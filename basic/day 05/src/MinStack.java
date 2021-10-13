@@ -2,7 +2,7 @@ import java.util.Stack;
 
 public class MinStack {
 
-    Stack<Integer> stack;
+    private Stack<Integer> stack;
     private int minStack;
 
     public MinStack() {
@@ -56,6 +56,10 @@ public class MinStack {
             }
         }
 
+    }
+    public int getMinStack(){
+        
+        return minStack;
     }
 
 }
