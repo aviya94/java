@@ -10,10 +10,11 @@ public class ArrExercisess {
                 SumArr += e;
             }
         }
-        return SumArr;
-    }
 
-    public int Sum(int[][] mat) {
+        return SumArr;
+    }//1
+
+    public int sum(int[][] mat) {
 
         int SumElementsMatrix = 0;
 
@@ -26,42 +27,66 @@ public class ArrExercisess {
                 SumElementsMatrix += sum(mat[i]);
             }
         }
+
         return SumElementsMatrix;
     }//1
 
-    public boolean integerExistsInMatrix(int[][] mat, int integerToFind) {
-        boolean isExists = false;
+    public boolean integerExistsInPerfectMatrix(int[][] mat, int integerToFind) {
 
         if (mat == null) {
             throw new IllegalArgumentException("matrix is null");
         }
 
-        for (int i = 0; i < mat.length; i++) {
-            if (mat[i] != null) {
-                isExists = binarySearchInArr(mat[i], integerToFind);
-            }
-        }
-        return isExists;
+        return binarySearchInMatrix(mat,integerToFind);
+
     }//2
 
+    public boolean binarySearchInMatrix(int[][] mat, int integerToFind)//2
+    {
+        boolean isExists = false;
+        int endSearch = mat.length - 1;
+        int startSearch = 0;
+        int mid;
+        int[] row;
+
+        while (startSearch <= endSearch) {
+            mid = startSearch + (endSearch - startSearch) / 2;
+            row = mat[mid];
+            isExists = binarySearchInArr(row, integerToFind);
+
+            if (isExists) {
+                return true;
+            }
+            else if (mat[mid][0] > integerToFind) {
+                endSearch = mid - 1;
+            }
+            else {
+                startSearch = mid + 1;
+            }
+
+        }//2
+        return isExists;
+    }
     public boolean binarySearchInArr(int[] arr, int integerToFind) {
 
-        int endSearch = arr.length-1;
+        int endSearch = arr.length - 1;
         int startSearch = 0;
         int mid;
 
         while (startSearch <= endSearch) {
-            mid= startSearch+(endSearch-startSearch)/2;
+            mid = startSearch + (endSearch - startSearch) / 2;
+
             if (arr[mid] == integerToFind) {
                 return true;
             } else if (arr[mid] > integerToFind) {
-                endSearch = mid-1;
-            } else   {
-                startSearch = mid+1;
+                endSearch = mid - 1;
+            } else {
+                startSearch = mid + 1;
             }
         }
+
         return false;
-    }
+    }//2
 
     public boolean isMagicSquare(int[][] mat) {
 
@@ -77,17 +102,18 @@ public class ArrExercisess {
             sumOfFirstCol += mat[row][0];
         }
 
-        for (int row = 0; row < mat.length; row++, reversRow--) {
-            sumOfSlantLeft += mat[row][row];
-            sumOfSlantRight += mat[reversRow][row];
+        for (int i = 0; i < mat.length; i++, reversRow--) {
+            sumOfSlantLeft += mat[i][i];
+            sumOfSlantRight += mat[reversRow][i];
 
-            for (int col = 0; col < mat[row].length; col++) {
-                sumOfCol += mat[row][col];
-                sumOfRow += mat[col][row];
+            for (int j = 0; j < mat[i].length; j++) {
+                sumOfCol += mat[i][j];
+                sumOfRow += mat[j][i];
             }
 
             if (sumOfCol != sumOfFirstCol && sumOfRow != sumOfFirstCol) {
                 isMagicSquare = false;
+
                 break;
             } else {
                 sumOfCol = 0;
@@ -98,93 +124,167 @@ public class ArrExercisess {
         if (sumOfSlantLeft != sumOfFirstCol && sumOfSlantRight != sumOfFirstCol) {
             isMagicSquare = false;
         }
-
-        return isMagicSquare;
+        if (isMagicSquare == true) {
+            if ((mat.length * (mat.length + 1)) / 2 == sum(mat)) {
+                return true;
+            }
+        }
+        return false;
     }//3
 
+    public int[][] creatMagicSquare(int num) {
 
-        public int[][] creatMagicSquare(int num) {
 
-            int[][] magic_square = new int[num][num];
+        int[][] magicSquare = new int[num][num];
 
-            int row_num = num - 1;
-            int col_num = num / 2;
-            magic_square[row_num][col_num] = 1;
+        int rowNum = num - 1;
+        int colNum = num / 2;
+        magicSquare[rowNum][colNum] = 1;
 
-            for (int i = 2; i <= num * num; i++) {
-                if (magic_square[(row_num + 1) % num][(col_num + 1) % num] == 0) {
-                    row_num = (row_num + 1) % num;
-                    col_num = (col_num + 1) % num;
-                } else {
-                    row_num = (row_num - 1 + num) % num;
-                }
-                magic_square[row_num][col_num] = i;
+        for (int i = 2; i <= num * num; i++) {
+
+            if (magicSquare[(rowNum + 1) % num][(colNum + 1) % num] == 0) {
+                rowNum = (rowNum + 1) % num;
+                colNum = (colNum + 1) % num;
+            } else {
+                rowNum = (rowNum - 1 + num) % num;
             }
-            return magic_square;
+
+            magicSquare[rowNum][colNum] = i;
         }
 
+        return magicSquare;
+    }//4
 
-
-    ///4
-    public void printMatrix(int[][] mat) {
+    public void print(int[][] mat) {
 
         for (int row = 0; row < mat.length; row++) {
             System.out.print("[");
 
-            for (int col = 0; col < mat[row].length; col++) {
-                System.out.print(mat[row][col]);
-                System.out.print(",");
-            }
+            print(mat[row]);
 
             System.out.println("]");
 
         }
     }//5
 
-    public void reateDiagonalArray(int rows, int cols) {
-        int jump = 2;
-        int n = 2;
-        int jumpRow = 0;
-        int j;
-        int s = 1;
-        int[][] mat = new int[rows][cols];
+    public void print(int[] arr) {
 
-        for (int i = 0; i < rows; i++) {
-            for (j = 0; j < cols; j++) {
-
-                if (i == 0 && j == 0) {
-                    mat[i][j] = 1;
-                } else if (j == 0 && i != 0) {
-                    mat[i][j] = mat[i - 1][j] + jump - 2;
-                } else {
-                    mat[i][j] = mat[i][j - 1] + n;
-                    if (i == 0 || j != cols - s) {
-                        n++;
-                    } else {
-                        n--;
-                        s--;
-                    }
-                }
-            }
-            jump++;
-            n = jump;
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+            System.out.print(",");
         }
-        printMatrix(mat);
+    }//5
+
+    public void createDiagonalArray(int rows, int cols) {
+
+        int[][] mat = new int[rows][cols];
+        int indexToFill = createUpperDiagonalArray(mat);
+        createLowerDiagonalArray(mat, indexToFill);
+        print(mat);
+
+    }//6
+
+    public void createLowerDiagonalArray(int[][] mat, int indexToFill) {
+
+        for (int i = 1; i <= mat[0].length - 1; i++) {
+            int upperIndex = mat.length - 1;
+            int rightIndex = i;
+
+            indexToFill = fillDiagonalArray(mat, upperIndex, rightIndex, indexToFill);
+        }
+    }//6
+
+    public int createUpperDiagonalArray(int[][] mat) {
+        int indexToFill = 0;
+
+        for (int i = 0; i < mat.length; i++) {
+            int upperIndex = i;
+            int rightIndex = 0;
+
+            indexToFill = fillDiagonalArray(mat, upperIndex, rightIndex, indexToFill);
+        }
+        return indexToFill;
+    }//6
+
+    public int fillDiagonalArray(int[][] mat, int upperIndex, int rightIndex, int indexToFill)//6
+    {
+        while (upperIndex >= 0 && rightIndex < mat[upperIndex].length) {
+            mat[upperIndex--][rightIndex++] = indexToFill++;
+        }
+
+        return indexToFill;
     }
 
-    public void ReplaceWithNextMax(int[] arr) {
+    public int[] ReplaceWithNextMax(int[] arr) {
 
-        int NextMax=arr[arr.length-1];
+        int NextMax = arr[arr.length - 1];
         int indexArr;
-        for(int i=arr.length-2;i>=0;i--)
-        {
-            arr[i]=NextMax;
-            indexArr=arr[i];
-            if(NextMax<indexArr)
-            {
-                NextMax=indexArr;
+
+        for (int i = arr.length - 2; i >= 0; i--) {
+            arr[i] = NextMax;
+            indexArr = arr[i];
+            if (NextMax < indexArr) {
+                NextMax = indexArr;
             }
         }
+        return arr;
 
     }//7
+
+    public void replaceWithClosestGreaterValue(int arr[]) {//8
+        boolean isChanged = false;
+
+        for (int i = 0; i < arr.length-1; i++) {
+            if (i != arr.length - 1) {
+                for (int j = i + 1; i < arr.length - 1; j++) {
+
+                    if (arr[j] > arr[i]) {
+                        arr[i] = arr[j];
+                        isChanged = true;
+                        break;
+                    }
+                }
+
+                if (isChanged == false) {
+                    arr[i] = -1;
+                } else {
+                    isChanged = false;
+                }
+
+            }
+        }
+        arr[arr.length-1]=-1;
+        print(arr);
+
+
+        /*
+int[]copyArr=arr;
+    int maxIndex=arr[arr.length-1];
+    int nextIndex;
+
+    for(int i=arr.length-2;i>0;i--)
+    {
+        if(copyArr[i]>maxIndex){
+            arr[i]=-1;
+        }
+        else
+        {
+            arr[i]=maxIndex;
+        }
+        if(copyArr[i]<copyArr[i-1])
+        {
+            maxIndex=arr[i-1];
+        }
+        else
+        {
+            maxIndex=copyArr[i];
+        }
+    }
+    arr[arr.length-1]=-1;
+        print(arr);
+    }
+
+         */
+    }
 }
