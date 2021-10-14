@@ -12,12 +12,11 @@ public class MinStack {
         updateMin(numberToPush);
     }
 
-    public void updateMin(int numberToPush) {
+    private void updateMin(int numberToPush) {
 
         if (stack.empty()) {
             stackMin.push(numberToPush);
-        }
-        else if (stackMin.peek() >= numberToPush) {
+        } else if (stackMin.peek() >= numberToPush) {
             stackMin.push(numberToPush);
         }
 
@@ -39,6 +38,8 @@ public class MinStack {
 
     private void RemoveFromMinStack(int popNumber) {
 
+        assert stackMin.size() > 0 : "stackMin is empty";
+
         if (popNumber == stackMin.peek()) {
             stackMin.pop();
             minStack = stackMin.peek();
@@ -47,7 +48,10 @@ public class MinStack {
 
     public int getMinStack() {
 
+        if (stack.empty())
+        {
+          throw new NullPointerException ("the stack is empty ");
+        }
         return minStack;
     }
-
 }
