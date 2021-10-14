@@ -2,21 +2,30 @@ import java.util.Stack;
 
 public class MinStack {
 
-    private Stack<Integer> stack;
+    private Stack<Integer> stack = new Stack<Integer>();
+    private Stack<Integer> stackMin = new Stack<Integer>();
     private int minStack;
-
-    public MinStack() {
-        stack = new Stack<Integer>();
-    }
 
     public void pushToStack(int numberToPush) {
 
-        updateMinStack(numberToPush);
-        stack.push((Integer) numberToPush);
-
+        stack.push(numberToPush);
+        updateMin(numberToPush);
     }
 
-    public int popToStack() {
+    public void updateMin(int numberToPush) {
+
+        if (stack.empty()) {
+            stackMin.push(numberToPush);
+        }
+        else if (stackMin.peek() >= numberToPush) {
+            stackMin.push(numberToPush);
+        }
+
+        minStack = stackMin.peek();
+    }
+
+    public int popFromStack() {
+
         int popNumber;
 
         if (stack.empty()) {
@@ -24,41 +33,20 @@ public class MinStack {
         }
 
         popNumber = stack.pop();
-
-        if (minStack == popNumber) {
-            RemoveMinStack();
-        }
-
+        RemoveFromMinStack(popNumber);
         return popNumber;
     }
 
-    private void RemoveMinStack() {
+    private void RemoveFromMinStack(int popNumber) {
 
-        int min = stack.peek();
-        minStack = min;
-
-        for (Integer e : stack) {
-            if (e < min) {
-                minStack = e;
-                min = e;
-            }
+        if (popNumber == stackMin.peek()) {
+            stackMin.pop();
+            minStack = stackMin.peek();
         }
     }
 
-    public void updateMinStack(int number) {
+    public int getMinStack() {
 
-        if (stack.empty()) {
-            minStack = number;
-        }
-        else {
-            if (minStack > number) {
-                minStack = number;
-            }
-        }
-
-    }
-    public int getMinStack(){
-        
         return minStack;
     }
 

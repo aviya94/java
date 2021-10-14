@@ -8,9 +8,9 @@ public class Main {
         m.pushToStack(2);
         m.pushToStack(3);
         m.pushToStack(1);
-        m.popToStack();
-        m.popToStack();
-        m.popToStack();
+        m.popFromStack();
+        m.popFromStack();
+        m.popFromStack();
 
     }
 }

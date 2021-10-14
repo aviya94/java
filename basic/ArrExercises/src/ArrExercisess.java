@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class ArrExercisess {
 
@@ -43,7 +46,6 @@ public class ArrExercisess {
 
     public boolean binarySearchInMatrix(int[][] mat, int integerToFind)//2
     {
-        boolean isExists = false;
         int endSearch = mat.length - 1;
         int startSearch = 0;
         int mid;
@@ -52,21 +54,20 @@ public class ArrExercisess {
         while (startSearch <= endSearch) {
             mid = startSearch + (endSearch - startSearch) / 2;
             row = mat[mid];
-            isExists = binarySearchInArr(row, integerToFind);
-
-            if (isExists) {
-                return true;
+            if(row[0]<=integerToFind&&integerToFind<=row[row.length-1]) {
+                return binarySearchInArr(row, integerToFind);
             }
             else if (mat[mid][0] > integerToFind) {
                 endSearch = mid - 1;
             }
-            else {
+            else if(mat[mid][mat.length-1]<integerToFind ){
                 startSearch = mid + 1;
             }
 
         }//2
-        return isExists;
+        return false;
     }
+
     public boolean binarySearchInArr(int[] arr, int integerToFind) {
 
         int endSearch = arr.length - 1;
@@ -232,10 +233,41 @@ public class ArrExercisess {
 
     }//7
 
+    public void replaceWithClosestGreaterValue(int arr[])//8
+    {
+        int []arrSmallNumber=new int[arr.length];
+
+        for(int i=0 ; i < arr.length ; i++)
+        {
+            arrSmallNumber[i]=arr[i];
+
+            for(int j = 0 ; j < i ; j++)
+            {
+
+                if(arrSmallNumber[j]==arr[j]) {
+                    if (arr[i] > arrSmallNumber[j]) {
+                        arr[j] = arr[i];
+
+                    }
+                }
+
+            }
+        }
+        for(int i=0 ; i < arr.length ; i++){
+
+            if(arrSmallNumber[i]==arr[i])
+            {
+                arr[i]=-1;
+            }
+        }
+        print(arr);
+
+    }
+    /*
     public void replaceWithClosestGreaterValue(int arr[]) {//8
         boolean isChanged = false;
 
-        for (int i = 0; i < arr.length-1; i++) {
+        for (int i = 0; i < arr.length - 1; i++) {
             if (i != arr.length - 1) {
                 for (int j = i + 1; i < arr.length - 1; j++) {
 
@@ -254,37 +286,37 @@ public class ArrExercisess {
 
             }
         }
-        arr[arr.length-1]=-1;
+        arr[arr.length - 1] = -1;
         print(arr);
+    }
 
 
-        /*
+
+
 int[]copyArr=arr;
     int maxIndex=arr[arr.length-1];
     int nextIndex;
 
     for(int i=arr.length-2;i>0;i--)
     {
-        if(copyArr[i]>maxIndex){
-            arr[i]=-1;
-        }
-        else
-        {
+        if(copyArr[i]<maxIndex){
             arr[i]=maxIndex;
         }
-        if(copyArr[i]<copyArr[i-1])
-        {
-            maxIndex=arr[i-1];
+        else {
+            arr[i] = -1;
         }
-        else
-        {
+
+        if(copyArr[i-1]<copyArr[i]) {
             maxIndex=copyArr[i];
         }
+
     }
     arr[arr.length-1]=-1;
         print(arr);
     }
 
-         */
+
     }
+
+       */
 }
