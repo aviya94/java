@@ -37,13 +37,13 @@ public class ArrExercisess {
             throw new IllegalArgumentException("matrix is null");
         }
 
-        return binarySearchInMatrix(mat,integerToFind);
+        return binarySearchInMatrix(mat, integerToFind);
 
     }//2
 
     public boolean binarySearchInMatrix(int[][] mat, int integerToFind)//2
     {
-        MultiDimArrayAsArrayView matInArr=new MultiDimArrayAsArrayView(mat);
+        MultiDimArrayAsArrayView matInArr = new MultiDimArrayAsArrayView(mat);
         int endSearch = matInArr.getLastIndex();
         int startSearch = 0;
         int mid;
@@ -51,13 +51,11 @@ public class ArrExercisess {
         while (startSearch <= endSearch) {
             mid = startSearch + (endSearch - startSearch) / 2;
 
-            if (matInArr.getIndexArray(mid) == integerToFind) {
+            if (matInArr.getValueAt(mid) == integerToFind) {
                 return true;
-            }
-            else if (matInArr.getIndexArray(mid) > integerToFind) {
+            } else if (matInArr.getValueAt(mid) > integerToFind) {
                 endSearch = mid - 1;
-            }
-            else {
+            } else {
                 startSearch = mid + 1;
             }
         }
@@ -245,141 +243,56 @@ public class ArrExercisess {
         return arr;
 
     }//7
-    /*
+
     public void replaceWithClosestGreaterValue(int arr[])//8
     {
-        int []arrSmallNumber=new int[arr.length];
-
-
-        for(int i=0 ; i < arr.length ; i++)
-        {
-            arrSmallNumber[i]=arr[i];
-
-            for(int j = 0 ; j < i ; j++)
-            {
-
-                if(arrSmallNumber[j]==arr[j]) {
-                    if (arr[i] > arrSmallNumber[j]) {
-                        arr[j] = arr[i];
-
-                    }
-                }
-
-            }
+        if (arr == null) {
+            return;
         }
-        for(int i=0 ; i < arr.length ; i++){
-
-            if(arrSmallNumber[i]==arr[i])
-            {
-                arr[i]=-1;
-            }
+        if (arr.length == 1) {
+            arr[0] = -1;
+            return;
         }
-        print(arr);
 
-    }
+        Stack<Integer> stack = new Stack<Integer>();
+        stack.add(0);
 
-     */
-    public void replaceWithClosestGreaterValue(int arr[])//8
-    {
-        Stack<Integer>stack =new Stack<Integer>();
-        stack.add(arr[0]);
-
-        for(int i=1 ; i < arr.length ; i++) {
-
+        for (int i = 1; i < arr.length; i++) {
+//{7,6,5,1,2,4,3,10,9,8,7,2,4,9,5}
             if (arr[i] > arr[i - 1]) {
-                changeSmallerNumberInStackfromIndex(stack,arr,i);
+                changeSmallerNumberInStack(stack, arr, i);
             }
-            stack.add(arr[i]);
+            stack.add(i);
         }
-        setNumberInUnchangedIndex(-1,arr,stack);
+        setNumberInUnchangedIndex(-1, arr, stack);
 
 
     }
-    public void setNumberInUnchangedIndex(int numberToSet,int []arr,Stack<Integer> stack){
-        while (!stack.empty())
-        {
-            for(int i =arr.length-1;i>=0;i--)
-            {
 
-                if(arr[i]==stack.peek())
-                {
-                arr[i]=-1;
+    public void setNumberInUnchangedIndex(int numberToSet, int[] arr, Stack<Integer> stack) {
+
+        while (!stack.empty()) {
+            arr[stack.pop()] = -1;
+        }
+
+    }
+
+    public void changeSmallerNumberInStack(Stack<Integer> stack, int[] arr, int indexInArr) {
+        int stackSize = stack.size();
+        Stack<Integer> tempSteak = new Stack<Integer>();
+        for (int i = stackSize - 1; i >= 0; i--) {
+
+            if (arr[indexInArr] > arr[stack.get(i)]) {
+                arr[stack.get(i)] = arr[indexInArr];
                 stack.pop();
-                break;
-                }
-            }
-        }
-       // print(arr);
-    }
-
-    public void changeSmallerNumberInStackfromIndex(Stack<Integer> stack,int []arr,int indexInArr)
-    {
-        int stackSize=stack.size();
-
-       for (int i=0;i<stackSize;i++)
-       {
-            if(arr[indexInArr]>stack.peek())
-            {
-            arr[indexInArr-(i+1)]=arr[indexInArr];
-            stack.pop();
+            } else {
+                tempSteak.add(stack.pop());
             }
 
         }
-    }
-    /*
-    public void replaceWithClosestGreaterValue(int arr[]) {//8
-        boolean isChanged = false;
-
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (i != arr.length - 1) {
-                for (int j = i + 1; i < arr.length - 1; j++) {
-
-                    if (arr[j] > arr[i]) {
-                        arr[i] = arr[j];
-                        isChanged = true;
-                        break;
-                    }
-                }
-
-                if (isChanged == false) {
-                    arr[i] = -1;
-                } else {
-                    isChanged = false;
-                }
-
-            }
+        while (!tempSteak.empty()) {
+            stack.add(tempSteak.pop());
         }
-        arr[arr.length - 1] = -1;
-        print(arr);
     }
 
-
-
-
-int[]copyArr=arr;
-    int maxIndex=arr[arr.length-1];
-    int nextIndex;
-
-    for(int i=arr.length-2;i>0;i--)
-    {
-        if(copyArr[i]<maxIndex){
-            arr[i]=maxIndex;
-        }
-        else {
-            arr[i] = -1;
-        }
-
-        if(copyArr[i-1]<copyArr[i]) {
-            maxIndex=copyArr[i];
-        }
-
-    }
-    arr[arr.length-1]=-1;
-        print(arr);
-    }
-
-
-    }
-
-       */
 }
