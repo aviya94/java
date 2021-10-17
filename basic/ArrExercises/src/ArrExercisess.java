@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.Stack;
 
 public class ArrExercisess {
 
@@ -248,10 +245,11 @@ public class ArrExercisess {
         return arr;
 
     }//7
-
+    /*
     public void replaceWithClosestGreaterValue(int arr[])//8
     {
         int []arrSmallNumber=new int[arr.length];
+
 
         for(int i=0 ; i < arr.length ; i++)
         {
@@ -278,6 +276,55 @@ public class ArrExercisess {
         }
         print(arr);
 
+    }
+
+     */
+    public void replaceWithClosestGreaterValue(int arr[])//8
+    {
+        Stack<Integer>stack =new Stack<Integer>();
+        stack.add(arr[0]);
+
+        for(int i=1 ; i < arr.length ; i++) {
+
+            if (arr[i] > arr[i - 1]) {
+                changeSmallerNumberInStackfromIndex(stack,arr,i);
+            }
+            stack.add(arr[i]);
+        }
+        setNumberInUnchangedIndex(-1,arr,stack);
+
+
+    }
+    public void setNumberInUnchangedIndex(int numberToSet,int []arr,Stack<Integer> stack){
+        while (!stack.empty())
+        {
+            for(int i =arr.length-1;i>=0;i--)
+            {
+
+                if(arr[i]==stack.peek())
+                {
+                arr[i]=-1;
+                stack.pop();
+                break;
+                }
+            }
+        }
+       // print(arr);
+    }
+
+    public void changeSmallerNumberInStackfromIndex(Stack<Integer> stack,int []arr,int indexInArr)
+    {
+        int stackSize=stack.size();
+
+       for (int i=0;i<stackSize;i++)
+       {
+            if(arr[indexInArr]>stack.peek())
+            {
+            arr[indexInArr-(i+1)]=arr[indexInArr];
+            stack.pop();
+            }
+
+        }
     }
     /*
     public void replaceWithClosestGreaterValue(int arr[]) {//8
