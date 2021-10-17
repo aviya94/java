@@ -29,36 +29,5 @@ public class ArrExercisessTest {
         final boolean result = arr.binarySearchInMatrix(mat,a);
         assertEquals(false, result);
     }
-    @Test
-    void replaceWithClosestGreaterValue() {
 
-        int[] array={ 5,2,6,1,10,11,2,9,1,2};
-        int []result={6,6,10,10,11,-1,9,-1,2,-1};
-        arr.replaceWithClosestGreaterValue(array);
-
-            assertArrayEquals(result,array);
-
-    }
-
-    @Test
-    void replaceWithClosestGreaterValueInSortedArray() {
-
-        int[] array={1,2,3,4,5,6,7};
-        int []result={2,3,4,5,6,7,-1};
-        arr.replaceWithClosestGreaterValue(array);
-
-        assertArrayEquals(result,array);
-
-    }
-
-    @Test
-    void replaceWithClosestGreaterValueInReverseSortedArray() {
-
-        int[] array= {7,6,5,4,3,2,1};
-        int []result={-1,-1,-1,-1,-1,-1,-1};
-        arr.replaceWithClosestGreaterValue(array);
-
-        assertArrayEquals(result,array);
-
-    }
 }
