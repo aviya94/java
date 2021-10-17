@@ -46,12 +46,26 @@ public class ArrExercisess {
 
     public boolean binarySearchInMatrix(int[][] mat, int integerToFind)//2
     {
-        int endSearch = mat.length - 1;
+        MultiDimArrayAsArrayView matInArr=new MultiDimArrayAsArrayView(mat);
+        int endSearch = matInArr.getLastIndex();
         int startSearch = 0;
         int mid;
-        int[] row;
 
         while (startSearch <= endSearch) {
+            mid = startSearch + (endSearch - startSearch) / 2;
+
+            if (matInArr.getIndexArray(mid) == integerToFind) {
+                return true;
+            }
+            else if (matInArr.getIndexArray(mid) > integerToFind) {
+                endSearch = mid - 1;
+            }
+            else {
+                startSearch = mid + 1;
+            }
+        }
+        return false;
+       /* while (startSearch <= endSearch) {
             mid = startSearch + (endSearch - startSearch) / 2;
             row = mat[mid];
             if(row[0]<=integerToFind&&integerToFind<=row[row.length-1]) {
@@ -66,6 +80,8 @@ public class ArrExercisess {
 
         }//2
         return false;
+
+        */
     }
 
     public boolean binarySearchInArr(int[] arr, int integerToFind) {
