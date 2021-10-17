@@ -1,11 +1,30 @@
-public class MultiDimArrayAsArrayView {
-    private int [] MultiDimArray;
-    private int length;
+import java.lang.reflect.Array;
 
-    public MultiDimArrayAsArrayView(int[][]mat){
+public class MultiDimArrayAsArrayView {
+    private int length;
+    private Object array;
+
+    public MultiDimArrayAsArrayView(Object arr)
+    {
+        array= arr;
+        length=Array.getLength(arr);
+
+    }
+    public int getFirstIndex(){
+        return (int) Array.get(array,0);
+    }
+    public int getLastIndex()
+    {
+       return (int) Array.get(array,length-1);
+    }
+    public int getValueAt(int value){
+        return (int) Array.get(array,value);
+    }
+/*
+    public MultiDimArrayAsArrayView(Object mat){
         length =0;
         matLength(mat);
-        MultiDimArray=new int[length];
+        //MultiDimArray=new int[length];
         convert2dArrayToArray(mat);
 
     }
@@ -75,6 +94,8 @@ public class MultiDimArrayAsArrayView {
     {
         return MultiDimArray[MultiDimArray.length-1];
     }
+
+ */
 
 
 }
