@@ -63,24 +63,24 @@ public class ArrayViewer {
         return getValueAt(0);
     }
 
-    /*
-    public void setValueAt(int value) {
+    public void setValueAt(int index, int value) {
+
         Object array = dimArray;
         int arrLlength = dimArrLength;
-        ArrayList<Integer> indexArray=new ArrayList<Integer>();
+        int currntIndex;
 
-        for (int i = 0; i < length.size(); i++) {
+        for (int i = 0; i < length.size()-1; i++) {
 
             arrLlength /= length.get(i);
-            int currntIndex = value / arrLlength;
-            value = value % arrLlength;
+            currntIndex = index / arrLlength;
+            index = index % arrLlength;
             array = Array.get(array, currntIndex);
-            indexArray.add(currntIndex);
         }
 
+        Array.set((int[])array,index,value);
     }
 
- */
+
 
 }
 

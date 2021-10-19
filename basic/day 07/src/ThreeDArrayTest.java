@@ -80,6 +80,18 @@ public class ThreeDArrayTest {
 
         assertEquals(result, index);
     }
+
+@Test
+    void setValueAt() {
+        int[][][] arr = {{{1, 5, 7}, {2, 6, 3}, {1, 6, 9}},
+                {{1, 5, 7}, {2, 6, 3}, {1, 6, 9}}};
+        arrayViewer = new ArrayViewer(arr);
+        arrayViewer.setValueAt(5,5);
+        int index = 4;
+        int result=arr[0][1][2];
+
+        assertEquals(result, index);
+    }
 }
 
 
