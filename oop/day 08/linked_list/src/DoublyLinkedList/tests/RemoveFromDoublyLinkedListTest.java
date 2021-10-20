@@ -1,10 +1,9 @@
 package DoublyLinkedList.tests;
-
+import DoublyLinkedList.Matcher.biggerNumberMatcher;
 import org.junit.jupiter.api.*;
 import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.LinkedListException;
 import static org.junit.jupiter.api.Assertions.*;
-
 @DisplayName("RemoveFromDoublyLinkedListTest")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RemoveFromDoublyLinkedListTest {
@@ -27,6 +26,7 @@ class RemoveFromDoublyLinkedListTest {
         int value = (int) linkedList.tail();
         linkedList.removeFromTail();
         assertNotEquals(value, linkedList.tail());
+        assertEquals(null, linkedList.isExist(value));
 
     }
 
@@ -56,6 +56,7 @@ class RemoveFromDoublyLinkedListTest {
         int value = (int) linkedList.head();
         linkedList.removeFromHead();
         assertNotEquals(value, linkedList.head());
+        assertEquals(null, linkedList.isExist(value));
 
     }
 
@@ -82,7 +83,7 @@ class RemoveFromDoublyLinkedListTest {
         }
 
         linkedList.removeObject(size / 2);
-        //assertEquals(null, linkedList.find(size / 2));
+        assertEquals(null, linkedList.isExist(size / 2));
         assertEquals(size - 1, linkedList.size());
     }
 
@@ -99,11 +100,12 @@ class RemoveFromDoublyLinkedListTest {
 
         linkedList.removeObject(value);
         assertEquals(size, linkedList.size());
+        assertEquals(null, linkedList.isExist(value));
 
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void remove_empty_list() {
 
         int value = 5;
@@ -113,5 +115,20 @@ class RemoveFromDoublyLinkedListTest {
         } catch (NullPointerException e) {
 
         }
+    }
+
+    @Test
+    @Order(7)
+    void remove_matcher() {
+
+        int size = 10;
+
+        for (int i = 0; i < size; i++) {
+            linkedList.addToHead(i);
+        }
+
+        linkedList.removeObject(new biggerNumberMatcher(size/2));
+        assertEquals(null, linkedList.isExist(size -1));
+        assertEquals(size - 1, linkedList.size());
     }
 }

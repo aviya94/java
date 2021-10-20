@@ -1,8 +1,10 @@
 package DoublyLinkedList;
 
+import DoublyLinkedList.Matcher.Matcher;
+
 public class DoublyLinkedList extends Throwable {
 
-    private final  Node head;
+    private final Node head;
     private final Node tail;
     private int sizeLinkedList;
 
@@ -38,22 +40,65 @@ public class DoublyLinkedList extends Throwable {
         sizeLinkedList--;
     }
 
-    public void removeFromTail() throws LinkedListException {
+    public Object removeFromTail() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
             throw new LinkedListException();
         }
+
+        Object obj=tail.getPrevious().value();
         remove(tail.getPrevious());
+        return obj;
 
     }
 
-    public void removeFromHead() throws LinkedListException {
+    public Object removeFromHead() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
             throw new LinkedListException();
         }
 
+        Object obj=head.getNext().value();
         remove(head.getNext());
+        return obj;
+    }
+
+    public Object removeObject(Object objToRemove) {
+
+        Node node = find(objToRemove);
+
+        if (node != null) {
+            remove(node);
+            return objToRemove;
+        }
+        return null;
+
+    }
+
+    public Object removeObject(Matcher matc) {
+
+        Node node = find(matc);
+
+        if (node != null) {
+            remove(node);
+            return matc;
+        }
+        return null;
+
+    }
+
+    public Object isExist(Matcher matc){
+        return isExist (matc);
+    }
+
+    public Object isExist(Object obj){
+
+        Node value=find (obj);
+
+        if(value!=null) {
+            return value.value();
+        }
+        return null;
     }
 
     private Node find(Object obj) {
@@ -71,15 +116,17 @@ public class DoublyLinkedList extends Throwable {
 
     }
 
-    public Object removeObject(Object objToRemove) {
+    private Node find(Matcher matc) {
 
-        Node node = find(objToRemove);
+        Node LinkedList = head.getNext();
 
-        if (node != null) {
-            remove(node);
-            return objToRemove;
+        while (LinkedList.getNext() != tail) {
+
+            if (matc.match(LinkedList.value())) {
+                return LinkedList;
+            }
+            LinkedList = LinkedList.getNext();
         }
-
         return null;
 
     }
@@ -112,7 +159,7 @@ public class DoublyLinkedList extends Throwable {
             reverse(head);
         }
 
-        Node node =new Node(null,tail.getNext(),tail.getPrevious());
+        Node node = new Node(null, tail.getNext(), tail.getPrevious());
         tail.setPrevious(head.getPrevious());
         tail.setNext(head.getNext());
         head.setPrevious(node.getPrevious());
@@ -143,14 +190,15 @@ public class DoublyLinkedList extends Throwable {
         private Object item;
         private Node previous;
         private Node next;
+
         private Node() {
 
         }
 
         private Node(Object obj, Node nextNode, Node prevNode) {
             item = obj;
-            previous=prevNode;
-            next=nextNode;
+            previous = prevNode;
+            next = nextNode;
         }
 
         private void setNext(Node nextIndex) {

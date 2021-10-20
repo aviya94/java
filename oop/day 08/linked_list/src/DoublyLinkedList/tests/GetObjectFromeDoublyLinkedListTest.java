@@ -3,6 +3,7 @@ package DoublyLinkedList.tests;
 import org.junit.jupiter.api.*;
 import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.LinkedListException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("GetObjectFromeDoublyLinkedListTest")
@@ -57,7 +58,7 @@ class GetObjectFromeDoublyLinkedListTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void get_size() {
 
         assertEquals(0, linkedList.size());
@@ -71,9 +72,9 @@ class GetObjectFromeDoublyLinkedListTest {
         assertEquals(size, linkedList.size());
 
     }
-/*
+
     @Test
-    @Order(4)
+    @Order(5)
     void find() {
 
         int size = 10;
@@ -82,12 +83,12 @@ class GetObjectFromeDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        assertEquals(size / 2, linkedList.find(size / 2).value());
+        assertEquals(size / 2, linkedList.isExist(size / 2));
 
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     void Not_find() {
 
         int size = 10;
@@ -96,21 +97,17 @@ class GetObjectFromeDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        try {
-            linkedList.find(size + 1).value();
-            fail();
+        assertEquals(null, linkedList.isExist(size + 1));
 
-        } catch (NullPointerException e) {
-        }
     }
 
     @Test
-    @Order(5)
+    @Order(7)
     void find_from_empty_list() {
 
         int value = 1;
         try {
-            linkedList.find(value).value();
+            linkedList.isExist(value);
             fail();
 
         } catch (NullPointerException e) {
@@ -118,10 +115,8 @@ class GetObjectFromeDoublyLinkedListTest {
 
     }
 
- */
-
     @Test
-    @Order(5)
+    @Order(8)
     void reverse() throws LinkedListException {
         int size = 10;
 
@@ -136,7 +131,7 @@ class GetObjectFromeDoublyLinkedListTest {
     }
 
     @Test
-    @Order(6)
+    @Order(9)
     void reverse_empty() throws LinkedListException {
 
         linkedList.reverseFromHead();
