@@ -13,12 +13,12 @@ public class IntLinkedList {
         linkedList.addToTail(dataToAdd);
     }
 
-    public void removeFromTail() {
+    public void removeFromTail() throws LinkedListException {
 
         linkedList.removeFromTail();
     }
 
-    public void removeFromHead() {
+    public void removeFromHead() throws LinkedListException {
 
         linkedList.removeFromHead();
     }
@@ -34,17 +34,17 @@ public class IntLinkedList {
         return linkedList.size();
     }
 
-    public int head() {
+    public int head() throws LinkedListException {
 
         return (int) linkedList.head();
     }
 
-    public Object tail() {
+    public Object tail() throws LinkedListException {
 
         return (int) linkedList.tail();
     }
 
-    public void reverseFromHead() {
+    public void reverseFromHead() throws LinkedListException {
 
         linkedList.reverseFromHead();
     }

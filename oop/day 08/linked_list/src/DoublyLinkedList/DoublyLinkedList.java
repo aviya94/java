@@ -1,6 +1,6 @@
 package DoublyLinkedList;
 
-public class DoublyLinkedList {
+public class DoublyLinkedList extends Throwable {
 
     private final  Node head;
     private final Node tail;
@@ -38,19 +38,19 @@ public class DoublyLinkedList {
         sizeLinkedList--;
     }
 
-    public void removeFromTail() {
+    public void removeFromTail() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
-            throw new NullPointerException();
+            throw new LinkedListException();
         }
         remove(tail.getPrevious());
 
     }
 
-    public void removeFromHead() {
+    public void removeFromHead() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
-            throw new NullPointerException();
+            throw new LinkedListException();
         }
 
         remove(head.getNext());
@@ -88,25 +88,25 @@ public class DoublyLinkedList {
         return sizeLinkedList;
     }
 
-    public Object head() {
+    public Object head() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
-            throw new NullPointerException();
+            throw new LinkedListException();
         }
 
         return head.getNext().value();
     }
 
-    public Object tail() {
+    public Object tail() throws LinkedListException {
 
         if (sizeLinkedList == 0) {
-            throw new NullPointerException();
+            throw new LinkedListException();
         }
 
         return tail.getPrevious().value();
     }
 
-    public void reverseFromHead() {
+    public void reverseFromHead() throws LinkedListException {
 
         if (sizeLinkedList > 0) {
             reverse(head);
@@ -120,10 +120,10 @@ public class DoublyLinkedList {
 
     }
 
-    private void reverse(Node obj) {
+    private void reverse(Node obj) throws LinkedListException {
 
         if (obj == null) {
-            throw new NullPointerException();
+            throw new LinkedListException();
         }
 
         if (obj.getNext() == null) {
@@ -143,7 +143,6 @@ public class DoublyLinkedList {
         private Object item;
         private Node previous;
         private Node next;
-
         private Node() {
 
         }

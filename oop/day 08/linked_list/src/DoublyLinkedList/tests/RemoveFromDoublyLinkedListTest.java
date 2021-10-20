@@ -2,7 +2,7 @@ package DoublyLinkedList.tests;
 
 import org.junit.jupiter.api.*;
 import DoublyLinkedList.DoublyLinkedList;
-
+import DoublyLinkedList.LinkedListException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("RemoveFromDoublyLinkedListTest")
@@ -17,7 +17,7 @@ class RemoveFromDoublyLinkedListTest {
 
     @Test
     @Order(1)
-    void remove_from_tail() {
+    void remove_from_tail() throws LinkedListException {
 
         int size = 10;
         for (int i = 0; i < size; i++) {
@@ -38,13 +38,13 @@ class RemoveFromDoublyLinkedListTest {
             linkedList.removeFromTail();
             fail();
 
-        } catch (NullPointerException e) {
+        } catch (LinkedListException e) {
         }
     }
 
     @Test
     @Order(3)
-    void remove_From_Head() {
+    void remove_From_Head() throws LinkedListException {
 
         int size = 10;
 
@@ -67,7 +67,7 @@ class RemoveFromDoublyLinkedListTest {
             linkedList.removeFromHead();
             fail();
 
-        } catch (NullPointerException e) {
+        } catch (LinkedListException e) {
         }
     }
 

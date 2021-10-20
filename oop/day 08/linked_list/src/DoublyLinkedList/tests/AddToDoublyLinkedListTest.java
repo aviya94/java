@@ -1,5 +1,5 @@
 package DoublyLinkedList.tests;
-
+import DoublyLinkedList.LinkedListException;
 import org.junit.jupiter.api.*;
 import DoublyLinkedList.DoublyLinkedList;
 
@@ -17,7 +17,7 @@ class AddToDoublyLinkedListTest {
 
     @Test
     @Order(1)
-    void add_to_tail_empty_list() {
+    void add_to_tail_empty_list() throws LinkedListException {
 
         int value = 1;
         int size = 1;
@@ -30,7 +30,7 @@ class AddToDoublyLinkedListTest {
 
     @Test
     @Order(2)
-    void add_to_head_empty_list() {
+    void add_to_head_empty_list() throws LinkedListException {
 
         int value = 1;
         int size = 1;
@@ -43,7 +43,7 @@ class AddToDoublyLinkedListTest {
 
     @Test
     @Order(3)
-    void add_to_tail_not_empty_list() {
+    void add_to_tail_not_empty_list() throws LinkedListException {
 
         int size = 5;
         int value = 6;
@@ -61,7 +61,7 @@ class AddToDoublyLinkedListTest {
 
     @Test
     @Order(4)
-    void add_to_head_not_empty_list() {
+    void add_to_head_not_empty_list() throws LinkedListException {
 
         int size = 5;
         int value = 6;

@@ -2,7 +2,7 @@ package DoublyLinkedList.tests;
 
 import org.junit.jupiter.api.*;
 import DoublyLinkedList.DoublyLinkedList;
-
+import DoublyLinkedList.LinkedListException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("GetObjectFromeDoublyLinkedListTest")
@@ -17,7 +17,7 @@ class GetObjectFromeDoublyLinkedListTest {
 
     @Test
     @Order(1)
-    void get_tail_not_empty_list() {
+    void get_tail_not_empty_list() throws LinkedListException {
         int size = 10;
 
         for (int i = 0; i < size; i++) {
@@ -37,14 +37,14 @@ class GetObjectFromeDoublyLinkedListTest {
             linkedList.tail();
             fail();
 
-        } catch (NullPointerException e) {
+        } catch (LinkedListException e) {
 
         }
     }
 
     @Test
     @Order(3)
-    void get_head_not_empty_list() {
+    void get_head_not_empty_list() throws LinkedListException {
 
         int size = 10;
 
@@ -122,7 +122,7 @@ class GetObjectFromeDoublyLinkedListTest {
 
     @Test
     @Order(5)
-    void reverse() {
+    void reverse() throws LinkedListException {
         int size = 10;
 
         for (int i = 0; i < size; i++) {
@@ -137,7 +137,7 @@ class GetObjectFromeDoublyLinkedListTest {
 
     @Test
     @Order(6)
-    void reverse_empty() {
+    void reverse_empty() throws LinkedListException {
 
         linkedList.reverseFromHead();
         assertEquals(0, linkedList.size());
