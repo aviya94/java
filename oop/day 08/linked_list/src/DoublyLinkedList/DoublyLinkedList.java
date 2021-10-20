@@ -138,4 +138,40 @@ public class DoublyLinkedList {
         obj.setPrevious(Next);
 
     }
+
+    private static class Node {
+        private Object item;
+        private Node previous;
+        private Node next;
+
+        private Node() {
+
+        }
+
+        private Node(Object obj, Node nextNode, Node prevNode) {
+            item = obj;
+            previous=prevNode;
+            next=nextNode;
+        }
+
+        private void setNext(Node nextIndex) {
+            next = nextIndex;
+        }
+
+        private void setPrevious(Node prev) {
+            previous = prev;
+        }
+
+        private Node getPrevious() {
+            return previous;
+        }
+
+        private Node getNext() {
+            return next;
+        }
+
+        private Object value() {
+            return item;
+        }
+    }
 }
