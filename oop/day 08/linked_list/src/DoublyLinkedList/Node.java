@@ -5,8 +5,14 @@ public class Node {
     private Node previous;
     private Node next;
 
-    public Node(Object obj) {
+    public Node() {
+
+    }
+
+    public Node(Object obj,Node nextNode,Node prevNode) {
         item = obj;
+        previous=prevNode;
+        next=nextNode;
     }
 
     public void setNext(Node nextIndex) {

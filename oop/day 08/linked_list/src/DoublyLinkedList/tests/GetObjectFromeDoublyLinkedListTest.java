@@ -24,8 +24,8 @@ class GetObjectFromeDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        assertEquals(0, linkedList.tail().value());
-        assertNotEquals(0, linkedList.head().value());
+        assertEquals(0, linkedList.tail());
+        assertNotEquals(0, linkedList.head());
 
     }
 
@@ -34,7 +34,7 @@ class GetObjectFromeDoublyLinkedListTest {
     void get_tail_empty_list() {
 
         try {
-            linkedList.tail().value();
+            linkedList.tail();
             fail();
 
         } catch (NullPointerException e) {
@@ -52,8 +52,8 @@ class GetObjectFromeDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        assertNotEquals(size - 1, linkedList.tail().value());
-        assertEquals(size - 1, linkedList.head().value());
+        assertNotEquals(size - 1, linkedList.tail());
+        assertEquals(size - 1, linkedList.head());
     }
 
     @Test
@@ -71,7 +71,7 @@ class GetObjectFromeDoublyLinkedListTest {
         assertEquals(size, linkedList.size());
 
     }
-
+/*
     @Test
     @Order(4)
     void find() {
@@ -118,16 +118,20 @@ class GetObjectFromeDoublyLinkedListTest {
 
     }
 
+ */
+
     @Test
     @Order(5)
     void reverse() {
         int size = 10;
+
         for (int i = 0; i < size; i++) {
             linkedList.addToHead(i);
         }
-        linkedList.reverse(linkedList.head());
-        assertEquals(size - 1, linkedList.tail().value());
-        assertEquals(0, linkedList.head().value());
+
+        linkedList.reverseFromHead();
+        assertEquals(0, linkedList.head());
+        assertEquals(size - 1, linkedList.tail());
 
     }
 
@@ -135,13 +139,8 @@ class GetObjectFromeDoublyLinkedListTest {
     @Order(6)
     void reverse_empty() {
 
-        try {
-            linkedList.reverse(linkedList.head());
-            fail();
-        }
-
-        catch (NullPointerException e) {
-        }
+        linkedList.reverseFromHead();
+        assertEquals(0, linkedList.size());
 
     }
 

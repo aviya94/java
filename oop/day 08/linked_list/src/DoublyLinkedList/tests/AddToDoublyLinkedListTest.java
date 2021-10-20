@@ -22,8 +22,8 @@ class AddToDoublyLinkedListTest {
         int value = 1;
         int size = 1;
         linkedList.addToTail(value);
-        assertEquals(value, linkedList.tail().value());
-        assertEquals(value, linkedList.head().value());
+        assertEquals(value, linkedList.tail());
+        assertEquals(value, linkedList.head());
         assertEquals(size, linkedList.size());
 
     }
@@ -35,8 +35,8 @@ class AddToDoublyLinkedListTest {
         int value = 1;
         int size = 1;
         linkedList.addToHead(value);
-        assertEquals(value, linkedList.tail().value());
-        assertEquals(value, linkedList.head().value());
+        assertEquals(value, linkedList.tail());
+        assertEquals(value, linkedList.head());
         assertEquals(size, linkedList.size());
 
     }
@@ -53,8 +53,8 @@ class AddToDoublyLinkedListTest {
         }
 
         linkedList.addToTail(value);
-        assertEquals(value, linkedList.tail().value());
-        assertNotEquals(value, linkedList.head().value());
+        assertEquals(value, linkedList.tail());
+        assertNotEquals(value, linkedList.head());
         assertEquals(size + 1, linkedList.size());
 
     }
@@ -71,8 +71,8 @@ class AddToDoublyLinkedListTest {
         }
 
         linkedList.addToHead(value);
-        assertNotEquals(value, linkedList.tail().value());
-        assertEquals(value, linkedList.head().value());
+        assertNotEquals(value, linkedList.tail());
+        assertEquals(value, linkedList.head());
         assertEquals(size + 1, linkedList.size());
 
     }

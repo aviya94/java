@@ -2,90 +2,65 @@ package DoublyLinkedList;
 
 public class DoublyLinkedList {
 
-    private Node head = null;
-    private Node tail = null;
-    private int sizeLinkedList = 0;
+    private final  Node head;
+    private final Node tail;
+    private int sizeLinkedList;
 
-    public void addToTail(Object obj) {
+    public DoublyLinkedList() {
 
-        if (head == null && tail == null) {
-            addFirstValue(obj);
-
-        } else {
-            Node newNode = new Node(obj);
-            newNode.setNext(null);
-            newNode.setPrevious(tail);
-            tail.setNext(newNode);
-            tail = newNode;
-            sizeLinkedList++;
-        }
+        head = new Node();
+        tail = new Node();
+        head.setNext(tail);
+        tail.setPrevious(head);
+        sizeLinkedList = 0;
 
     }
 
-    public void addToHead(Object obj) {
+    public void addToHead(Object dataToAdd) {
+        addAfter(head, dataToAdd);
+    }
 
-        if (head == null && tail == null) {
-            addFirstValue(obj);
+    public void addToTail(Object dataToAdd) {
+        addAfter(tail.getPrevious(), dataToAdd);
+    }
 
-        } else {
-            Node newNode = createNewNode(obj);
-            newNode.setNext(head);
-            newNode.setPrevious(null);
-            head.setPrevious(newNode);
-            head = newNode;
-            sizeLinkedList++;
-        }
+    private void addAfter(Node where, Object data) {
+        Node node = new Node(data, where.getNext(), where);
+        where.getNext().setPrevious(node);
+        where.setNext(node);
+        ++sizeLinkedList;
 
     }
 
-    private void addFirstValue(Object obj) {
-
-        Node newNode = new Node(obj);
-        newNode.setNext(null);
-        newNode.setPrevious(null);
-        tail = newNode;
-        head = newNode;
-        sizeLinkedList++;
-
-    }
-
-
-    private Node createNewNode(Object obj) {
-
-        Node newNode = new Node(obj);
-        return newNode;
-
+    private void remove(Node nodeToRemove) {
+        nodeToRemove.getNext().setPrevious(nodeToRemove.getPrevious());
+        nodeToRemove.getPrevious().setNext(nodeToRemove.getNext());
+        sizeLinkedList--;
     }
 
     public void removeFromTail() {
 
-        if (tail == null) {
+        if (sizeLinkedList == 0) {
             throw new NullPointerException();
         }
-
-        tail = tail.getPrevious();
-        tail.setNext(null);
-        sizeLinkedList--;
+        remove(tail.getPrevious());
 
     }
 
     public void removeFromHead() {
 
-        if (head == null) {
+        if (sizeLinkedList == 0) {
             throw new NullPointerException();
         }
 
-        head = head.getNext();
-        head.setPrevious(null);
-        sizeLinkedList--;
-
+        remove(head.getNext());
     }
 
-    public Node find(Object obj) {
+    private Node find(Object obj) {
 
-        Node LinkedList = head;
+        Node LinkedList = head.getNext();
 
-        while (LinkedList.getNext() != null) {
+        while (LinkedList.getNext() != tail) {
 
             if (LinkedList.value() == obj) {
                 return LinkedList;
@@ -96,55 +71,64 @@ public class DoublyLinkedList {
 
     }
 
-    public void remove(Object obj) {
+    public Object removeObject(Object objToRemove) {
 
-        if (head != null) {
+        Node node = find(objToRemove);
 
-            Node nodeToRemove = find(obj);
-            if (nodeToRemove != null) {
-
-                if (nodeToRemove.getNext() != null) {
-                    nodeToRemove.getNext().setPrevious(nodeToRemove.getPrevious());
-
-                } else {
-                    tail = nodeToRemove.getPrevious();
-                }
-
-                if (nodeToRemove.getPrevious() != null) {
-                    nodeToRemove.getPrevious().setNext(nodeToRemove.getNext());
-
-                } else {
-                    head = nodeToRemove.getNext();
-                }
-
-                sizeLinkedList--;
-            }
+        if (node != null) {
+            remove(node);
+            return objToRemove;
         }
+
+        return null;
+
     }
 
     public int size() {
         return sizeLinkedList;
     }
 
-    public Node head() {
-        return head;
+    public Object head() {
+
+        if (sizeLinkedList == 0) {
+            throw new NullPointerException();
+        }
+
+        return head.getNext().value();
     }
 
-    public Node tail() {
-        return tail;
+    public Object tail() {
+
+        if (sizeLinkedList == 0) {
+            throw new NullPointerException();
+        }
+
+        return tail.getPrevious().value();
     }
 
-    public void reverse(Node obj) {
+    public void reverseFromHead() {
 
-        if(obj==null)
-        {
-            throw new  NullPointerException();
+        if (sizeLinkedList > 0) {
+            reverse(head);
+        }
+
+        Node node =new Node(null,tail.getNext(),tail.getPrevious());
+        tail.setPrevious(head.getPrevious());
+        tail.setNext(head.getNext());
+        head.setPrevious(node.getPrevious());
+        head.setNext(node.getNext());
+
+    }
+
+    private void reverse(Node obj) {
+
+        if (obj == null) {
+            throw new NullPointerException();
         }
 
         if (obj.getNext() == null) {
             obj.setNext(obj.getPrevious());
-            obj.setPrevious(null);
-            head = obj;
+            obj.setPrevious(tail);
             return;
         }
 
@@ -152,7 +136,6 @@ public class DoublyLinkedList {
         Node Next = obj.getNext();
         obj.setNext(obj.getPrevious());
         obj.setPrevious(Next);
-        tail = obj;
 
     }
 }

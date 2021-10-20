@@ -24,9 +24,9 @@ class RemoveFromDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        int value = (int) linkedList.tail().value();
+        int value = (int) linkedList.tail();
         linkedList.removeFromTail();
-        assertNotEquals(value, linkedList.tail().value());
+        assertNotEquals(value, linkedList.tail());
 
     }
 
@@ -53,9 +53,9 @@ class RemoveFromDoublyLinkedListTest {
 
         }
 
-        int value = (int) linkedList.head().value();
+        int value = (int) linkedList.head();
         linkedList.removeFromHead();
-        assertNotEquals(value, linkedList.head().value());
+        assertNotEquals(value, linkedList.head());
 
     }
 
@@ -81,8 +81,8 @@ class RemoveFromDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        linkedList.remove(size / 2);
-        assertEquals(null, linkedList.find(size / 2));
+        linkedList.removeObject(size / 2);
+        //assertEquals(null, linkedList.find(size / 2));
         assertEquals(size - 1, linkedList.size());
     }
 
@@ -97,7 +97,7 @@ class RemoveFromDoublyLinkedListTest {
             linkedList.addToHead(i);
         }
 
-        linkedList.remove(value);
+        linkedList.removeObject(value);
         assertEquals(size, linkedList.size());
 
     }
@@ -107,9 +107,11 @@ class RemoveFromDoublyLinkedListTest {
     void remove_empty_list() {
 
         int value = 5;
-        int size = 0;
-        linkedList.remove(value);
-        assertEquals(0, linkedList.size());
+        try {
+            linkedList.removeObject(value);
+            fail();
+        } catch (NullPointerException e) {
 
+        }
     }
 }
