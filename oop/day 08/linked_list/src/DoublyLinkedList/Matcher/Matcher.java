@@ -1,11 +1,11 @@
 package DoublyLinkedList.Matcher;
 
-public abstract class Matcher {
+public abstract class Matcher<T> {
 
-    public boolean match(Object obj) {
+    public boolean match(T obj) {
         return test(obj);
     }
 
-    abstract protected boolean test(Object obj);
+    abstract protected boolean test(T obj);
 }
 

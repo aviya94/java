@@ -106,12 +106,7 @@ class GetObjectFromeDoublyLinkedListTest {
     void find_from_empty_list() {
 
         int value = 1;
-        try {
-            linkedList.isExist(value);
-            fail();
-
-        } catch (NullPointerException e) {
-        }
+        assertNull(linkedList.isExist(value));
 
     }
 
@@ -137,6 +132,25 @@ class GetObjectFromeDoublyLinkedListTest {
         linkedList.reverseFromHead();
         assertEquals(0, linkedList.size());
 
+    }
+
+    @Test
+    @Order(10)
+    void iterable() {
+
+        int size = 10;
+        DoublyLinkedList.Iterable iter;
+        iter = linkedList.new Iterable();
+
+        for (int i = 0; i < size; i++) {
+            linkedList.addToHead(i);
+        }
+
+        while (iter.hasNext()) {
+            linkedList.removeObject(iter.next());
+        }
+
+        assertEquals(0, linkedList.size());
     }
 
 }

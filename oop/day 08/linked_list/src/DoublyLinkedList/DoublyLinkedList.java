@@ -3,11 +3,14 @@ package DoublyLinkedList;
 import DoublyLinkedList.Matcher.EqualMatcher;
 import DoublyLinkedList.Matcher.Matcher;
 
+import java.util.Iterator;
+
 public class DoublyLinkedList<T> {
 
     private final Node<T> head;
     private final Node<T> tail;
     private int sizeLinkedList;
+
 
     public DoublyLinkedList() {
 
@@ -16,6 +19,7 @@ public class DoublyLinkedList<T> {
         head.setNext(tail);
         tail.setPrevious(head);
         sizeLinkedList = 0;
+
 
     }
 
@@ -43,7 +47,7 @@ public class DoublyLinkedList<T> {
 
     public T removeFromTail() throws LinkedListException {
 
-        if (sizeLinkedList == 0) {
+        if (isZeroSize()) {
             throw new LinkedListException();
         }
 
@@ -55,7 +59,7 @@ public class DoublyLinkedList<T> {
 
     public T removeFromHead() throws LinkedListException {
 
-        if (sizeLinkedList == 0) {
+        if (isZeroSize()) {
             throw new LinkedListException();
         }
 
@@ -64,42 +68,50 @@ public class DoublyLinkedList<T> {
         return (T) obj;
     }
 
+    private boolean isZeroSize() {
+        return sizeLinkedList == 0 ? true : false;
+    }
+
     public T removeObject(T objToRemove) {
-        return removeObject(new EqualMatcher(objToRemove));
+        return (T) removeObject(new EqualMatcher(objToRemove));
 
     }
 
-    public T removeObject(Matcher matc) {
+    public T removeObject(Matcher<T> matc) {
 
         Node<T> node = find(matc);
 
-        if (node != null) {
+        if (!isNullNode(node)) {
             remove(node);
-            return (T) matc;
+            return (T) node.value();
         }
         return null;
 
     }
 
-    public T isExist(Matcher matc) {
+    public T isExist(Matcher<T> matc) {
 
         Node<T> value = find(matc);
 
-        if (value != null) {
+        if (!isNullNode(value)) {
             return (T) value.value();
         }
         return null;
     }
 
     public T isExist(T obj) {
-        return isExist(new EqualMatcher(obj));
+        return (T) isExist(new EqualMatcher(obj));
     }
 
-    private Node find(Matcher matc) {
+    private boolean isNullNode(Node<T> node) {
+        return node == null ? true : false;
+    }
+
+    private Node<T> find(Matcher<T> matc) {
 
         Node<T> LinkedList = head.getNext();
 
-        while (LinkedList.getNext() != tail) {
+        while (LinkedList != tail) {
 
             if (matc.match(LinkedList.value())) {
                 return LinkedList;
@@ -116,7 +128,7 @@ public class DoublyLinkedList<T> {
 
     public T head() throws LinkedListException {
 
-        if (sizeLinkedList == 0) {
+        if (isZeroSize()) {
             throw new LinkedListException();
         }
 
@@ -148,7 +160,7 @@ public class DoublyLinkedList<T> {
 
     private void reverse(Node obj) throws LinkedListException {
 
-        if (obj == null) {
+        if (isNullNode(obj)) {
             throw new LinkedListException();
         }
 
@@ -162,6 +174,48 @@ public class DoublyLinkedList<T> {
         Node<T> Next = obj.getNext();
         obj.setNext(obj.getPrevious());
         obj.setPrevious(Next);
+
+    }
+
+    public class Iterable<T> implements Iterator<T> {
+
+        private Node<T> node;
+
+        private Iterable(Node node) {
+            this.node = node;
+        }
+
+        public Iterable(){
+            node= (Node<T>) head;
+        }
+
+        @Override
+        public boolean hasNext() {
+
+            if (node.next.value() == null) {
+                return false;
+            }
+            return true;
+        }
+
+        public boolean hasPrev() {
+
+            if (node.previous.value() == null) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public T next() {
+            node=node.getNext();
+            return node.value();
+        }
+
+        public T prev() {
+            return node.getNext().value();
+        }
+
 
     }
 
@@ -200,4 +254,6 @@ public class DoublyLinkedList<T> {
             return item;
         }
     }
+
+
 }

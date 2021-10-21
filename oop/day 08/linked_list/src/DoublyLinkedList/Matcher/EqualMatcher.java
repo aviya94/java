@@ -1,20 +1,20 @@
 package DoublyLinkedList.Matcher;
 
-public class EqualMatcher extends Matcher {
-    private Object number;
+public class EqualMatcher<T> extends Matcher {
+    private T value;
 
-    public EqualMatcher(Object number) {
-        this.number = number;
+    public EqualMatcher(T value) {
+        this.value = value;
     }
+
 
     @Override
     protected boolean test(Object obj) {
-
         try {
-            return (int) obj == (int)number;
+            T object=(T) obj;
+            return object == value;
         } catch (IllegalArgumentException e) {
             return false;
         }
-
     }
 }

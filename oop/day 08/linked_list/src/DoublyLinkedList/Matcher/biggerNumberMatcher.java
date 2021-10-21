@@ -1,7 +1,7 @@
 package DoublyLinkedList.Matcher;
 
 public class biggerNumberMatcher extends Matcher {
-    private double threshold;
+    private int threshold;
 
     public biggerNumberMatcher(int threshold) {
         this.threshold = threshold;
