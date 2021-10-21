@@ -11,7 +11,7 @@ class RemoveFromDoublyLinkedListTest {
 
     @BeforeEach
     void setup() {
-        linkedList = new DoublyLinkedList();
+        linkedList = new DoublyLinkedList<Integer>();
     }
 
     @Test

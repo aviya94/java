@@ -13,7 +13,7 @@ class AddToDoublyLinkedListTest {
 
     @BeforeEach
     void setup() {
-        linkedList = new DoublyLinkedList();
+        linkedList = new DoublyLinkedList<Integer>();
     }
 
     @Test
