@@ -65,14 +65,7 @@ public class DoublyLinkedList<T> {
     }
 
     public T removeObject(T objToRemove) {
-
-        Node node = find(objToRemove);
-
-        if (node != null) {
-            remove(node);
-            return objToRemove;
-        }
-        return null;
+        return removeObject(new EqualMatcher(objToRemove));
 
     }
 
@@ -89,12 +82,8 @@ public class DoublyLinkedList<T> {
     }
 
     public T isExist(Matcher matc) {
-        return isExist(matc);
-    }
 
-    public T isExist(T obj) {
-
-        Node<T> value = find(obj);
+        Node<T> value = find(matc);
 
         if (value != null) {
             return (T) value.value();
@@ -102,10 +91,8 @@ public class DoublyLinkedList<T> {
         return null;
     }
 
-    private Node find(T obj) {
-
-        return (find(new EqualMatcher(obj)));
-
+    public T isExist(T obj) {
+        return isExist(new EqualMatcher(obj));
     }
 
     private Node find(Matcher matc) {
