@@ -4,8 +4,12 @@ import DoublyLinkedList.Matcher.EqualMatcher;
 import DoublyLinkedList.Matcher.Matcher;
 
 import java.util.Iterator;
+import java.util.concurrent.locks.Condition;
+import java.util.function.IntUnaryOperator;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
-public class DoublyLinkedList<T> {
+public class DoublyLinkedList<T>implements Iterable<T>  {
 
     private final Node<T> head;
     private final Node<T> tail;
@@ -177,16 +181,18 @@ public class DoublyLinkedList<T> {
 
     }
 
-    public class Iterable<T> implements Iterator<T> {
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<T> {
 
         private Node<T> node;
 
-        private Iterable(Node node) {
-            this.node = node;
-        }
-
-        public Iterable(){
-            node= (Node<T>) head;
+        public ListIterator(){
+            node= head;
         }
 
         @Override
@@ -253,6 +259,7 @@ public class DoublyLinkedList<T> {
         private V value() {
             return item;
         }
+
     }
 
 

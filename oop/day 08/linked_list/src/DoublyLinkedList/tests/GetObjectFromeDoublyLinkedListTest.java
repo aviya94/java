@@ -133,14 +133,14 @@ class GetObjectFromeDoublyLinkedListTest {
         assertEquals(0, linkedList.size());
 
     }
-
+/*
     @Test
     @Order(10)
     void iterable() {
 
         int size = 10;
-        DoublyLinkedList.Iterable iter;
-        iter = linkedList.new Iterable();
+        DoublyLinkedList.DoublyLinkedList.ListIterator iter;
+        iter = linkedList.new ListIterator();
 
         for (int i = 0; i < size; i++) {
             linkedList.addToHead(i);
@@ -152,6 +152,8 @@ class GetObjectFromeDoublyLinkedListTest {
 
         assertEquals(0, linkedList.size());
     }
+
+ */
 
 }
 
