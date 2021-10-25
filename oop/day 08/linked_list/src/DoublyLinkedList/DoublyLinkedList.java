@@ -26,6 +26,10 @@ public class DoublyLinkedList<T>implements Iterable<T>  {
 
 
     }
+    public void setValue(T valuestart,T newVal) {
+      Node<T> node= find(new EqualMatcher<T>(valuestart));
+      node.item=newVal;
+    }
 
     public void addToHead(T dataToAdd) {
         addAfter(head, dataToAdd);

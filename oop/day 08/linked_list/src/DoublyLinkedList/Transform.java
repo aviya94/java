@@ -5,12 +5,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static org.junit.platform.commons.util.ReflectionUtils.isArray;
+
 public abstract class Transform {
 
-    public static <T> void transform(DoublyLinkedList<T> list, Consumer<T> consumer) {
+    public static <T> void transform(DoublyLinkedList<T> list, Function<T, T> func) {
 
         for (T val : list) {
-            consumer.accept(val);
+            list.setValue(val, func.apply(val));
+
         }
     }
 
@@ -36,21 +39,39 @@ public abstract class Transform {
         return newLinkdList;
     }
 
-    public static <T> DoublyLinkedList<T> flatten(DoublyLinkedList<List<T>> list) {
+    public static <T> DoublyLinkedList<Object> flatten(DoublyLinkedList<T> list) {
 
-        DoublyLinkedList<T> newList = new DoublyLinkedList<T>();
-        Consumer<List<T>> consumer = x -> {
+        DoublyLinkedList<Object> newList = new DoublyLinkedList<Object>();
+        Consumer<List<Object>> consumer = x -> {
 
-            for (T e : x) {
+            for (Object e : x) {
                 newList.addToTail(e);
             }
         };
 
-        for (List<T> val : list) {
-            consumer.accept(val);
+        Consumer<List<Object>> cons2 = x -> {
+
+            for (Object e : x) {
+                newList.addAfter(e);
+            }
+        };
+
+        for (Object val : list) {
+            if (isArray(val)) {
+                consumer.accept((List<Object>) val);
+            }
         }
+        {
+            for (Object val : newList) {
 
+                while (isArray(val))
+                    cons2.accept((List<Object>) val);
+            }
+
+        }
+    
         return newList;
-
     }
+
+
 }

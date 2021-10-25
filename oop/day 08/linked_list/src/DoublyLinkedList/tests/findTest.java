@@ -4,8 +4,6 @@ import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.find;
 import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +14,6 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("AddToDoublyLinkedListTest")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class findTest {
 

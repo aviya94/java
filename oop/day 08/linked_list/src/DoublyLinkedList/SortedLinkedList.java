@@ -22,7 +22,7 @@ public class SortedLinkedList<T> implements Iterable<T> {
         }
         if(bool==false)
         {
-            linkedList.addToTail(obj);
+            linkedList.addToHead(obj);
         }
     }
 

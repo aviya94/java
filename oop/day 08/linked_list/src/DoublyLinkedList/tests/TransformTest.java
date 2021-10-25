@@ -17,9 +17,11 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("AddToDoublyLinkedListTest")
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TransformTest {
+    private DoublyLinkedList linkedListInt;
+    private DoublyLinkedList linkedListStudent;
 
     public class student {
 
@@ -32,17 +34,34 @@ class TransformTest {
         }
     }
 
-    private DoublyLinkedList linkedListStudent;
-
     @BeforeEach
     void setup() {
 
         linkedListStudent = new DoublyLinkedList<student>();
+        linkedListInt=new DoublyLinkedList<Integer>();
+
+        for (int i = 0; i < 5; i++) {
+            linkedListInt.addToTail(i);
+        }
 
     }
 
     @Test
     @Order(1)
+    void transform_int() {
+
+        Function<Integer,Integer> add5point = x -> {return x+= 5;};
+        Transform.transform(linkedListInt, add5point);
+        int i=5;
+        for (Object e:linkedListInt) {
+            assertEquals(i, (int) e);
+            i++;
+        }
+
+    }
+
+    @Test
+    @Order(2)
     void transform_student() {
 
         student student1 = new student(50);
@@ -54,7 +73,8 @@ class TransformTest {
         linkedListStudent.addToTail(student3);
         linkedListStudent.addToTail(student4);
 
-        Consumer<student> add5point = x -> x.grade += 5;
+        Function<student,student> add5point = x -> { x.grade += 5;
+        return x;};
         Transform.transform(linkedListStudent, add5point);
         assertEquals(55, student1.grade);
         assertEquals(65, student2.grade);
@@ -149,6 +169,47 @@ class TransformTest {
 
         for (int e : res) {
             assertEquals(i, e);
+            i++;
+        }
+    }
+
+    @Test
+    @Order(4)
+    void flatten_mat() {
+
+        DoublyLinkedList<List<List<Integer>>> list = new DoublyLinkedList<List<List<Integer>>>();
+        List<Integer> a = new ArrayList<Integer>();
+        List<Integer> b = new ArrayList<Integer>();
+        List<Integer> c = new ArrayList<Integer>();
+
+        List<List<Integer>> d = new ArrayList<List<Integer>>();
+        List<List<Integer>> e = new ArrayList<List<Integer>>();
+        List<List<Integer>> f = new ArrayList<List<Integer>>();
+        int i;
+
+        for (i = 0; i < 5; i++) {
+            a.add(i);
+        }
+
+        for (i = 5; i < 10; i++) {
+            b.add(i);
+        }
+
+        for (i = 10; i < 15; i++) {
+            c.add(i);
+        }
+        d.add(c);
+        e.add(a);
+        f.add(b);
+        list.addToTail(d);
+        list.addToTail(e);
+        list.addToTail(f);
+
+        DoublyLinkedList<Integer> res = Transform.flatten(list);
+        i = 0;
+
+        for (int val : res) {
+            assertEquals(i, val);
             i++;
         }
     }

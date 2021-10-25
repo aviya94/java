@@ -58,7 +58,7 @@ class SortedLonkedListTest {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     void add_string() throws LinkedListException {
         Comparator<String> stringComparator = (x, y) -> {
 
