@@ -45,6 +45,7 @@ public abstract class Transform {
     }
 
     public static <T, R> DoublyLinkedList<R> flatmapRecursive(DoublyLinkedList linkedList, DoublyLinkedList<R> newList, Function<T, R> trans) {
+
         for (Object obj : linkedList) {
             if (obj instanceof DoublyLinkedList) {
                 var list = obj;
