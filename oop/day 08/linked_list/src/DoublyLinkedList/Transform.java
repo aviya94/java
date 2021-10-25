@@ -39,39 +39,22 @@ public abstract class Transform {
         return newLinkdList;
     }
 
-    public static <T> DoublyLinkedList<Object> flatten(DoublyLinkedList<T> list) {
-
-        DoublyLinkedList<Object> newList = new DoublyLinkedList<Object>();
-        Consumer<List<Object>> consumer = x -> {
-
-            for (Object e : x) {
-                newList.addToTail(e);
-            }
-        };
-
-        Consumer<List<Object>> cons2 = x -> {
-
-            for (Object e : x) {
-                newList.addAfter(e);
-            }
-        };
-
-        for (Object val : list) {
-            if (isArray(val)) {
-                consumer.accept((List<Object>) val);
-            }
-        }
-        {
-            for (Object val : newList) {
-
-                while (isArray(val))
-                    cons2.accept((List<Object>) val);
-            }
-
-        }
-
-        return newList;
+    public static <T, R> DoublyLinkedList<R> flatmap(DoublyLinkedList linkedList, Function<T, R> trans) {
+        final var newList = new DoublyLinkedList<R>();
+        return flatmapRecursive(linkedList, newList, trans);
     }
 
+    public static <T, R> DoublyLinkedList<R> flatmapRecursive(DoublyLinkedList linkedList, DoublyLinkedList<R> newList, Function<T, R> trans) {
+        for (Object obj : linkedList) {
+            if (obj instanceof DoublyLinkedList) {
+                var list = obj;
+                flatmapRecursive((DoublyLinkedList) list, newList, trans);
+            } else {
+                T value = (T) obj;
+                newList.addToTail(trans.apply(value));
+            }
 
+        }
+        return newList;
+    }
 }
