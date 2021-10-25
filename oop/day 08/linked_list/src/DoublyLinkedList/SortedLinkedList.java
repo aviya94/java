@@ -15,7 +15,7 @@ public class SortedLinkedList<T> implements Iterable<T> {
         boolean bool = false;
         for (T e : linkedList) {
             if (comp.compare(obj, e) > 0 || comp.compare(obj, e) == 0) {
-                linkedList.addApter(e);
+                linkedList.addAfter(e);
                 bool=true;
             }
 

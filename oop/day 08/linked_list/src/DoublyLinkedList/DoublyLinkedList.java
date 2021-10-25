@@ -92,7 +92,7 @@ public class DoublyLinkedList<T>implements Iterable<T>  {
         return null;
 
     }
-    public void addApter(T obj)
+    public void addAfter(T obj)
     {
         Node<T> node = find(new EqualMatcher(obj));
         addAfter(tail.getPrevious(), obj);
