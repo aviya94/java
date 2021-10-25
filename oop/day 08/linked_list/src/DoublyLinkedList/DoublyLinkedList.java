@@ -92,6 +92,12 @@ public class DoublyLinkedList<T>implements Iterable<T>  {
         return null;
 
     }
+    public void addApter(T obj)
+    {
+        Node<T> node = find(new EqualMatcher(obj));
+        addAfter(tail.getPrevious(), obj);
+
+    }
 
     public T isExist(Matcher<T> matc) {
 
