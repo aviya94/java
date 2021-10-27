@@ -19,9 +19,9 @@ class SearchByISBNtest {
 
     @BeforeEach
     void setup() throws FileNotFoundException {
-        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt");
+        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt");
         searchByISBN = new SearchByISBN(loadDatabase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 

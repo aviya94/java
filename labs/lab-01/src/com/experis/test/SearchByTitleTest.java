@@ -20,9 +20,9 @@ public class SearchByTitleTest {
 
     @BeforeEach
     void setup() throws FileNotFoundException {
-        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt");
+        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt");
         searchByTitle = new SearchByTitle(loadDatabase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
@@ -50,7 +50,7 @@ public class SearchByTitleTest {
 
             for (String[] e : resultFind) {
                 String key = (String) book.getKey();
-                key=key.substring(1,key.length()-1);
+                key = key.substring(1, key.length() - 1);
                 assertTrue(e[indexTitle].contains(key));
             }
 
@@ -95,7 +95,7 @@ public class SearchByTitleTest {
                 String wordWithoutLess = e.substring(1, e.length());
 
                 for (String[] lineFind : resultFind) {
-                    assertFalse(lineFind[indexTitle].contains(" "+wordWithoutLess+" "));
+                    assertFalse(lineFind[indexTitle].contains(" " + wordWithoutLess + " "));
                 }
 
             }
@@ -119,7 +119,7 @@ public class SearchByTitleTest {
 
                     if (e.startsWith("-")) {
                         String wordWithoutLess = e.substring(1, e.length());
-                        assertFalse(lineFind[indexTitle].contains(" "+wordWithoutLess+" "));
+                        assertFalse(lineFind[indexTitle].contains(" " + wordWithoutLess + " "));
 
                     } else {
                         assertTrue(lineFind[indexTitle].contains(e));
