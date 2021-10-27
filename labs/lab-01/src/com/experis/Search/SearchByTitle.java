@@ -5,6 +5,8 @@ import com.experis.LoadDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchByTitle implements Search {
     private LoadDatabase loadDatabase;
@@ -77,7 +79,7 @@ public class SearchByTitle implements Search {
         for (Map.Entry book : loadDatabase.getBooksCatalogTitel().entrySet()) {
             String key = (String) book.getKey();
 
-            if (key.contains(word) && resultWithoutReduction.get(key) == null) {
+            if (key.contains(" "+word+" ") && resultWithoutReduction.get(key) == null) {
                 addToResult(book);
             }
         }
@@ -99,7 +101,7 @@ public class SearchByTitle implements Search {
     }
 
     private void removeFromResult(String key, String word, Map.Entry book, Boolean isContainWord) {
-        if (key.contains(word) == isContainWord && searchResult.contains(book.getValue())) {
+        if (key.contains(" "+word+" ") == isContainWord && searchResult.contains(book.getValue())) {
             searchResult.remove((String[]) book.getValue());
         }
     }
