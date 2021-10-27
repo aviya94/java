@@ -15,21 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SearchByTitleTest {
     LoadDatabase loadDatabase;
     SearchByTitle searchByTitle;
-    FileInputStream fstream;
-    BufferedReader br;
+    FileInputStream fileInputStream;
+    BufferedReader bufferedReader;
 
     @BeforeEach
     void setup() throws FileNotFoundException {
-        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tiny.txt");
+        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt");
         searchByTitle = new SearchByTitle(loadDatabase);
-        fstream = new FileInputStream("C:\\Users\\user\\books-tiny.txt");
-        br = new BufferedReader(new InputStreamReader(fstream));
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
+        bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
     @Test
     @Order(1)
     void Search_not_fount() {
-
 
         searchByTitle.search("1111111");
         ArrayList<String[]> resultFind = searchByTitle.getResult();
@@ -41,7 +40,7 @@ public class SearchByTitleTest {
     @Order(2)
     void Search_all_name_books_in_catalog() throws IOException {
 
-        String strLine = br.readLine();
+        String strLine = bufferedReader.readLine();
 
         for (Map.Entry book : loadDatabase.getBooksCatalogTitel().entrySet()) {
 
@@ -51,6 +50,7 @@ public class SearchByTitleTest {
 
             for (String[] e : resultFind) {
                 String key = (String) book.getKey();
+                key=key.substring(1,key.length()-1);
                 assertTrue(e[indexTitle].contains(key));
             }
 
@@ -95,7 +95,7 @@ public class SearchByTitleTest {
                 String wordWithoutLess = e.substring(1, e.length());
 
                 for (String[] lineFind : resultFind) {
-                    assertFalse(lineFind[indexTitle].contains(wordWithoutLess));
+                    assertFalse(lineFind[indexTitle].contains(" "+wordWithoutLess+" "));
                 }
 
             }
@@ -119,7 +119,7 @@ public class SearchByTitleTest {
 
                     if (e.startsWith("-")) {
                         String wordWithoutLess = e.substring(1, e.length());
-                        assertFalse(lineFind[indexTitle].contains(wordWithoutLess));
+                        assertFalse(lineFind[indexTitle].contains(" "+wordWithoutLess+" "));
 
                     } else {
                         assertTrue(lineFind[indexTitle].contains(e));

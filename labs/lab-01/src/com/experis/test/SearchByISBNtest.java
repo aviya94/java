@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class SearchByISBNtest {
     LoadDatabase loadDatabase;
     SearchByISBN searchByISBN;
-    FileInputStream fstream;
-    BufferedReader br;
+    FileInputStream fileInputStream;
+    BufferedReader bufferedReader;
 
     @BeforeEach
     void setup() throws FileNotFoundException {
-        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tiny.txt");
+        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt");
         searchByISBN = new SearchByISBN(loadDatabase);
-        fstream = new FileInputStream("C:\\Users\\user\\books-tiny.txt");
-        br = new BufferedReader(new InputStreamReader(fstream));
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
+        bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
     @Test
@@ -40,7 +40,7 @@ class SearchByISBNtest {
     @Order(2)
     void Search() throws IOException {
 
-        String strLine = br.readLine();
+        String strLine = bufferedReader.readLine();
 
         for (Map.Entry book : loadDatabase.getBooksCatalogISBN().entrySet()) {
 
