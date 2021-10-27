@@ -71,11 +71,13 @@ public class LoadDatabase {
 
     private void setTitlesFildsInHashMap(String strLine) {
         assert strLine != null;
-        String[] fildName = strLine.split("\\|");
+        String[] fildNames = strLine.split("\\|");
         int index = 0;
 
-        for (String e : fildName) {
-            titleFildlInHashMap.put(e.stripLeading(), index++);
+        for (String e : fildNames) {
+            String fild=e;
+            fild=fild.replace(" ", "");
+            titleFildlInHashMap.put(fild, index++);
         }
     }
 
