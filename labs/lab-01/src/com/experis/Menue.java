@@ -76,7 +76,7 @@ public class Menue {
 
     private String getChoice() {
         Scanner scanner = new Scanner(System.in);
-        String choice = scanner.next();
+        String choice = scanner.nextLine();
         return choice;
     }
 }
