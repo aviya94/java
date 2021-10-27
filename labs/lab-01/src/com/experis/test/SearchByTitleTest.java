@@ -103,7 +103,7 @@ public class SearchByTitleTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void Search_with_and_less_word() {
         int indexTitle = loadDatabase.getTiteFildlInHashMap().get("Book-Title");
         String[] wordToFind = {"-All Sum", "-House The", "end -the", "-Cider +Russia", "+Kitchen -The"};
