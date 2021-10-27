@@ -44,7 +44,9 @@ public class SearchByTitleTest {
 
         for (Map.Entry book : loadDatabase.getBooksCatalogTitel().entrySet()) {
 
-            searchByTitle.search(String.valueOf(book.getKey()));
+            String bookToSearch = (String) book.getKey();
+            bookToSearch = bookToSearch.substring(1, bookToSearch.length() - 1);
+            searchByTitle.search(bookToSearch);
             ArrayList<String[]> resultFind = searchByTitle.getResult();
             int indexTitle = loadDatabase.getTiteFildlInHashMap().get("Book-Title");
 
