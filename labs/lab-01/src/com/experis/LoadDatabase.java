@@ -7,25 +7,25 @@ import java.util.Map;
 public class LoadDatabase {
 
 
-    private HashMap<String, String[]> BooksCatalogISBN = new HashMap<String, String[]>();
-    private HashMap<String, String[]> BooksCatalogTitel = new HashMap<String, String[]>();
-    private HashMap<Integer, String> publishers = new HashMap<Integer, String>();
-    private HashMap<Integer, String> authors = new HashMap<Integer, String>();
-    private HashMap<String, Integer> titeFildlInHashMap = new HashMap<String, Integer>();
-    private FileInputStream fstream;
-    private BufferedReader br;
+    final private HashMap<String, String[]> BooksCatalogISBN = new HashMap<String, String[]>();
+    final private HashMap<String, String[]> BooksCatalogTitel = new HashMap<String, String[]>();
+    final private HashMap<Integer, String> publishers = new HashMap<Integer, String>();
+    final private HashMap<Integer, String> authors = new HashMap<Integer, String>();
+    final private HashMap<String, Integer> titleFildlInHashMap = new HashMap<String, Integer>();
+    private FileInputStream fileInputStream;
+    private BufferedReader bufferedReader;
 
     public LoadDatabase(String filePath) {
 
         loadFile(filePath);
-        addToBookCatalogFromFile();
+        addDataToStructuresDataFromFile();
     }
 
     private void loadFile(String filePath) {
 
         try {
-            fstream = new FileInputStream(filePath);
-            br = new BufferedReader(new InputStreamReader(fstream));
+            fileInputStream = new FileInputStream(filePath);
+            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
         }
 
         catch (FileNotFoundException e) {
@@ -33,22 +33,22 @@ public class LoadDatabase {
         }
     }
 
-    private void addToBookCatalogFromFile() {
+    private void addDataToStructuresDataFromFile() {
 
         try {
-            String strLine = br.readLine();
-            setTitelInHashMap(strLine);
+            String line = bufferedReader.readLine();
+            setTitlesFildsInHashMap(line);
             int nextIndexAuthor = 0;
             int nextIndexPublishersr = 0;
-            while ((strLine = br.readLine()) != null) {
 
-                String[] filds = strLine.split("\\|");
-                nextIndexAuthor = addauthor(filds, nextIndexAuthor);
-                nextIndexPublishersr = addPublishersr(filds, nextIndexPublishersr);
-                String isbnFild = filds[titeFildlInHashMap.get("ISBN")];
-                String titelFild = filds[titeFildlInHashMap.get("Book-Title")];
-                BooksCatalogISBN.put(isbnFild, filds);
-                BooksCatalogTitel.put(titelFild, filds);
+            while ((line = bufferedReader.readLine()) != null) {
+
+                String[] lineFilds = line.split("\\|");
+                if(lineFilds.length==titleFildlInHashMap.size()) {
+                    nextIndexAuthor = addauthor(lineFilds, nextIndexAuthor);
+                    nextIndexPublishersr = addPublishersr(lineFilds, nextIndexPublishersr);
+                    addToBookCatalogStructuresData(lineFilds);
+                }
 
             }
         } catch (IOException e) {
@@ -59,17 +59,27 @@ public class LoadDatabase {
 
     }
 
-    private void setTitelInHashMap(String strLine) {
+    private void addToBookCatalogStructuresData(String[] lineFilds){
+
+        String isbnFild = lineFilds[titleFildlInHashMap.get("ISBN")];
+        String titelFild = lineFilds[titleFildlInHashMap.get("Book-Title")];
+
+        BooksCatalogISBN.put(isbnFild, lineFilds);
+        BooksCatalogTitel.put(" "+titelFild+" ", lineFilds);
+
+    }
+
+    private void setTitlesFildsInHashMap(String strLine) {
         assert strLine != null;
         String[] fildName = strLine.split("\\|");
         int index = 0;
 
         for (String e : fildName) {
-            titeFildlInHashMap.put(e, index++);
+            titleFildlInHashMap.put(e.stripLeading(), index++);
         }
     }
 
-    private int AddIndexTofild(String[] filds, int nextIndex, int indexInFild, HashMap<Integer, String> hashMapToSaveFild) {
+    private int addIndexToFildStructurData(String[] filds, int nextIndex, int indexInFild, HashMap<Integer, String> hashMapToSaveFild) {
         assert filds != null;
         assert hashMapToSaveFild != null;
 
@@ -91,12 +101,13 @@ public class LoadDatabase {
 
     private int addauthor(String[] filds, int nextIndex) {
         assert filds != null;
-        return AddIndexTofild(filds, nextIndex, titeFildlInHashMap.get("Book-Author"), authors);
+        int next=addIndexToFildStructurData(filds, nextIndex, titleFildlInHashMap.get("Book-Author"), authors);
+        return next;
     }
 
     private int addPublishersr(String[] filds, int nextIndex) {
         assert filds != null;
-        return AddIndexTofild(filds, nextIndex, titeFildlInHashMap.get("Publisher"), publishers);
+        return addIndexToFildStructurData(filds, nextIndex, titleFildlInHashMap.get("Publisher"), publishers);
     }
 
     public HashMap<String, String[]> getBooksCatalogISBN() {
@@ -116,7 +127,7 @@ public class LoadDatabase {
     }
 
     public HashMap<String, Integer> getTiteFildlInHashMap() {
-        return titeFildlInHashMap;
+        return titleFildlInHashMap;
     }
 }
 
