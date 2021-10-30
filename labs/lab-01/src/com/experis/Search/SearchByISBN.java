@@ -1,38 +1,24 @@
 package com.experis.Search;
 
-import com.experis.LoadDatabase;
-import com.experis.Search.Search;
+import com.experis.dataBase.Book;
+import com.experis.dataBase.DataBase;
 
 public class SearchByISBN implements Search {
-    private LoadDatabase loadDatabase;
-    private String[] searchResult;
 
-    public SearchByISBN(LoadDatabase loadDatabase) {
-        this.loadDatabase = loadDatabase;
+    private DataBase dataBase;
+    private Book searchResult;
+
+    public SearchByISBN(DataBase dataBase) {
+        this.dataBase = dataBase;
     }
 
     public void search(String choice) {
-
-        searchResult = loadDatabase.getBooksCatalogISBN().get(choice);
+        searchResult = dataBase.BooksCatalog.get(choice);
     }
 
-    public String[] getResult() {
+    public Book getResult() {
 
         return searchResult;
-    }
-
-    public void print() {
-
-        try {
-            System.out.println("ISBN: " + searchResult[0]);
-            System.out.println("Title: " + searchResult[1]);
-            System.out.println("Author: " + loadDatabase.getAuthors().get(Integer.valueOf(searchResult[2])));
-            System.out.println("Year: " + searchResult[3]);
-            System.out.println("Publisher: " + loadDatabase.getPublishers().get(Integer.valueOf(searchResult[4])) + "\n");
-
-        } catch (NullPointerException e) {
-            System.out.println("book not found");
-        }
 
     }
 

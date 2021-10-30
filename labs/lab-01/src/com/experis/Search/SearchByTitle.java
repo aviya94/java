@@ -1,138 +1,189 @@
 package com.experis.Search;
 
-import com.experis.LoadDatabase;
+import com.experis.dataBase.Book;
+import com.experis.dataBase.DataBase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SearchByTitle implements Search {
-    private LoadDatabase loadDatabase;
-    private ArrayList<String[]> searchResult;
-    private HashMap<String, String[]> resultWithoutReduction;
 
-    public SearchByTitle(LoadDatabase loadDatabase) {
-        this.loadDatabase = loadDatabase;
+    private DataBase dataBase;
+    private ArrayList<Book> searchResult;
+    private ArrayList<String> ignorList;
+
+    public SearchByTitle(DataBase dataBase, ArrayList<String> ignorList) {
+        this.dataBase = dataBase;
+        this.ignorList = ignorList;
     }
 
+    @Override
     public void search(String choice) {
         initialResult();
         String[] choiceWordArr = choice.split(" ");
-        addwantedWord(choiceWordArr);
-        RemoveUnwantedWord(choiceWordArr);
+        search(choiceWordArr);
+        findAuthorChoice(choice);
 
     }
 
-    private void addwantedWord(String[] choiceWordArr) {
-        if (CheckIfHaveOnlyLessWorld(choiceWordArr) == false) ;
-        {
+    private void initialResult() {
+        searchResult = new ArrayList<Book>();
+    }
 
-            for (String word : choiceWordArr) {
+    private void search(String[] choiceWordsArr) {
+        ArrayList<Integer> resultsIndex = new ArrayList<Integer>();
+        for (Map.Entry dictionaryWord : dataBase.dictionaryTitle.entrySet()) {
+            addwantedWord(choiceWordsArr, resultsIndex, dictionaryWord);
 
-                if (!isLess(word)) {
-                    scanCatalogToAddBookToResult(word);
+        }
+        removeBookNoContainAllWord(choiceWordsArr, resultsIndex);
+
+        for (Map.Entry dictionaryWord : dataBase.dictionaryTitle.entrySet()) {
+            removeUnwontedWords(choiceWordsArr, resultsIndex, dictionaryWord);
+        }
+
+        addToSearchResult(resultsIndex);
+
+
+    }
+
+    private void addwantedWord(String[] choiceWordsArr, ArrayList<Integer> resultsIndex, Map.Entry dictionaryWord) {
+
+        for (String choiceWord : choiceWordsArr) {
+
+            if (chekIfIsProperWorldToInsert(choiceWord)) {
+                String dictionaryKey = (String) dictionaryWord.getKey();
+                String word = choiceWord;
+                word = isStartWithPlus(choiceWord, word);
+
+                if (word.equals(dictionaryKey)) {
+
+                    ArrayList<Integer> dictionaryValue = (ArrayList<Integer>) dictionaryWord.getValue();
+                    int sizeResult = resultsIndex.size();
+
+                    addBookToResultIndex(resultsIndex, dictionaryValue, sizeResult);
                 }
             }
         }
     }
 
-    private void RemoveUnwantedWord(String[] choiceWordArr) {
-        for (String word : choiceWordArr) {
-            scanCatalogToRemoveFromResult(word);
-        }
+    private boolean chekIfIsProperWorldToInsert(String choiceWord) {
+        return isStartWhith(choiceWord, "-") == false && ignorList.indexOf(choiceWord) == -1;
     }
 
-    private void scanCatalogToRemoveFromResult(String word) {
-        for (Map.Entry book : resultWithoutReduction.entrySet()) {
-            String key = (String) book.getKey();
+    private void addBookToResultIndex(ArrayList<Integer> resultsIndex, ArrayList<Integer> dictionaryValue, int sizeResult) {
 
-            if (isLess(word)) {
-                String wordWithoutLess = word.substring(1, word.length());
-                removeFromResult(key, wordWithoutLess, book, true);
+        for (int i = 0; i < sizeResult; i++) {
 
-            } else {
-                removeFromResult(key, word, book, false);
-            }
-
-        }
-    }
-
-    private Boolean CheckIfHaveOnlyLessWorld(String[] choiceWordArr) {
-        Boolean onlyLess = true;
-
-        for (String word : choiceWordArr) {
-            if (!word.startsWith("-")) {
-                onlyLess = false;
-            }
-        }
-
-        if (onlyLess == true) {
-            addAllCatalogToResult();
-        }
-
-        return onlyLess;
-    }
-
-    private void scanCatalogToAddBookToResult(String word) {
-        for (Map.Entry book : loadDatabase.getBooksCatalogTitel().entrySet()) {
-            String key = (String) book.getKey();
-
-            if (key.contains(" " + word + " ") && resultWithoutReduction.get(key) == null) {
-                addToResult(book);
+            if (resultsIndex.indexOf(dictionaryValue.get(i)) == -1) {
+                resultsIndex.add(dictionaryValue.get(i));
             }
         }
     }
 
-    private boolean isLess(String word) {
-        return word.startsWith("-");
-    }
+    private void removeBookNoContainAllWord(String[] choiceWordsArr, ArrayList<Integer> resultsIndex) {
 
-    private void addAllCatalogToResult() {
-        for (Map.Entry book : loadDatabase.getBooksCatalogTitel().entrySet()) {
-            addToResult(book);
+        for (String choiceWord : choiceWordsArr) {
+
+            if (chekIfIsProperWorldToInsert(choiceWord)) {
+                String word = choiceWord;
+                word = isStartWithPlus(choiceWord, word);
+                int index = 0;
+
+                while (index != resultsIndex.size()) {
+                    String bookTitle = dataBase.books.get(resultsIndex.get(index));
+                    if (bookTitle.contains(word) == false) {
+                        resultsIndex.remove(index);
+                    } else {
+                        index++;
+                    }
+                }
+            }
         }
     }
 
-    private void addToResult(Map.Entry book) {
-        resultWithoutReduction.put((String) book.getKey(), (String[]) book.getValue());
-        searchResult.add((String[]) book.getValue());
+    private String isStartWithPlus(String choiceWord, String word) {
+        if (isStartWhith(choiceWord, "+")) {
+            word = word.substring(1);
+        }
+        return word;
     }
 
-    private void removeFromResult(String key, String word, Map.Entry book, Boolean isContainWord) {
-        if (key.contains(" " + word + " ") == isContainWord && searchResult.contains(book.getValue())) {
-            searchResult.remove((String[]) book.getValue());
+    private void removeUnwontedWords(String[] choiceWordsArr, ArrayList<Integer> resultsIndex, Map.Entry dictionaryWord) {
+
+        for (String choiceWord : choiceWordsArr) {
+
+            if (isStartWhith(choiceWord, "-")) {
+                String wordWithoutSign = choiceWord.substring(1, choiceWord.length());
+                String dictionaryKey = (String) dictionaryWord.getKey();
+
+                if (wordWithoutSign.equals(dictionaryKey)) {
+                    ArrayList<Integer> dictionaryValue = (ArrayList<Integer>) dictionaryWord.getValue();
+
+                    int i = 0;
+
+                    while (i != resultsIndex.size()) {
+                        int index = resultsIndex.indexOf(dictionaryValue.get(i));
+                        if (index >= 0) {
+                            resultsIndex.remove(i);
+                        } else {
+                            i++;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    public ArrayList<String[]> getResult() {
+    private void findAuthorChoice(String choice) {
+
+        if (choice.indexOf("a:") >= 0) {
+
+            String wordWithoutSign = choice.substring(choice.indexOf("a:\"") + 3);
+            wordWithoutSign = wordWithoutSign.substring(0, wordWithoutSign.indexOf("\""));
+            SearchByAuthor searchByAuthor = new SearchByAuthor(searchResult, dataBase);
+            searchByAuthor.search(wordWithoutSign);
+        }
+    }
+
+    private boolean isStartWhith(String choiceWord, String sign) {
+        return choiceWord.startsWith(sign);
+    }
+
+    private void addToSearchResult(ArrayList<Integer> results) {
+
+        for (int e : results) {
+            String book = dataBase.books.get(e);
+            searchResult.add(dataBase.BooksCatalog.get(dataBase.isbnAndBooks.get(book)));
+
+        }
+
+    }
+
+    public ArrayList<Book> getResult() {
 
         return searchResult;
     }
 
-    public void print() {
+    private static class SearchByAuthor implements Search {
+        DataBase dataBase;
+        ArrayList<Book> searchResultTitle;
 
-        if (searchResult.size() == 0) {
-            System.out.println("books not found");
+        public SearchByAuthor(ArrayList<Book> searchResultTitle, DataBase dataBase) {
+            this.searchResultTitle = searchResultTitle;
+            this.dataBase = dataBase;
+        }
 
-        } else {
+        @Override
+        public void search(String choice) {
 
-            for (String[] line : searchResult) {
-                System.out.print(line[0]);
-                System.out.print("|" + line[1]);
-                System.out.print("|" + loadDatabase.getAuthors().get(Integer.valueOf(line[2])));
-                System.out.print("|" + line[3]);
-                System.out.println("|" + loadDatabase.getPublishers().get(Integer.valueOf(line[4])));
+            for (int i = 0; i < searchResultTitle.size(); i++) {
+                String author = dataBase.authors.get(searchResultTitle.get(i).bookAuthor);
 
+                if (author.equals(choice) == false) {
+                    searchResultTitle.remove(searchResultTitle.get(i));
+                }
             }
-            System.out.println();
         }
     }
-
-    private void initialResult() {
-        searchResult = new ArrayList<String[]>();
-        resultWithoutReduction = new HashMap<String, String[]>();
-    }
-
 }
