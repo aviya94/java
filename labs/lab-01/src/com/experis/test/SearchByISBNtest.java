@@ -1,7 +1,8 @@
 
 package com.experis.test;
 
-import com.experis.LoadDatabase;
+import com.experis.dataBase.Book;
+import com.experis.dataBase.DataBase;
 import com.experis.Search.SearchByISBN;
 import org.junit.jupiter.api.*;
 
@@ -12,27 +13,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SearchByISBNtest {
-    LoadDatabase loadDatabase;
+
     SearchByISBN searchByISBN;
-    FileInputStream fileInputStream;
-    BufferedReader bufferedReader;
+    DataBase dataBase;
 
     @BeforeEach
     void setup() throws FileNotFoundException {
-        loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt");
-        searchByISBN = new SearchByISBN(loadDatabase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
-        bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+        dataBase = new DataBase();
+        searchByISBN = new SearchByISBN(dataBase);
+
     }
 
     @Test
     @Order(1)
     void Search_not_fount() {
-
         searchByISBN.search("1111111");
-        String[] result = searchByISBN.getResult();
+        Book result = searchByISBN.getResult();
         assertEquals(null, result);
-
 
     }
 
@@ -40,18 +37,13 @@ class SearchByISBNtest {
     @Order(2)
     void Search() throws IOException {
 
-        String strLine = bufferedReader.readLine();
-
-        for (Map.Entry book : loadDatabase.getBooksCatalogISBN().entrySet()) {
-
+        for (Map.Entry book : dataBase.BooksCatalog.entrySet()) {
             searchByISBN.search(String.valueOf(book.getKey()));
-            String[] ResultFind = searchByISBN.getResult();
-            int indexTitleISBN = loadDatabase.getTiteFildlInHashMap().get("ISBN");
-            assertEquals(book.getKey(), ResultFind[indexTitleISBN]);
+            Book ResultFind = searchByISBN.getResult();
+            assertEquals(book.getKey(), ResultFind.isbn);
 
         }
 
     }
-
 
 }
