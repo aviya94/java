@@ -1,6 +1,4 @@
-package parser;
-
-import parser.Parser;
+package com.experis.parser;
 
 public class BookParser implements Parser<String[]> {
     private final String buffer;
