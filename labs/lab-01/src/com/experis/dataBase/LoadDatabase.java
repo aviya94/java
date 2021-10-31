@@ -36,15 +36,18 @@ public class LoadDatabase {
         return line;
     }
 
-    private void addDataToStructuresDataFromFile(BookParser bookPraser) throws IOException {
+    private void addDataToStructuresDataFromFile(BookParser bookPraser) {
+        try {
+            String line = readLine();
 
-        String line = readLine();
-
-        while ((line = readLine()) != null) {
-            String[] filds = bookPraser.parser(line);
-            dataBase.addNewBook(filds);
+            while ((line = readLine()) != null) {
+                String[] filds = bookPraser.parser(line);
+                dataBase.addNewBook(filds);
+            }
+        } catch (IOException e) {
+            System.out.println("IO Exception");
         }
-    }
 
+    }
 }
 

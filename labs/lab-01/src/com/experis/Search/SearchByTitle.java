@@ -59,9 +59,7 @@ public class SearchByTitle implements Search {
                 if (word.equals(dictionaryKey)) {
 
                     ArrayList<Integer> dictionaryValue = (ArrayList<Integer>) dictionaryWord.getValue();
-                    int sizeResult = resultsIndex.size();
-
-                    addBookToResultIndex(resultsIndex, dictionaryValue, sizeResult);
+                    addBookToResultIndex(resultsIndex, dictionaryValue);
                 }
             }
         }
@@ -71,7 +69,8 @@ public class SearchByTitle implements Search {
         return isStartWhith(choiceWord, "-") == false && ignorList.indexOf(choiceWord) == -1;
     }
 
-    private void addBookToResultIndex(ArrayList<Integer> resultsIndex, ArrayList<Integer> dictionaryValue, int sizeResult) {
+    private void addBookToResultIndex(ArrayList<Integer> resultsIndex, ArrayList<Integer> dictionaryValue) {
+        int sizeResult = resultsIndex.size();
 
         for (int i = 0; i < sizeResult; i++) {
 
@@ -91,7 +90,7 @@ public class SearchByTitle implements Search {
                 int index = 0;
 
                 while (index != resultsIndex.size()) {
-                    String bookTitle = dataBase.books.get(resultsIndex.get(index));
+                    String bookTitle = dataBase.booksTitle.get(resultsIndex.get(index));
                     if (bookTitle.contains(word) == false) {
                         resultsIndex.remove(index);
                     } else {
@@ -153,8 +152,8 @@ public class SearchByTitle implements Search {
     private void addToSearchResult(ArrayList<Integer> results) {
 
         for (int e : results) {
-            String book = dataBase.books.get(e);
-            searchResult.add(dataBase.BooksCatalog.get(dataBase.isbnAndBooks.get(book)));
+            String book = dataBase.booksTitle.get(e);
+            searchResult.add(dataBase.BooksCatalog.get(dataBase.isbnAndBooksTitle.get(book)));
 
         }
 

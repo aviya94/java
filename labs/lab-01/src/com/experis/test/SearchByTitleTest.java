@@ -18,8 +18,6 @@ public class SearchByTitleTest {
     DataBase dataBase;
     LoadDatabase loadDatabase;
     SearchByTitle searchByTitle;
-    FileInputStream fileInputStream;
-    BufferedReader bufferedReader;
     BookParser bookParser;
     private ArrayList<String> ignorList;
 
@@ -27,11 +25,9 @@ public class SearchByTitleTest {
     void setup() throws FileNotFoundException {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
-        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt", bookParser, dataBase);
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\bbooks-tons-of.txt", bookParser, dataBase);
         ignorList = new ArrayList<String>();
         searchByTitle = new SearchByTitle(dataBase, ignorList);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
-        bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
     @Test
@@ -57,7 +53,7 @@ public class SearchByTitleTest {
             for (String e : arrWordToFind) {
 
                 for (Book lineFind : resultFind) {
-                    String resultTitle = dataBase.books.get(lineFind.bookTitle);
+                    String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
                     assertTrue(resultTitle.contains(e));
                 }
 
@@ -79,7 +75,7 @@ public class SearchByTitleTest {
                 String wordWithoutLess = e.substring(1, e.length());
 
                 for (Book lineFind : resultFind) {
-                    String resultTotle = dataBase.books.get(lineFind.bookTitle);
+                    String resultTotle = dataBase.booksTitle.get(lineFind.bookTitle);
                     assertFalse(resultTotle.contains(e));
                 }
 
@@ -103,11 +99,11 @@ public class SearchByTitleTest {
 
                     if (e.startsWith("-")) {
                         String wordWithoutLess = e.substring(1, e.length());
-                        String resultTotle = dataBase.books.get(lineFind.bookTitle);
-                        assertFalse(resultTotle.contains(e));
+                        String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                        assertFalse(resultTitle.contains(e));
 
                     } else {
-                        String resultTitle = dataBase.books.get(lineFind.bookTitle);
+                        String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
                         assertTrue(resultTitle.contains(e));
                     }
 
@@ -135,30 +131,32 @@ public class SearchByTitleTest {
         }
 
     }
-/*
+
     @Test
     @Order(6)
     void Search_with_and_less_and_author() {
-        String[] wordToFind = {"-All +Sum a:\"E. J. W. Barber\"", "-House Thea a:\"Richard Bruce Wright\"", "+end -the a:\"R. J. Kaiser\"", "the -and a:\"John Grisham\""};
+        String[] wordToFind = {"-All Sum a:\"E. J. W. Barber\"", "-House Thea a:\"Richard Bruce Wright\"", "+end -the a:\"R. J. Kaiser\"", "the -and a:\"John Grisham\""};
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
             ArrayList<Book> resultFind = searchByTitle.getResult();
+            String less = lessWord.substring(1, lessWord.indexOf(" "));
+            String plus = lessWord.substring(lessWord.indexOf(" ") + 1);
+            plus = plus.substring(0, lessWord.indexOf(" ") - 1);
+            String author = lessWord.substring(lessWord.indexOf("a:\"") + 3);
+            author = author.substring(0, author.indexOf("\"") - 1);
 
-            String wordWithoutSign = lessWord.substring(lessWord.indexOf("a:\"") + 3);
-            wordWithoutSign = wordWithoutSign.substring(0, wordWithoutSign.indexOf("\""));
             for (Book lineFind : resultFind) {
                 String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
-                assertTrue(resultAuthor.contains(wordWithoutSign));
-
+                String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                assertTrue(resultAuthor.contains(author));
+                assertFalse(resultTitle.contains(less));
+                assertTrue(resultTitle.contains(plus));
             }
-
         }
-
-
     }
 
- */
+
 }
 
 

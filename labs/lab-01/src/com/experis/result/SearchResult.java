@@ -15,7 +15,7 @@ public abstract class SearchResult {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("ISBN: " + bookResult.isbn + "\n");
-        stringBuilder.append("Title: " + dataBase.books.get(bookResult.bookTitle) + "\n");
+        stringBuilder.append("Title: " + dataBase.booksTitle.get(bookResult.bookTitle) + "\n");
         stringBuilder.append("Author: " + dataBase.authors.get(bookResult.bookAuthor) + "\n");
         stringBuilder.append("Year: " + bookResult.year + "\n");
         stringBuilder.append("Publisher: " + dataBase.publishers.get(bookResult.publisher));
@@ -34,7 +34,7 @@ public abstract class SearchResult {
 
         for (Book book : booksResult) {
             stringBuilder.append(book.isbn + "|");
-            stringBuilder.append(dataBase.books.get(book.bookTitle) + "|");
+            stringBuilder.append(dataBase.booksTitle.get(book.bookTitle) + "|");
             stringBuilder.append(dataBase.authors.get(book.bookAuthor) + "|");
             stringBuilder.append(book.year + "|");
             stringBuilder.append(dataBase.publishers.get(book.publisher) + "\n");

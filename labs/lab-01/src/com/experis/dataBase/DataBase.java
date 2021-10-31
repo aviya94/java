@@ -1,7 +1,5 @@
 package com.experis.dataBase;
 
-import com.experis.dataBase.Book;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,23 +8,27 @@ public class DataBase {
     final public HashMap<String, Book> BooksCatalog = new HashMap<String, Book>();
     final public HashMap<Integer, String> publishers = new HashMap<Integer, String>();
     final public HashMap<Integer, String> authors = new HashMap<Integer, String>();
-    final public HashMap<String, String> isbnAndBooks = new HashMap<String, String>();
-    final public HashMap<Integer, String> books = new HashMap<Integer, String>();
+    final public HashMap<String, String> isbnAndBooksTitle = new HashMap<String, String>();
+    final public HashMap<Integer, String> booksTitle = new HashMap<Integer, String>();
     final public HashMap<String, ArrayList<Integer>> dictionaryTitle = new HashMap<String, ArrayList<Integer>>();
     int publishersIndex = 0;
     int authorsIndex = 0;
     int booksIndex = 0;
 
     public void addNewBook(String[] fild) {
-        addToIsbnAndBooks(fild[0], fild[1]);
-        int bookTitleIndex = addToBooks(fild[1]);
-        int authorIndex = addAuthor(fild[2]);
-        int publisherIndex = addPublishersr(fild[4]);
-        addToBookCatalog(fild[0], bookTitleIndex, authorIndex, Integer.valueOf(fild[3]), publisherIndex);
+
+        if (fild.length == 5) {
+            addToIsbnAndBooks(fild[0], fild[1]);
+            int bookTitleIndex = addToBooks(fild[1]);
+            int authorIndex = addAuthor(fild[2]);
+            int publisherIndex = addPublishersr(fild[4]);
+            addToBookCatalog(fild[0], bookTitleIndex, authorIndex, fild[3], publisherIndex);
+        }
+
 
     }
 
-    private void addToBookCatalog(String isbn, int book, int author, int year, int publisher) {
+    private void addToBookCatalog(String isbn, int book, int author, String year, int publisher) {
         Book newBook = new Book(isbn, book, author, year, publisher);
         BooksCatalog.put(isbn, newBook);
 
@@ -36,7 +38,7 @@ public class DataBase {
         assert fild != null;
         assert hashMapToSaveFild != null;
 
-        fild=fild.trim();
+        fild = fild.trim();
         Boolean isExist = false;
 
         for (Map.Entry e : hashMapToSaveFild.entrySet()) {
@@ -74,7 +76,7 @@ public class DataBase {
     }
 
     private int addToBooks(String fild) {
-        books.put(booksIndex, fild);
+        booksTitle.put(booksIndex, fild);
         String[] bookTitle = fild.split(" ");
         addToDictionaryTitle(bookTitle, booksIndex);
         return booksIndex++;
@@ -82,7 +84,7 @@ public class DataBase {
     }
 
     private void addToIsbnAndBooks(String isbn, String title) {
-        isbnAndBooks.put(title, isbn);
+        isbnAndBooksTitle.put(title, isbn);
     }
 
     private int addAuthor(String fild) {

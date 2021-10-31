@@ -1,12 +1,16 @@
 
 package com.experis.test;
 
+import com.experis.Search.SearchByTitle;
 import com.experis.dataBase.Book;
 import com.experis.dataBase.DataBase;
 import com.experis.Search.SearchByISBN;
+import com.experis.dataBase.LoadDatabase;
+import com.experis.parser.BookParser;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,12 +20,14 @@ class SearchByISBNtest {
 
     SearchByISBN searchByISBN;
     DataBase dataBase;
+    BookParser bookParser;
 
     @BeforeEach
     void setup() throws FileNotFoundException {
         dataBase = new DataBase();
+        bookParser = new BookParser("\\|");
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
         searchByISBN = new SearchByISBN(dataBase);
-
     }
 
     @Test

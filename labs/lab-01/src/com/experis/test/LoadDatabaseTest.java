@@ -24,8 +24,8 @@ class LoadDatabaseTest {
     void setup() throws FileNotFoundException {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
-        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt", bookParser, dataBase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-small.txt");
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
@@ -40,7 +40,7 @@ class LoadDatabaseTest {
 
                 Book book = dataBase.BooksCatalog.get(arrLine[0]);
                 assertTrue(arrLine[0].equals(book.isbn));
-                assertTrue(dataBase.books.get(book.bookTitle).equals(arrLine[1]));
+                assertTrue(dataBase.booksTitle.get(book.bookTitle).equals(arrLine[1]));
                 assertTrue(dataBase.authors.get(book.bookAuthor).equals(arrLine[2]));
                 assertEquals(Integer.valueOf(arrLine[3]), book.year);
                 assertTrue(dataBase.publishers.get(book.publisher).equals(arrLine[4]));
