@@ -6,8 +6,8 @@ import java.util.function.Function;
 
 public class MaxStack<T> {
 
-    private Stack<T> stack = new Stack<T>();
-    private T maxStack;
+    Stack<T> stack = new Stack<T>();
+     T maxStack;
     private Comparator<T> compere;
 
     public MaxStack(Comparator<T> compere) {
@@ -19,7 +19,6 @@ public class MaxStack<T> {
         updateMaxStackApterPush(objectToPush);
     }
 
-
     private void updateMaxStackApterPush(T objectToPush) {
 
         if (stack.empty()) {
@@ -29,7 +28,6 @@ public class MaxStack<T> {
             {
                 maxStack = objectToPush;
             }
-
         }
     }
 
@@ -61,6 +59,7 @@ public class MaxStack<T> {
             }
         }
     }
+
 }
 
 
