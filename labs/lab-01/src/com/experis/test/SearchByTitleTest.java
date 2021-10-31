@@ -25,7 +25,7 @@ public class SearchByTitleTest {
     void setup() throws FileNotFoundException {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
-        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\bbooks-tons-of.txt", bookParser, dataBase);
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
         ignorList = new ArrayList<String>();
         searchByTitle = new SearchByTitle(dataBase, ignorList);
     }
