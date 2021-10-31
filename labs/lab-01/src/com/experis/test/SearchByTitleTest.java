@@ -156,6 +156,22 @@ public class SearchByTitleTest {
         }
     }
 
+    @Test
+    @Order(7)
+    void Search_ignor_list() {
+        String[] wordToFind = {"The", "is", "or", "and", "to"};
+        ignorList.add("The");
+        ignorList.add("is");
+        ignorList.add("or");
+        ignorList.add("and");
+        ignorList.add("to");
+
+        for (String lessWord : wordToFind) {
+            searchByTitle.search(lessWord);
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            assertEquals(0, resultFind.size());
+        }
+    }
 
 }
 
