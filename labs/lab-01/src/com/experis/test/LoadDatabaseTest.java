@@ -25,7 +25,7 @@ class LoadDatabaseTest {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
         LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\ii.txt");
+        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 

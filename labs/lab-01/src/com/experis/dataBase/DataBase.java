@@ -22,7 +22,8 @@ public class DataBase {
                 int bookTitleIndex = addToBooks(fild[1]);
                 int authorIndex = addAuthor(fild[2]);
                 int publisherIndex = addPublishersr(fild[4]);
-                addToBookCatalog(fild[0], bookTitleIndex, authorIndex, fild[3], publisherIndex);
+                String year=fild[3].trim();
+                addToBookCatalog(fild[0], bookTitleIndex, authorIndex, year, publisherIndex);
             }
 
     }
@@ -75,6 +76,7 @@ public class DataBase {
     }
 
     private int addToBooks(String fild) {
+        fild= fild.trim();
         booksTitle.put(booksIndex, fild);
         String[] bookTitle = fild.split(" ");
         addToDictionaryTitle(bookTitle, booksIndex);
