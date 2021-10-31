@@ -48,7 +48,7 @@ class MaxStackTest {
 
         assertTrue(maxStack.stack.size()==10);
         assertTrue((int)maxStack.maxStack==9);
-        
+
 
     }
 
