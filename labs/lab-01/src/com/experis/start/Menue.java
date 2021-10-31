@@ -17,7 +17,7 @@ import static java.lang.System.exit;
 
 public class Menue {
 
-    DataBase dataBase;
+    final private DataBase dataBase;
     private SearchByISBN searchByISBN;
     private SearchByTitle searchByTitle;
 

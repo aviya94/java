@@ -36,6 +36,7 @@ public class DataBase {
         assert fild != null;
         assert hashMapToSaveFild != null;
 
+        fild=fild.trim();
         Boolean isExist = false;
 
         for (Map.Entry e : hashMapToSaveFild.entrySet()) {

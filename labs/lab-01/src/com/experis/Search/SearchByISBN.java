@@ -5,7 +5,7 @@ import com.experis.dataBase.DataBase;
 
 public class SearchByISBN implements Search {
 
-    private DataBase dataBase;
+    final private DataBase dataBase;
     private Book searchResult;
 
     public SearchByISBN(DataBase dataBase) {

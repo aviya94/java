@@ -132,10 +132,33 @@ public class SearchByTitleTest {
                 String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
                 assertTrue(resultAuthor.contains(wordWithoutSign));
             }
-
         }
 
     }
+/*
+    @Test
+    @Order(6)
+    void Search_with_and_less_and_author() {
+        String[] wordToFind = {"-All +Sum a:\"E. J. W. Barber\"", "-House Thea a:\"Richard Bruce Wright\"", "+end -the a:\"R. J. Kaiser\"", "the -and a:\"John Grisham\""};
+
+        for (String lessWord : wordToFind) {
+            searchByTitle.search(lessWord);
+            ArrayList<Book> resultFind = searchByTitle.getResult();
+
+            String wordWithoutSign = lessWord.substring(lessWord.indexOf("a:\"") + 3);
+            wordWithoutSign = wordWithoutSign.substring(0, wordWithoutSign.indexOf("\""));
+            for (Book lineFind : resultFind) {
+                String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
+                assertTrue(resultAuthor.contains(wordWithoutSign));
+
+            }
+
+        }
+
+
+    }
+
+ */
 }
 
 
