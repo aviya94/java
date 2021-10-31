@@ -17,14 +17,13 @@ public class DataBase {
 
     public void addNewBook(String[] fild) {
 
-        if (fild.length == 5) {
-            addToIsbnAndBooks(fild[0], fild[1]);
-            int bookTitleIndex = addToBooks(fild[1]);
-            int authorIndex = addAuthor(fild[2]);
-            int publisherIndex = addPublishersr(fild[4]);
-            addToBookCatalog(fild[0], bookTitleIndex, authorIndex, fild[3], publisherIndex);
-        }
-
+            if (fild.length == 5) {
+                addToIsbnAndBooks(fild[0], fild[1]);
+                int bookTitleIndex = addToBooks(fild[1]);
+                int authorIndex = addAuthor(fild[2]);
+                int publisherIndex = addPublishersr(fild[4]);
+                addToBookCatalog(fild[0], bookTitleIndex, authorIndex, fild[3], publisherIndex);
+            }
 
     }
 

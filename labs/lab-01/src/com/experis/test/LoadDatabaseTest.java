@@ -25,25 +25,31 @@ class LoadDatabaseTest {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
         LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
-        fileInputStream = new FileInputStream("C:\\Users\\user\\books-tons-of.txt");
+        fileInputStream = new FileInputStream("C:\\Users\\user\\ii.txt");
         bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
     }
 
     @Test
     @Order(1)
     void Search_not_fount() throws IOException {
-        String strLine = bufferedReader.readLine();
+        String fildsLine = bufferedReader.readLine();
 
-        while ((strLine = bufferedReader.readLine()) != null) {
+        while ((fildsLine = bufferedReader.readLine()) != null) {
             {
-                String[] arrLine = strLine.split("\\|");
+                String[] arrLine = fildsLine.split("\\|");
 
-                Book book = dataBase.BooksCatalog.get(arrLine[0]);
-                assertTrue(arrLine[0].equals(book.isbn));
-                assertTrue(dataBase.booksTitle.get(book.bookTitle).equals(arrLine[1]));
-                assertTrue(dataBase.authors.get(book.bookAuthor).equals(arrLine[2]));
-                assertEquals(Integer.valueOf(arrLine[3]), book.year);
-                assertTrue(dataBase.publishers.get(book.publisher).equals(arrLine[4]));
+                for (int i = 0; i < arrLine.length; i++) {
+                    arrLine[i]=arrLine[i].trim();
+                }
+
+                if (arrLine.length == 5) {
+                    Book book = dataBase.BooksCatalog.get(arrLine[0]);
+                    assertTrue(arrLine[0].equals(book.isbn));
+                    assertTrue(dataBase.booksTitle.get(book.bookTitle).equals(arrLine[1]));
+                    assertTrue(dataBase.authors.get(book.bookAuthor).equals(arrLine[2]));
+                    assertEquals(arrLine[3], book.year);
+                    assertTrue(dataBase.publishers.get(book.publisher).equals(arrLine[4]));
+                }
             }
 
         }
