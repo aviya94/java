@@ -34,7 +34,7 @@ class SearchByISBNtest {
     @Order(1)
     void Search_not_fount() {
         searchByISBN.search("1111111");
-        Book result = searchByISBN.getResult();
+        Book result = searchByISBN.searchResult;
         assertEquals(null, result);
 
     }
@@ -45,7 +45,7 @@ class SearchByISBNtest {
 
         for (Map.Entry book : dataBase.BooksCatalog.entrySet()) {
             searchByISBN.search(String.valueOf(book.getKey()));
-            Book ResultFind = searchByISBN.getResult();
+            Book ResultFind = searchByISBN.searchResult;
             assertEquals(book.getKey(), ResultFind.isbn);
 
         }

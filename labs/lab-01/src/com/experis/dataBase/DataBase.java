@@ -17,14 +17,14 @@ public class DataBase {
 
     public void addNewBook(String[] fild) {
 
-            if (fild.length == 5) {
-                addToIsbnAndBooks(fild[0], fild[1]);
-                int bookTitleIndex = addToBooks(fild[1]);
-                int authorIndex = addAuthor(fild[2]);
-                int publisherIndex = addPublishersr(fild[4]);
-                String year=fild[3].trim();
-                addToBookCatalog(fild[0], bookTitleIndex, authorIndex, year, publisherIndex);
-            }
+        if (fild.length == 5) {
+            addToIsbnAndBooks(fild[0], fild[1]);
+            int bookTitleIndex = addToBooks(fild[1]);
+            int authorIndex = addAuthor(fild[2]);
+            int publisherIndex = addPublishersr(fild[4]);
+            String year = fild[3].trim();
+            addToBookCatalog(fild[0], bookTitleIndex, authorIndex, year, publisherIndex);
+        }
 
     }
 
@@ -76,7 +76,7 @@ public class DataBase {
     }
 
     private int addToBooks(String fild) {
-        fild= fild.trim();
+        fild = fild.trim();
         booksTitle.put(booksIndex, fild);
         String[] bookTitle = fild.split(" ");
         addToDictionaryTitle(bookTitle, booksIndex);

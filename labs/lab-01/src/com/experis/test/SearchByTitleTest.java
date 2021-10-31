@@ -35,7 +35,7 @@ public class SearchByTitleTest {
     void Search_not_fount() {
 
         searchByTitle.search("1111111");
-        ArrayList<Book> resultFind = searchByTitle.getResult();
+        ArrayList<Book> resultFind = searchByTitle.searchResult;
         assertEquals(0, resultFind.size());
 
     }
@@ -48,7 +48,7 @@ public class SearchByTitleTest {
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.getResult();
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
 
             for (String e : arrWordToFind) {
 
@@ -69,7 +69,7 @@ public class SearchByTitleTest {
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.getResult();
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
 
             for (String e : arrWordToFind) {
                 String wordWithoutLess = e.substring(1, e.length());
@@ -91,7 +91,7 @@ public class SearchByTitleTest {
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.getResult();
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
 
             for (String e : arrWordToFind) {
 
@@ -120,7 +120,7 @@ public class SearchByTitleTest {
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.getResult();
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
 
             String wordWithoutSign = lessWord.substring(lessWord.indexOf("a:\"") + 3);
             wordWithoutSign = wordWithoutSign.substring(0, wordWithoutSign.indexOf("\""));
@@ -139,7 +139,7 @@ public class SearchByTitleTest {
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.getResult();
+            ArrayList<Book> resultFind = searchByTitle.searchResult;
             String less = lessWord.substring(1, lessWord.indexOf(" "));
             String plus = lessWord.substring(lessWord.indexOf(" ") + 1);
             plus = plus.substring(0, lessWord.indexOf(" ") - 1);

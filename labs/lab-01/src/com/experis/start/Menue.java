@@ -94,14 +94,14 @@ public class Menue {
         System.out.println("please eneter ISBN");
         String choice = getChoice();
         searchByISBN.search(choice);
-        print(searchByISBN.getResult());
+        print(searchByISBN.searchResult);
     }
 
     private void searchByTitel() {
         System.out.println("please eneter titel or partial titel");
         String choice = getChoice();
         searchByTitle.search(choice);
-        print(searchByTitle.getResult());
+        print(searchByTitle.searchResult);
     }
 
     private String getChoice() {

@@ -6,7 +6,7 @@ import com.experis.dataBase.DataBase;
 public class SearchByISBN implements Search {
 
     final private DataBase dataBase;
-    private Book searchResult;
+    public Book searchResult;
 
     public SearchByISBN(DataBase dataBase) {
         this.dataBase = dataBase;
@@ -14,12 +14,6 @@ public class SearchByISBN implements Search {
 
     public void search(String choice) {
         searchResult = dataBase.BooksCatalog.get(choice);
-    }
-
-    public Book getResult() {
-
-        return searchResult;
-
     }
 
 }

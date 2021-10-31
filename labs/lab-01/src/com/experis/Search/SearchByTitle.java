@@ -9,7 +9,7 @@ import java.util.Map;
 public class SearchByTitle implements Search {
 
     final private DataBase dataBase;
-    private ArrayList<Book> searchResult;
+    public ArrayList<Book> searchResult;
     final private ArrayList<String> ignorList;
 
     public SearchByTitle(DataBase dataBase, ArrayList<String> ignorList) {
@@ -157,10 +157,6 @@ public class SearchByTitle implements Search {
 
         }
 
-    }
-
-    public ArrayList<Book> getResult() {
-        return searchResult;
     }
 
     private static class SearchByAuthor implements Search {

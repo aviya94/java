@@ -39,7 +39,7 @@ class LoadDatabaseTest {
                 String[] arrLine = fildsLine.split("\\|");
 
                 for (int i = 0; i < arrLine.length; i++) {
-                    arrLine[i]=arrLine[i].trim();
+                    arrLine[i] = arrLine[i].trim();
                 }
 
                 if (arrLine.length == 5) {
