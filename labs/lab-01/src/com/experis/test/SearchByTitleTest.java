@@ -43,7 +43,8 @@ public class SearchByTitleTest {
     @Test
     @Order(3)
     void Search_with_words() {
-        String[] wordToFind = {"House The", "end the", "Cider Russia", "Kitchen The"};
+        ignorList = null;
+        String[] wordToFind = {"Wife Kitchen"};
 
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
@@ -54,7 +55,8 @@ public class SearchByTitleTest {
 
                 for (Book lineFind : resultFind) {
                     String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
-                    assertTrue(resultTitle.contains(e));
+                    String[] resultArr = resultTitle.split(" ");
+                    assertTrue(isOK(e, resultArr));
                 }
 
             }
@@ -64,6 +66,7 @@ public class SearchByTitleTest {
     @Test
     @Order(4)
     void Search_less_words() {
+        ignorList = null;
         String[] wordToFind = {"-The", "-Cider -Russia", "-Kitchen -The"};
 
         for (String lessWord : wordToFind) {
@@ -75,8 +78,9 @@ public class SearchByTitleTest {
                 String wordWithoutLess = e.substring(1, e.length());
 
                 for (Book lineFind : resultFind) {
-                    String resultTotle = dataBase.booksTitle.get(lineFind.bookTitle);
-                    assertFalse(resultTotle.contains(e));
+                    String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                    String[] resultArr = resultTitle.split(" ");
+                    assertFalse(isOK(wordWithoutLess, resultArr));
                 }
 
             }
@@ -86,7 +90,9 @@ public class SearchByTitleTest {
     @Test
     @Order(5)
     void Search_with_and_less_word() {
-        String[] wordToFind = {"-All +Sum", "-House The", "+end -the", "-Cider +Russia", "+Kitchen -The"};
+        ignorList = null;
+        //"-All +Sum", "-Cider +Russia","+The -End",
+        String[] wordToFind = {"+The -House"};
 
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
@@ -100,11 +106,14 @@ public class SearchByTitleTest {
                     if (e.startsWith("-")) {
                         String wordWithoutLess = e.substring(1, e.length());
                         String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
-                        assertFalse(resultTitle.contains(e));
+                        String[] resultArr = resultTitle.split(" ");
+                        assertFalse(isOK(wordWithoutLess, resultArr));
 
                     } else {
+                        String wordWithoutPlus = e.substring(1, e.length());
                         String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
-                        assertTrue(resultTitle.contains(e));
+                        String[] resultArr = resultTitle.split(" ");
+                        assertTrue(isOK(wordWithoutPlus, resultArr));
                     }
 
                 }
@@ -113,9 +122,21 @@ public class SearchByTitleTest {
         }
     }
 
+    private Boolean isOK(String wordWithoutPlus, String[] resultArr) {
+        Boolean isOk = false;
+        for (String word : resultArr) {
+            if (word.equals(wordWithoutPlus)) {
+                isOk = true;
+                assertTrue(true);
+            }
+        }
+        return isOk;
+    }
+
     @Test
     @Order(5)
     void Search_with_author() {
+        ignorList = null;
         String[] wordToFind = {"a:\"E. J. W. Barber\"", "a:\"Richard Bruce Wright\"", "a:\"R. J. Kaiser\"", "\"a:John Grisham\""};
 
         for (String lessWord : wordToFind) {
@@ -135,6 +156,7 @@ public class SearchByTitleTest {
     @Test
     @Order(6)
     void Search_with_and_less_and_author() {
+        ignorList = null;
         String[] wordToFind = {"-All Sum a:\"E. J. W. Barber\"", "-House Thea a:\"Richard Bruce Wright\"", "+end -the a:\"R. J. Kaiser\"", "the -and a:\"John Grisham\""};
 
         for (String lessWord : wordToFind) {
@@ -149,9 +171,11 @@ public class SearchByTitleTest {
             for (Book lineFind : resultFind) {
                 String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
                 String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
-                assertTrue(resultAuthor.contains(author));
-                assertFalse(resultTitle.contains(less));
-                assertTrue(resultTitle.contains(plus));
+                String[] resultTitleArr = resultTitle.split(" ");
+                String[] resultAuthorArr = resultAuthor.split(" ");
+                assertTrue(isOK(author, resultAuthorArr));
+                assertFalse(isOK(less, resultTitleArr));
+                assertTrue(isOK(plus, resultTitleArr));
             }
         }
     }

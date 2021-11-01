@@ -1,5 +1,5 @@
 package com.experis.Search;
 
-public interface Search {
-    void search(String choice);
+public interface Search<T extends Object> {
+    void search(T choice);
 }

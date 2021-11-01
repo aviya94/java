@@ -52,9 +52,7 @@ public class DataBase {
         }
 
         if (!isExist) {
-
             hashMapToSaveFild.put(nextIndex, fild);
-
         }
 
         return nextIndex;
@@ -85,6 +83,8 @@ public class DataBase {
     }
 
     private void addToIsbnAndBooks(String isbn, String title) {
+        title = title.trim();
+        isbn = isbn.trim();
         isbnAndBooksTitle.put(title, isbn);
     }
 

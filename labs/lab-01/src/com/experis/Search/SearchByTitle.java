@@ -6,11 +6,12 @@ import com.experis.dataBase.DataBase;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SearchByTitle implements Search {
+public class SearchByTitle implements Search<String> {
 
     final private DataBase dataBase;
     public ArrayList<Book> searchResult;
     final private ArrayList<String> ignorList;
+    private ArrayList<Integer> resultsIndex;
 
     public SearchByTitle(DataBase dataBase, ArrayList<String> ignorList) {
         this.dataBase = dataBase;
@@ -28,26 +29,24 @@ public class SearchByTitle implements Search {
 
     private void initialResult() {
         searchResult = new ArrayList<Book>();
+        resultsIndex = new ArrayList<Integer>();
     }
 
     private void search(String[] choiceWordsArr) {
-        ArrayList<Integer> resultsIndex = new ArrayList<Integer>();
-        for (Map.Entry dictionaryWord : dataBase.dictionaryTitle.entrySet()) {
-            addwantedWord(choiceWordsArr, resultsIndex, dictionaryWord);
-
-        }
-        removeBookNoContainAllWord(choiceWordsArr, resultsIndex);
 
         for (Map.Entry dictionaryWord : dataBase.dictionaryTitle.entrySet()) {
-            removeUnwontedWords(choiceWordsArr, resultsIndex, dictionaryWord);
+            addwantedWord(choiceWordsArr, dictionaryWord);
         }
 
-        addToSearchResult(resultsIndex);
+        removeBookNoContainAllWord(choiceWordsArr);
 
-
+        for (Map.Entry dictionaryWord : dataBase.dictionaryTitle.entrySet()) {
+            removeUnwontedWords(choiceWordsArr, dictionaryWord);
+        }
+        addToSearchResult();
     }
 
-    private void addwantedWord(String[] choiceWordsArr, ArrayList<Integer> resultsIndex, Map.Entry dictionaryWord) {
+    private void addwantedWord(String[] choiceWordsArr, Map.Entry dictionaryWord) {
 
         for (String choiceWord : choiceWordsArr) {
 
@@ -59,7 +58,7 @@ public class SearchByTitle implements Search {
                 if (word.equals(dictionaryKey)) {
 
                     ArrayList<Integer> dictionaryValue = (ArrayList<Integer>) dictionaryWord.getValue();
-                    addBookToResultIndex(resultsIndex, dictionaryValue);
+                    addBookToResultIndex(dictionaryValue);
                 }
             }
         }
@@ -69,18 +68,23 @@ public class SearchByTitle implements Search {
         return isStartWhith(choiceWord, "-") == false && ignorList.indexOf(choiceWord) == -1;
     }
 
-    private void addBookToResultIndex(ArrayList<Integer> resultsIndex, ArrayList<Integer> dictionaryValue) {
-        int sizeResult = resultsIndex.size();
+    private void addBookToResultIndex(ArrayList<Integer> dictionaryValue) {
+        int sizeResult = dictionaryValue.size();
 
-        for (int i = 0; i < sizeResult; i++) {
+        if (sizeResult == 0) {
+            resultsIndex.addAll(dictionaryValue);
 
-            if (resultsIndex.indexOf(dictionaryValue.get(i)) == -1) {
-                resultsIndex.add(dictionaryValue.get(i));
+        } else {
+            for (int i = 0; i < sizeResult; i++) {
+
+                if (resultsIndex.indexOf(dictionaryValue.get(i)) == -1) {
+                    resultsIndex.add(dictionaryValue.get(i));
+                }
             }
         }
     }
 
-    private void removeBookNoContainAllWord(String[] choiceWordsArr, ArrayList<Integer> resultsIndex) {
+    private void removeBookNoContainAllWord(String[] choiceWordsArr) {
 
         for (String choiceWord : choiceWordsArr) {
 
@@ -108,7 +112,7 @@ public class SearchByTitle implements Search {
         return word;
     }
 
-    private void removeUnwontedWords(String[] choiceWordsArr, ArrayList<Integer> resultsIndex, Map.Entry dictionaryWord) {
+    private void removeUnwontedWords(String[] choiceWordsArr, Map.Entry dictionaryWord) {
 
         for (String choiceWord : choiceWordsArr) {
 
@@ -119,14 +123,10 @@ public class SearchByTitle implements Search {
                 if (wordWithoutSign.equals(dictionaryKey)) {
                     ArrayList<Integer> dictionaryValue = (ArrayList<Integer>) dictionaryWord.getValue();
 
-                    int i = 0;
-
-                    while (i != resultsIndex.size()) {
-                        int index = resultsIndex.indexOf(dictionaryValue.get(i));
+                    for (int e : dictionaryValue) {
+                        int index = resultsIndex.indexOf(e);
                         if (index >= 0) {
-                            resultsIndex.remove(i);
-                        } else {
-                            i++;
+                            resultsIndex.remove(index);
                         }
                     }
                 }
@@ -149,17 +149,15 @@ public class SearchByTitle implements Search {
         return choiceWord.startsWith(sign);
     }
 
-    private void addToSearchResult(ArrayList<Integer> results) {
+    private void addToSearchResult() {
 
-        for (int e : results) {
-            String book = dataBase.booksTitle.get(e);
-            searchResult.add(dataBase.BooksCatalog.get(dataBase.isbnAndBooksTitle.get(book)));
-
+        for (int e : resultsIndex) {
+            String bookTitle = dataBase.booksTitle.get(e);
+            searchResult.add(dataBase.BooksCatalog.get(dataBase.isbnAndBooksTitle.get(bookTitle)));
         }
-
     }
 
-    private static class SearchByAuthor implements Search {
+    private static class SearchByAuthor implements Search<String> {
         DataBase dataBase;
         ArrayList<Book> searchResultTitle;
 

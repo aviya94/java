@@ -10,24 +10,20 @@ public class LoadDatabase {
     private DataBase dataBase;
 
     public LoadDatabase(String filePath, BookParser bookPraser, DataBase dataBase) {
-
-        try {
-            this.dataBase = dataBase;
-            bufferedReader = new BufferedReader(new FileReader(filePath));
-            addDataToStructuresDataFromFile(bookPraser);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.dataBase = dataBase;
+        loadFile(filePath, bookPraser);
     }
 
-    private void loadFile(String filePath) {
+    private void loadFile(String filePath, BookParser bookParser) {
 
-        try {
-            bufferedReader = new BufferedReader(new FileReader(String.valueOf(filePath)));
+        try (FileReader fileReader = new FileReader(filePath)) {
+            bufferedReader = new BufferedReader(fileReader);
+            addDataToStructuresDataFromFile(bookParser);
 
         } catch (FileNotFoundException e) {
-            System.out.println("File Not Found");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

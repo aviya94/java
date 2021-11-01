@@ -8,9 +8,9 @@ public class Book {
     final public String year;
     final public int publisher;
 
-    public Book(String isbn, int book, int author, String year, int publisher) {
+    public Book(String isbn, int bookTitle, int author, String year, int publisher) {
         this.isbn = isbn;
-        this.bookTitle = book;
+        this.bookTitle = bookTitle;
         this.bookAuthor = author;
         this.year = year;
         this.publisher = publisher;
