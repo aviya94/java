@@ -7,7 +7,7 @@ public class BookParser implements Parser<String[]> {
         this.buffer = buffer;
     }
 
-    public String[] parser(String line){
+    public String[] parser(String line) {
         return line.split(buffer);
     }
 }

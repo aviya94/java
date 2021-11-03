@@ -1,14 +1,16 @@
 package com.experis.dataBase;
 
 
+import java.util.ArrayList;
+
 public class Book {
     final public String isbn;
-    final public int bookTitle;
-    final public int bookAuthor;
+    final public ArrayList<Integer> bookTitle;
+    final public ArrayList<Integer> bookAuthor;
     final public String year;
-    final public int publisher;
+    final public ArrayList<Integer> publisher;
 
-    public Book(String isbn, int bookTitle, int author, String year, int publisher) {
+    public Book(String isbn, ArrayList<Integer> bookTitle, ArrayList<Integer> author, String year, ArrayList<Integer> publisher) {
         this.isbn = isbn;
         this.bookTitle = bookTitle;
         this.bookAuthor = author;

@@ -19,7 +19,7 @@ public class Main {
         ignorList.add("or");
         ignorList.add("and");
         ignorList.add("to");
-        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt", bookParser, dataBase);
         Menue menue = new Menue(dataBase, ignorList);
 
     }

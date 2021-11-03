@@ -40,14 +40,27 @@ class LoadDatabaseTest {
                     for (int i = 0; i < arrLine.length; i++) {
                         arrLine[i] = arrLine[i].trim();
                     }
-
                     if (arrLine.length == 5) {
+
                         Book book = dataBase.BooksCatalog.get(arrLine[0]);
                         assertTrue(arrLine[0].equals(book.isbn));
-                        assertTrue(dataBase.booksTitle.get(book.bookTitle).equals(arrLine[1]));
-                        assertTrue(dataBase.authors.get(book.bookAuthor).equals(arrLine[2]));
+
+                        int resultIndex = dataBase.getIndex(dataBase.booksTitle, book.bookTitle);
+                        String resultTitle = dataBase.booksTitle.get(resultIndex).toString();
+                        resultTitle = resultTitle.trim();
+                        assertTrue(resultTitle.equals(arrLine[1]));
+
+                        resultIndex = dataBase.getIndex(dataBase.authors, book.bookAuthor);
+                        String resultAuthor = dataBase.authors.get(resultIndex).toString();
+                        resultAuthor = resultAuthor.trim();
+                        assertTrue(resultAuthor.equals(arrLine[2]));
+
                         assertEquals(arrLine[3], book.year);
-                        assertTrue(dataBase.publishers.get(book.publisher).equals(arrLine[4]));
+
+                        resultIndex = dataBase.getIndex(dataBase.publishers, book.publisher);
+                        String resultPublisher = dataBase.publishers.get(resultIndex).toString();
+                        resultPublisher = resultPublisher.trim();
+                        assertTrue(resultPublisher.equals(arrLine[4]));
                     }
                 }
 
@@ -59,4 +72,5 @@ class LoadDatabaseTest {
         }
 
     }
+
 }

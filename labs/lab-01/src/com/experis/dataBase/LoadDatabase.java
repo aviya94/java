@@ -38,7 +38,7 @@ public class LoadDatabase {
 
             while ((line = readLine()) != null) {
                 String[] filds = bookPraser.parser(line);
-                dataBase.addNewBook(filds);
+                AddToDatabase.addNewBook(filds,dataBase);
             }
         } catch (IOException e) {
             System.out.println("IO Exception");

@@ -5,7 +5,7 @@ import com.experis.Search.SearchByTitle;
 import com.experis.dataBase.Book;
 import com.experis.dataBase.DataBase;
 import com.experis.result.Print;
-import com.experis.result.SearchResult;
+import com.experis.result.BuildResult;
 
 
 import java.io.IOException;
@@ -70,13 +70,13 @@ public class Menue {
     }
 
     public void print(Book searchResult) {
-        String resultString = SearchResult.result(searchResult, dataBase);
+        String resultString = BuildResult.result(searchResult, dataBase);
 
         print(resultString);
     }
 
     public void print(ArrayList<Book> searchResult) {
-        String resultString = SearchResult.result(searchResult, dataBase);
+        String resultString = BuildResult.result(searchResult, dataBase);
 
         print(resultString);
     }
@@ -101,7 +101,7 @@ public class Menue {
         System.out.println("please eneter titel or partial titel");
         String choice = getChoice();
         searchByTitle.search(choice);
-        print(searchByTitle.searchResult);
+        print(searchByTitle.bookResult);
     }
 
     private String getChoice() {

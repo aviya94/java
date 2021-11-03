@@ -25,7 +25,7 @@ public class SearchByTitleTest {
     void setup() throws FileNotFoundException {
         bookParser = new BookParser("\\|");
         dataBase = new DataBase();
-        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-tons-of.txt", bookParser, dataBase);
+        LoadDatabase loadDatabase = new LoadDatabase("C:\\Users\\user\\books-small.txt", bookParser, dataBase);
         ignorList = new ArrayList<String>();
         searchByTitle = new SearchByTitle(dataBase, ignorList);
     }
@@ -35,9 +35,8 @@ public class SearchByTitleTest {
     void Search_not_fount() {
 
         searchByTitle.search("1111111");
-        ArrayList<Book> resultFind = searchByTitle.searchResult;
+        ArrayList<Book> resultFind = searchByTitle.bookResult;
         assertEquals(0, resultFind.size());
-
     }
 
     @Test
@@ -49,12 +48,13 @@ public class SearchByTitleTest {
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
 
             for (String e : arrWordToFind) {
 
                 for (Book lineFind : resultFind) {
-                    String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                    int resultIndex = dataBase.getIndex(dataBase.booksTitle, lineFind.bookTitle);
+                    String resultTitle = dataBase.booksTitle.get(resultIndex).toString();
                     String[] resultArr = resultTitle.split(" ");
                     assertTrue(isOK(e, resultArr));
                 }
@@ -72,13 +72,14 @@ public class SearchByTitleTest {
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
 
             for (String e : arrWordToFind) {
                 String wordWithoutLess = e.substring(1, e.length());
 
                 for (Book lineFind : resultFind) {
-                    String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                    int resultIndex = dataBase.getIndex(dataBase.booksTitle, lineFind.bookTitle);
+                    String resultTitle = dataBase.booksTitle.get(resultIndex).toString();
                     String[] resultArr = resultTitle.split(" ");
                     assertFalse(isOK(wordWithoutLess, resultArr));
                 }
@@ -91,13 +92,12 @@ public class SearchByTitleTest {
     @Order(5)
     void Search_with_and_less_word() {
         ignorList = null;
-        //"-All +Sum", "-Cider +Russia","+The -End",
-        String[] wordToFind = {"+The -House"};
+        String[] wordToFind = {"+The -House +Book +Answers"};
 
         for (String lessWord : wordToFind) {
             String[] arrWordToFind = lessWord.split(" ");
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
 
             for (String e : arrWordToFind) {
 
@@ -105,13 +105,15 @@ public class SearchByTitleTest {
 
                     if (e.startsWith("-")) {
                         String wordWithoutLess = e.substring(1, e.length());
-                        String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                        int resultIndex = dataBase.getIndex(dataBase.booksTitle, lineFind.bookTitle);
+                        String resultTitle = dataBase.booksTitle.get(resultIndex).toString();
                         String[] resultArr = resultTitle.split(" ");
                         assertFalse(isOK(wordWithoutLess, resultArr));
 
                     } else {
                         String wordWithoutPlus = e.substring(1, e.length());
-                        String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                        int resultIndex = dataBase.getIndex(dataBase.booksTitle, lineFind.bookTitle);
+                        String resultTitle = dataBase.booksTitle.get(resultIndex).toString();
                         String[] resultArr = resultTitle.split(" ");
                         assertTrue(isOK(wordWithoutPlus, resultArr));
                     }
@@ -141,12 +143,13 @@ public class SearchByTitleTest {
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
 
             String wordWithoutSign = lessWord.substring(lessWord.indexOf("a:\"") + 3);
             wordWithoutSign = wordWithoutSign.substring(0, wordWithoutSign.indexOf("\""));
             for (Book lineFind : resultFind) {
-                String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
+                int resultIndex = dataBase.getIndex(dataBase.authors, lineFind.bookAuthor);
+                String resultAuthor = dataBase.authors.get(resultIndex).toString();
                 assertTrue(resultAuthor.contains(wordWithoutSign));
             }
         }
@@ -157,11 +160,11 @@ public class SearchByTitleTest {
     @Order(6)
     void Search_with_and_less_and_author() {
         ignorList = null;
-        String[] wordToFind = {"-All Sum a:\"E. J. W. Barber\"", "-House Thea a:\"Richard Bruce Wright\"", "+end -the a:\"R. J. Kaiser\"", "the -and a:\"John Grisham\""};
+        String[] wordToFind = {"+Calla a:\"Richard\""};
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
             String less = lessWord.substring(1, lessWord.indexOf(" "));
             String plus = lessWord.substring(lessWord.indexOf(" ") + 1);
             plus = plus.substring(0, lessWord.indexOf(" ") - 1);
@@ -169,8 +172,10 @@ public class SearchByTitleTest {
             author = author.substring(0, author.indexOf("\"") - 1);
 
             for (Book lineFind : resultFind) {
-                String resultAuthor = dataBase.authors.get(lineFind.bookAuthor);
-                String resultTitle = dataBase.booksTitle.get(lineFind.bookTitle);
+                int resultIndexAuthor = dataBase.getIndex(dataBase.authors, lineFind.bookAuthor);
+                String resultAuthor = dataBase.authors.get(resultIndexAuthor).toString();
+                int resultIndexPub = dataBase.getIndex(dataBase.booksTitle, lineFind.bookTitle);
+                String resultTitle = dataBase.booksTitle.get(resultIndexPub).toString();
                 String[] resultTitleArr = resultTitle.split(" ");
                 String[] resultAuthorArr = resultAuthor.split(" ");
                 assertTrue(isOK(author, resultAuthorArr));
@@ -179,6 +184,7 @@ public class SearchByTitleTest {
             }
         }
     }
+
 
     @Test
     @Order(7)
@@ -192,10 +198,11 @@ public class SearchByTitleTest {
 
         for (String lessWord : wordToFind) {
             searchByTitle.search(lessWord);
-            ArrayList<Book> resultFind = searchByTitle.searchResult;
+            ArrayList<Book> resultFind = searchByTitle.bookResult;
             assertEquals(0, resultFind.size());
         }
     }
+
 
 }
 
