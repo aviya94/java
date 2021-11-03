@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d0fa8b43-2465-4c31-93a8-b496cb4ea5af" name="Changes" comment="Initial commit">
+      <change afterPath="$PROJECT_DIR$/src/com/experis/result/BuildResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/Search/SearchByISBN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/Search/SearchByISBN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/Search/SearchByTitle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/Search/SearchByTitle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/dataBase/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/dataBase/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/dataBase/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/dataBase/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/dataBase/LoadDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/dataBase/LoadDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/parser/BookParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/parser/BookParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/result/SearchResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/start/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/start/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/start/Menue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/start/Menue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/test/LoadDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/test/LoadDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/experis/test/SearchByTitleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/experis/test/SearchByTitleTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="20039Z9i4bPrufsM62gKFILZ0b4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="untitled104" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="untitled104" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="untitled104" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="untitled104" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="untitled104" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="company" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="JUnit.SearchByTitleTest.Search_with_and_less_and_author">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.experis.start.Main" />
+      <module name="lab-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.experis.start.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadDatabaseTest.load_databse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.experis.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.experis.test" />
+      <option name="MAIN_CLASS_NAME" value="com.experis.test.LoadDatabaseTest" />
+      <option name="METHOD_NAME" value="load_databse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchByTitleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.experis.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.experis.test" />
+      <option name="MAIN_CLASS_NAME" value="com.experis.test.SearchByTitleTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchByTitleTest.Search_with_and_less_and_author" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.experis.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.experis.test" />
+      <option name="MAIN_CLASS_NAME" value="com.experis.test.SearchByTitleTest" />
+      <option name="METHOD_NAME" value="Search_with_and_less_and_author" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.experis.test in lab-01" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.experis.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.experis.test" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SearchByTitleTest.Search_with_and_less_and_author" />
+        <item itemvalue="JUnit.LoadDatabaseTest.load_databse" />
+        <item itemvalue="JUnit.com.experis.test in lab-01" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.SearchByTitleTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d0fa8b43-2465-4c31-93a8-b496cb4ea5af" name="Changes" comment="" />
+      <created>1635167529994</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1635167529994</updated>
+    </task>
+    <task id="LOCAL‎00001" summary="Initial commit">
+      <created>1635167573318</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1635167573318</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/experis/test/SearchByTitleTest.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="276" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/experis/test/SearchByTitleTest.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/experis/Search/AddToBookResult.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="309" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/experis/test/SearchByTitleTest.java</url>
+          <line>166</line>
+          <option name="timeStamp" value="312" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.experis.Search.SearchByTitle$SearchByAuthor" memberName="bookResult" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="((HashMap)((LoadDatabase)((SearchByISBN)((SearchByISBNtest)this).searchByISBN).loadDatabase).authors).entrySet().toArray()[6]" custom="com.experis.SearchByISBN,com.experis.test.SearchByISBNtest,com.experis.LoadDatabase,java.util.HashMap" />
+        <watch expression="dataBase.books.get(book.bookTitle)" language="JAVA" />
+        <watch expression="choiceWord.equals(choiceWord)" language="JAVA" />
+        <watch expression="dataBase.booksTitle.get(book.bookTitle)" language="JAVA" />
+        <watch expression="result.get(index).codeStr.get(i)" language="JAVA" />
+        <watch expression="result.get(index)" language="JAVA" />
+        <watch expression="result.get(index).codeStr.get(i)" language="JAVA" />
+      </configuration>
+      <configuration name="Application">
+        <watch expression="authorResult.get(0)" />
+        <watch expression="bookResult.get(i).bookAuthor" language="JAVA" />
+        <watch expression="bookResult.get(i).bookAuthor" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/lab_01$SearchByTitleTest_Search_with_words.ic" NAME="SearchByTitleTest.Search_with_words Coverage Results" MODIFIED="1635589641417" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.experis.test.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/lab_01$com_experis_test_in_lab_01.ic" NAME="com.experis.test in lab-01 Coverage Results" MODIFIED="1635948887681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.experis.test.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/lab_01$SearchByTitleTest_Searchn.ic" NAME="SearchByTitleTest.Searchn Coverage Results" MODIFIED="1635333148654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.experis.test.*</FILTER>
+    </SUITE>
+  </component>
+</project>
