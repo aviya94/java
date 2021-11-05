@@ -1,6 +1,7 @@
 package com.experis.destanation;
 
 
-public interface Writing  <T>  {
+public interface writer<T>  {
     public void writh(T message);
+
 }

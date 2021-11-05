@@ -3,14 +3,11 @@ package com.experis.destanation;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class FileWriting implements Writing<String> {
+public class FileWriterr implements writer<String> {
     String filePath;
 
-    public FileWriting(String filePath) {
+    public FileWriterr(String filePath) {
         this.filePath = filePath;
     }
 

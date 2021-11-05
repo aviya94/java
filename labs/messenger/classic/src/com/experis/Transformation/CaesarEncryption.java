@@ -3,10 +3,7 @@ package com.experis.Transformation;
 
 public class CaesarEncryption implements Transform<String> {
     public String transforn(String massage) {
-        char lower = 'a';
-        char upper = 'A';
-        String newMassage = massage;
-        String tempMassage;
+
         char[] messageArray = massage.toCharArray();
         for (int i = 0; i < messageArray.length; i++) {
 

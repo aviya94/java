@@ -1,7 +1,7 @@
 package com.experis.destanation;
 
 
-public class ConsoleWriting implements Writing<String> {
+public class ConsoleWriter implements writer<String> {
     public void writh(String message) {
             System.out.println(message);
     }
