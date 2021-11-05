@@ -1,4 +1,4 @@
-package com.experis.source;
+package com.experis;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,13 +15,13 @@ public class Reader {
         this.filePath = filePath;
     }
 
-    public  <T> T read(Supplier<T> read) {
-        T massege =  read.get();
+    public <T> T read(Supplier<T> read) {
+        T massege = read.get();
         return massege;
     }
 
-    public Supplier< String> readFromFile() {
-        Supplier< String> fileReader = ()-> {
+    public Supplier<String> readFromFile() {
+        Supplier<String> fileReader = () -> {
             Stream<String> lines = null;
             try {
                 lines = Files.lines(Path.of(filePath));
