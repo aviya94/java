@@ -2,33 +2,37 @@ package com.experis.Transformation;
 
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Censor implements Transform<String> {
-    public ArrayList<String> censorList;
+    String sensorPattern;
 
     public Censor(ArrayList<String> censorList) {
-        this.censorList = censorList;
+        sensorPattern = getPattern(censorList);
+    }
+
+    private String getPattern(List<String> forbidden) {
+        final var stringJoiner = new StringJoiner("|", "(", ")");
+        for (String word : forbidden) {
+            stringJoiner.add(Pattern.quote(word));
+        }
+
+        return stringJoiner.toString();
     }
 
     public String transforn(String message) {
-        String[] massgeWors = message.split(" ");
+        Pattern pattern = Pattern.compile(sensorPattern,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(message);
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < massgeWors.length; i++) {
-            if (censorList.indexOf(massgeWors[i]) >= 0) {
-                String stars = star(massgeWors[i].length());
-                massgeWors[i] = stars;
-            }
-
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, "****");
         }
-        return String.join(" ", massgeWors);
+        return String.valueOf(sb);
 
-    }
-
-    public String star(int size) {
-        String stars = "*";
-        for (int i = 1; i < size; i++) {
-            stars = stars + "*";
-        }
-        return stars;
     }
 }
+

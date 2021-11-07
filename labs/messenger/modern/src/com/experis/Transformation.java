@@ -17,16 +17,20 @@ public class Transformation {
     public Function<String, String> caesarEncryptionTransform(String massage) {
 
         Function<String, String> caesarEncryption = (str) -> {
-            char[] messageArray = str.toCharArray();
-            for (int i = 0; i < messageArray.length; i++) {
+            StringBuilder sb = new StringBuilder(str);
 
-                if (messageArray[i] < 'n' && messageArray[i] >= 'a' || messageArray[i] < 'N' && messageArray[i] >= 'A') {
-                    messageArray[i] = (char) (messageArray[i] + 13);
-                } else if (messageArray[i] <= 'z' && messageArray[i] >= 'n' || messageArray[i] <= 'Z' && messageArray[i] >= 'N') {
-                    messageArray[i] = (char) (messageArray[i] - 13);
+            for (int i = 0; i < sb.length(); i++) {
+                char ch = sb.charAt(i);
+
+                if (ch < 'n' && ch >= 'a' || ch < 'N' && ch >= 'A') {
+                    sb.setCharAt(i, (char) (ch + 13));
+
+                } else if (ch <= 'z' && ch >= 'n' || ch <= 'Z' && ch >= 'N') {
+                    sb.setCharAt(i, (char) (ch - 13));
                 }
             }
-            return String.valueOf(messageArray);
+
+            return String.valueOf(sb);
         };
         return caesarEncryption;
 
@@ -34,21 +38,21 @@ public class Transformation {
 
     public Function<String, String> censorTransforn(String massage) {
         Function<String, String> censor = str -> {
-            String[] massgeWors = str.split(" ");
+            String[] massegeWors = str.split(" ");
 
-            for (int i = 0; i < massgeWors.length; i++) {
-                if (condition.test(massgeWors[i])) {
-                    String stars = fillStars(massgeWors.length);
-                    massgeWors[i] = stars;
+            for (int i = 0; i < massegeWors.length; i++) {
+                if (condition.test(massegeWors[i])) {
+                    String stars = fillStars(massegeWors.length);
+                    massegeWors[i] = stars;
                 }
 
             }
-            return String.join(" ", massgeWors);
+            return String.join(" ", massegeWors);
         };
         return censor;
     }
 
-    public String fillStars(int size) {
+    private String fillStars(int size) {
         String stars = "*";
         for (int i = 1; i < size; i++) {
             stars = stars + "*";

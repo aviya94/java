@@ -23,8 +23,9 @@ public class CensorTest {
     @Test
     void censor() {
         String message = "helow word hi bye";
-        String result = "helow **** ** ***";
-        assertEquals(result, censor.transforn(message));
+        String expected = "helow **** **** ****";
+        String result= censor.transforn(message);
+        assertEquals(expected,result);
     }
 
 }
