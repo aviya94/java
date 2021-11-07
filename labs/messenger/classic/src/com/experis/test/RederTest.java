@@ -1,18 +1,18 @@
 package com.experis.test;
 
-import com.experis.sourse.FileReaders;
+import com.experis.sourse.FileReaderMassenger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RederTest {
-    FileReaders fileReaders;
+    private FileReaderMassenger fileReaders;
 
     @BeforeEach
     void setUp() {
-        final var path = "./src/com/experis/resources/Read.txt";
-        fileReaders = new FileReaders(path);
+        final var path = "./resources/Read.txt";
+        fileReaders = new FileReaderMassenger(path);
     }
 
     @Test
@@ -21,9 +21,14 @@ public class RederTest {
                 Hello World!
                 Love Java?
                 """;
-
+        StringBuilder sb = new StringBuilder();
         String result = fileReaders.read();
-        assertEquals(expected, result);
+
+        while (result != null) {
+            sb.append(result + "\n");
+            result = fileReaders.read();
+        }
+        assertEquals(expected, String.valueOf(sb));
     }
 
 

@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CensorTest {
-    Censor censor;
+    private Censor censor;
+
     @BeforeEach
     void setUp() {
-        ArrayList<String> censorList=new ArrayList<>();
+        ArrayList<String> censorList = new ArrayList<>();
         censorList.add("word");
         censorList.add("hi");
         censorList.add("bye");

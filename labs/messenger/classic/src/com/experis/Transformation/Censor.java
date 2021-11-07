@@ -4,7 +4,7 @@ package com.experis.Transformation;
 import java.util.ArrayList;
 
 public class Censor implements Transform<String> {
-    ArrayList<String>  censorList;
+    public ArrayList<String> censorList;
 
     public Censor(ArrayList<String> censorList) {
         this.censorList = censorList;
@@ -14,7 +14,7 @@ public class Censor implements Transform<String> {
         String[] massgeWors = message.split(" ");
 
         for (int i = 0; i < massgeWors.length; i++) {
-            if (censorList.indexOf(massgeWors[i])>=0) {
+            if (censorList.indexOf(massgeWors[i]) >= 0) {
                 String stars = star(massgeWors[i].length());
                 massgeWors[i] = stars;
             }

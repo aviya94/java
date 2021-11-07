@@ -4,17 +4,20 @@ package com.experis.Transformation;
 public class CaesarEncryption implements Transform<String> {
     public String transforn(String massage) {
 
-        char[] messageArray = massage.toCharArray();
-        for (int i = 0; i < messageArray.length; i++) {
+        StringBuilder sb = new StringBuilder(massage);
 
-            if (messageArray[i] < 'n' && messageArray[i] >= 'a' || messageArray[i] < 'N' && messageArray[i] >= 'A') {
-                messageArray[i] = (char) (messageArray[i] + 13);
-            } else if (messageArray[i] <= 'z' && messageArray[i] >= 'n' || messageArray[i] <= 'Z' && messageArray[i] >= 'N') {
-                messageArray[i] = (char) (messageArray[i] - 13);
+        for (int i = 0; i < sb.length(); i++) {
+            char ch = sb.charAt(i);
+
+            if (ch < 'n' && ch >= 'a' || ch < 'N' && ch >= 'A') {
+                sb.setCharAt(i, (char) (ch + 13));
+
+            } else if (ch <= 'z' && ch >= 'n' || ch <= 'Z' && ch >= 'N') {
+                sb.setCharAt(i, (char) (ch - 13));
             }
         }
 
-        return String.valueOf(messageArray);
+        return String.valueOf(sb);
     }
 }
 
