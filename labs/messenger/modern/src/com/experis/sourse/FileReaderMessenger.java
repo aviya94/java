@@ -1,23 +1,16 @@
-package com.experis;
+package com.experis.sourse;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Scanner;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class Reader {
+public class FileReaderMessenger {
     String filePath;
 
-    public Reader(String filePath) {
+    public FileReaderMessenger(String filePath) {
         this.filePath = filePath;
-    }
-
-    public <T> T read(Supplier<T> read) {
-        T massege = read.get();
-        return massege;
     }
 
     public Supplier<String> readFromFile() {
@@ -33,14 +26,4 @@ public class Reader {
         };
         return fileReader;
     }
-
-    public Supplier<String> readFromConsole() {
-        Supplier<String> consoleReader = () -> {
-            Scanner scanner = new Scanner(System.in);
-            return scanner.next();
-        };
-        return consoleReader;
-
-    }
 }
-

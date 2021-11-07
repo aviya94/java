@@ -1,4 +1,4 @@
-package com.experis;
+package com.experis.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,10 @@ public class TransformComposition<T> {
         transforms.add(transform);
     }
 
-    public T applyComposition(T massege) {
+    public T applyComposition(T massage) {
         for (Function<T,T> transform : transforms) {
-            massege = transform.apply(massege);
+            massage = transform.apply(massage);
         }
-        return massege;
+        return massage;
     }
 }

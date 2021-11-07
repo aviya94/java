@@ -1,33 +1,20 @@
-package com.experis;
+package com.experis.destanation;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+public class FileWriterMessenger {
+String filePath;
 
-public class Writer {
-    String filePath;
-
-    public Writer(String filePath) {
+    public FileWriterMessenger(String filePath) {
         this.filePath = filePath;
     }
 
-    public <T> void write(T massege, Consumer<T> writh) {
-        writh.accept(massege);
-    }
-
-    public Consumer<String> writhToConsole(String massege) {
-        Consumer<String> consoleWriter = (str) -> {
-            System.out.println(str);
-        };
-        return consoleWriter;
-    }
-
-    public Consumer<String> writhToFile(String massege) {
+    public Consumer<String> writeToFile(String message) {
         Consumer<String> fileWriter = (str) -> {
             Stream<String> lines = null;
             try {

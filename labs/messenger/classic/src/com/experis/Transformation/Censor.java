@@ -1,6 +1,4 @@
 package com.experis.Transformation;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -24,7 +22,7 @@ public class Censor implements Transform<String> {
     }
 
     public String transforn(String message) {
-        Pattern pattern = Pattern.compile(sensorPattern,Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(sensorPattern, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(message);
         StringBuilder sb = new StringBuilder();
 
