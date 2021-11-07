@@ -1,5 +1,8 @@
 package com.experis.destanation;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,20 +12,40 @@ import java.util.stream.Stream;
 
 public class FileWriterMessenger {
 String filePath;
-
+    BufferedWriter bufferedWriter;
     public FileWriterMessenger(String filePath) {
         this.filePath = filePath;
+
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            bufferedWriter = new BufferedWriter(fileWriter);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Consumer<String> writeToFile(String message) {
         Consumer<String> fileWriter = (str) -> {
-            Stream<String> lines = null;
-            try {
-                lines = (Stream<String>) Files.write(Paths.get(filePath), Collections.singleton(str));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (message == null) {
+                closeWrite();
+
+            } else {
+                try {
+                    bufferedWriter.write(message + "\n");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         };
         return fileWriter;
+    }
+    public void closeWrite() {
+        try {
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

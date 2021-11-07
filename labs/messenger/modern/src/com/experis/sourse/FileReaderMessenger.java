@@ -1,29 +1,52 @@
 package com.experis.sourse;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
+
 
 public class FileReaderMessenger {
     String filePath;
+    BufferedReader bufferedReader;
 
     public FileReaderMessenger(String filePath) {
-        this.filePath = filePath;
+        try {
+            FileReader fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Supplier<String> readFromFile() {
         Supplier<String> fileReader = () -> {
-            Stream<String> lines = null;
+            String line = null;
+
             try {
-                lines = Files.lines(Path.of(filePath));
-            } catch (IOException e) {
-                e.printStackTrace();
+                line = bufferedReader.readLine();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-            String massege = lines.toString();
-            return massege;
+
+            if (line == null) {
+                closeFile();
+            }
+            return line;
         };
         return fileReader;
+    }
+
+    private void closeFile() {
+        try {
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
