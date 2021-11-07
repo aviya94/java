@@ -22,8 +22,6 @@ class WriterTest {
     @AfterEach
     void after() {
         tempFileWrite.delete();
-
-
     }
 
     @Test
@@ -31,6 +29,7 @@ class WriterTest {
         String message = "hello world";
         fileWriterr.write(message);
         fileWriterr.closeWrite();
+        
         try {
             FileReader fileReader = new FileReader("./resources/WriteTemp.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);

@@ -18,8 +18,6 @@ public class CensorTest {
         censorList.add("hi");
         censorList.add("bye");
         censor = new Censor(censorList);
-
-
     }
 
     @Test

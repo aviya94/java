@@ -59,9 +59,11 @@ public class MessangerTest {
         messanger.sendMessage(fileReaders, composition, fileWriting);
         bufferedReader = new BufferedReader(fileReader);
         String result = "Hello World!";
+
         try {
             String res = bufferedReader.readLine();
             assertEquals(result, res);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
