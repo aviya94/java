@@ -4,7 +4,7 @@ import com.experis.Shapes.Point;
 import com.experis.Shapes.Shapes;
 
 public abstract class Polygon implements Shapes {
-    private final Point[] polygon;
+    protected final Point[] polygon;
 
     public Polygon(Point... polygon) {
         this.polygon = polygon;
