@@ -16,9 +16,8 @@ public abstract class Polygon implements Shapes {
         for (int i = 0; i < polygon.length - 1; i++) {
             area += (polygon[i].x() * polygon[i + 1].y()) - (polygon[i + 1].x() * polygon[i].y());
         }
-        if (area < 0) {
-            area *= -1;
-        }
-        return area * 0.5;
+
+        return Math.abs(area + polygon[polygon.length - 1].x() * polygon[0].y() -
+                polygon[0].x() * polygon[polygon.length - 1].y()) / 2.0;
     }
 }

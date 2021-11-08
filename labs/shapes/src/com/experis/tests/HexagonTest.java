@@ -24,11 +24,11 @@ public class HexagonTest {
     @Test
     void area_hexagon() {
 
-        hexagon = new Hexagon(new Point(1, 2), new Point(2, 4), new Point(4, 8)
-                , new Point(5, 4), new Point(2, 1), new Point(0, 0));
+        hexagon = new Hexagon(new Point(1, 2), new Point(2, 7), new Point(3, 3)
+                , new Point(5, 4), new Point(6, 0), new Point(12, 11));
 
         double result = hexagon.AreaCalculation();
-        double excepted = 13.5;
+        double excepted = 20;
         assertEquals(excepted, result);
 
     }
