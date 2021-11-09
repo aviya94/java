@@ -1,7 +1,9 @@
 package com.experis.test;
 
 import com.experis.ExpressionTree;
+import com.experis.ExpressionTreeCalculation;
 import com.experis.PaintExpressionTree;
+import com.experis.Variables;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +23,8 @@ class PaintExpressionTreeTest {
         PaintExpressionTree paintExpressionTree = new PaintExpressionTree(expressionTree);
         paintExpressionTree.paint(expressionTree.head);
         assertTrue(true);
+        ExpressionTreeCalculation expressionTreeCalculation=new ExpressionTreeCalculation(expressionTree);
+        assertEquals(1,expressionTreeCalculation.value(new Variables()));
 
     }
 }

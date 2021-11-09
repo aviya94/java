@@ -6,6 +6,10 @@ public class Variables {
 
     Hashtable<String, Integer> variables;
 
+    public Variables() {
+        variables = new Hashtable<>();
+    }
+
     public int getNumber(String var) {
         Integer number=variables.get(var);
         if(number==null){

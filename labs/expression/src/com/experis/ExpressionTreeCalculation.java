@@ -9,7 +9,7 @@ public class ExpressionTreeCalculation {
         this.expressionTree = expressionTree;
     }
 
-    Double value(Variables variables) {
+    public Double value(Variables variables) {
         ArrayList<String> operatorCalc = new ArrayList<>();
         double sum = 0;
         for (int i = expressionTree.prefixArrayList.size() - 1; i >= 0; i--) {

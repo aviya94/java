@@ -4,6 +4,7 @@ import com.experis.Parser.ArrayListParser;
 import com.experis.operands.BinaryOperators;
 import com.experis.operands.UnaryOperators;
 
+import javax.naming.NamingEnumeration;
 import java.util.ArrayList;
 
 public class ExpressionTree {
@@ -13,10 +14,13 @@ public class ExpressionTree {
     UnaryOperators unaryOperators;
 
     public ExpressionTree(String prefixExpression) {
+        binaryOperators=new BinaryOperators();
+        unaryOperators= new UnaryOperators();
         head = new TreeNode<>(null);
         ArrayListParser arrayListParser = new ArrayListParser(" ");
         this.prefixArrayList = arrayListParser.Parser(prefixExpression);
-        createExpirationTree(prefixArrayList, head);
+        ArrayList<String> ArrayList=arrayListParser.Parser(prefixExpression);
+        createExpirationTree(ArrayList, head);
     }
 
     void createExpirationTree(ArrayList<String> arrayPrefix, TreeNode<String> node) {
