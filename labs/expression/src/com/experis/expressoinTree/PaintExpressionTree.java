@@ -1,4 +1,4 @@
-package com.experis;
+package com.experis.expressoinTree;
 
 
 public class PaintExpressionTree {
@@ -14,10 +14,10 @@ public class PaintExpressionTree {
             return;
         }
 
-        paint(node.left);
+        paint(node.getLeft());
 
         System.out.printf("%s ", node.value);
-        paint(node.right);
+        paint(node.getRight());
 
 
     }

@@ -11,21 +11,20 @@ public class Variables {
     }
 
     public int getNumber(String var) {
-        Integer number=variables.get(var);
-        if(number==null){
+        Integer number = variables.get(var);
+        if (number == null) {
             throw new IllegalArgumentException();
         }
         return number;
     }
 
-    public void addVariable(String var, int number){
-        variables.put(var,number);
+    public void addVariable(String var, int number) {
+        variables.put(var, number);
     }
 
-    public Boolean isVariables(String var){
-        if(variables.get(var)!=null){
+    public Boolean isVariables(String var) {
+        if (variables.get(var) != null) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 }
