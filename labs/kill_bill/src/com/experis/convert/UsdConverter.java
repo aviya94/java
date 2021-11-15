@@ -1,14 +1,23 @@
 package com.experis.convert;
 
-import com.experis.TotalBill;
-import com.experis.loadCurrency.CurrenciesList;
+import com.experis.calcInvoice.Money;
+import com.experis.currency.Currency;
+import com.experis.currency.CurrencyConversionRate;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class UsdConverter extends CurrencyConverter {
+    Currency currency;
+
+    public UsdConverter() {
+        this.currency = CurrencyConversionRate.getCurrency("USD");
+    }
 
     @Override
-    public void Convert(double price, int quantity, TotalBill totalBill, CurrenciesList currenciesList) {
-        double value = currenciesList.getCurrencyValue("USD");
-        totalBill.addToBill(value * price * quantity);
+    public BigDecimal Convert(Money money, Currency currencyConvert) {
+        BigDecimal value = currency.value();
+        return money.getAmount().multiply(value).divide(currencyConvert.value(), MathContext.DECIMAL128);
 
     }
 }

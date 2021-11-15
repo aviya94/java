@@ -1,67 +1,82 @@
 package com.experis.tests;
 
-import com.experis.Item;
-import com.experis.TotalBill;
+import com.experis.calcInvoice.Money;
 import com.experis.convert.*;
-import com.experis.loadCurrency.LoadCurrencyFile;
+import com.experis.currency.Currency;
+import com.experis.loadDataBase.CurrencyFileLoader;
+import com.experis.parser.CurrencyParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConvertTest {
-    TotalBill totalBill;
-    LoadCurrencyFile loadCurrencyFile;
+    CurrencyFileLoader loadCurrencyFile;
 
     @BeforeEach
+
     void setUp() {
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("Ice cubes bag", 10, 3.12, "BRL"));
-        items.add(new Item("drizzle", 14, 4.25, "USD"));
-        items.add(new Item("slush", 3, 8.99, "CHF"));
-        HashMap<String, Converter> converters = new HashMap();
-        converters.put("USD", new UsdConverter());
-        converters.put("BRL", new BrlConverter());
-        converters.put("CHF", new ChfConverter());
-        converters.put("ILS", new IlsConverter());
-        totalBill = new TotalBill();
-        loadCurrencyFile = new LoadCurrencyFile("./resources/InputFile.txt");
+        CurrencyParser currencyParser=new CurrencyParser();
+        CurrencyFileLoader loadCurrencyFile = new CurrencyFileLoader(currencyParser,"./resources/RatesFile.txt");
 
     }
 
     @Test
     void brl() {
         BrlConverter brlConverter = new BrlConverter();
-        brlConverter.Convert(1, 1, totalBill, loadCurrencyFile.getNewCurrenciesList());
-        double brl = 0.31;
-        assertEquals(brl, totalBill.getBill());
+        BigDecimal bigDecimalUsd=new BigDecimal(0.73);
+        BigDecimal bigDecimalBrl=new BigDecimal(0.31);
+        Currency usd=new Currency(bigDecimalUsd,"USD");
+        Currency brl=new Currency(bigDecimalBrl,"BRL");
+        BigDecimal bigDecimalOne=new BigDecimal(1);
+        Money money=new Money(brl,bigDecimalOne);
+        var value= brlConverter.Convert(money,usd);
+        double excepted = 0.4246575342465754;
+        assertEquals(excepted,value.doubleValue() );
     }
 
     @Test
     void usd() {
         UsdConverter usdConverter = new UsdConverter();
-        usdConverter.Convert(1, 1, totalBill, loadCurrencyFile.getNewCurrenciesList());
-        double usd = 0.73;
-        assertEquals(usd, totalBill.getBill());
+        BigDecimal bigDecimalUsd=new BigDecimal(0.73);
+        BigDecimal bigDecimalChf=new BigDecimal(0.82);
+        Currency usd=new Currency(bigDecimalUsd,"USD");
+        Currency chf=new Currency(bigDecimalChf,"CHF");
+        BigDecimal bigDecimalOne=new BigDecimal(1);
+        Money money=new Money(usd,bigDecimalOne);
+        var value= usdConverter.Convert(money,chf);
+        double excepted = 0.8902439024390244;
+        assertEquals(excepted, value.doubleValue());
     }
 
     @Test
     void chf() {
         ChfConverter chfConverter = new ChfConverter();
-        chfConverter.Convert(1, 1, totalBill, loadCurrencyFile.getNewCurrenciesList());
-        double chf = 0.82;
-        assertEquals(chf, totalBill.getBill());
+        BigDecimal bigDecimalUsd=new BigDecimal(0.73);
+        BigDecimal bigDecimalChf=new BigDecimal(0.82);
+        Currency usd=new Currency(bigDecimalUsd,"USD");
+        Currency chf=new Currency(bigDecimalChf,"CHF");
+        BigDecimal bigDecimalOne=new BigDecimal(1);
+        Money money=new Money(chf,bigDecimalOne);
+        var value= chfConverter.Convert(money,usd);
+        double excepted = 1.1232876712328768;
+        assertEquals(excepted, value.doubleValue());
     }
 
     @Test
     void ils() {
         IlsConverter ilsConverter = new IlsConverter();
-        ilsConverter.Convert(1, 1, totalBill, loadCurrencyFile.getNewCurrenciesList());
-        double ils = 0.21;
-        assertEquals(ils, totalBill.getBill());
+        BigDecimal bigDecimalUsd=new BigDecimal(0.73);
+        BigDecimal bigDecimalIls=new BigDecimal(0.21);
+        Currency usd=new Currency(bigDecimalUsd,"USD");
+        Currency chf=new Currency(bigDecimalIls,"ILS");
+        BigDecimal bigDecimalOne=new BigDecimal(1);
+        Money money=new Money(chf,bigDecimalOne);
+        var value= ilsConverter.Convert(money,usd);
+        double excepted = 0.2876712328767123;
+        assertEquals(excepted, value.doubleValue());
     }
 
 }

@@ -1,44 +1,43 @@
 package com.experis.tests;
 
-import com.experis.Item;
-import com.experis.ItemCalc;
-import com.experis.TotalBill;
+import com.experis.calcInvoice.ItemCalc;
+import com.experis.calcInvoice.Money;
 import com.experis.convert.*;
-import com.experis.loadCurrency.LoadCurrencyFile;
+import com.experis.currency.Currency;
+import com.experis.loadDataBase.CurrencyFileLoader;
+import com.experis.parser.CurrencyParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemCalcTest {
     ItemCalc itemCalc;
-    TotalBill totalBill;
+
 
     @BeforeEach
     void setUp() {
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("Ice cubes bag", 10, 3.12, "BRL"));
-        items.add(new Item("drizzle", 14, 4.25, "USD"));
-        items.add(new Item("slush", 3, 8.99, "CHF"));
-        HashMap<String, Converter> converters = new HashMap();
-        converters.put("USD", new UsdConverter());
-        converters.put("BRL", new BrlConverter());
-        converters.put("CHF", new ChfConverter());
-        converters.put("ILS", new IlsConverter());
-        totalBill = new TotalBill();
-        LoadCurrencyFile loadCurrencyFile = new LoadCurrencyFile("./resources/InputFile.txt");
-        itemCalc = new ItemCalc(items, converters, totalBill, loadCurrencyFile.getNewCurrenciesList());
+        CurrencyParser currencyParser=new CurrencyParser();
+        CurrencyFileLoader loadCurrencyFile = new CurrencyFileLoader(currencyParser,"./resources/RatesFile.txt");
+        itemCalc = new ItemCalc();
 
     }
 
     @Test
     void calc() {
-        itemCalc.calc();
-        double excepted = 75.2224;
-        assertEquals(excepted, totalBill.getBill());
+        Converter converter=new UsdConverter();
+        int quantity =10;
+        Currency currency=new Currency(new BigDecimal(0.73),"USD");
+        BigDecimal unitPrice=new BigDecimal(3.12);
+        Money money=new Money(currency,unitPrice);
+        BigDecimal value=new BigDecimal(0.73);
+        Currency usd=new Currency(value,"USD");
+        BigDecimal result = itemCalc.calc(converter,quantity,money,usd);
+        Double excepted =31.200000000000003;
+        ;
+        assertEquals(excepted, result.doubleValue());
     }
 
 

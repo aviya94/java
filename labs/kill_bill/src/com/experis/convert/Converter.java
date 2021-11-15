@@ -1,9 +1,11 @@
 package com.experis.convert;
 
-import com.experis.TotalBill;
-import com.experis.loadCurrency.CurrenciesList;
+import com.experis.calcInvoice.Money;
+import com.experis.currency.Currency;
+
+import java.math.BigDecimal;
 
 public interface Converter {
-    public void Convert(double price, int quantity, TotalBill totalBill, CurrenciesList currenciesList);
+    public BigDecimal Convert(Money money, Currency currencyConvert);
 
 }
