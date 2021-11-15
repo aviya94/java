@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 public class ItemCalc {
 
-    public BigDecimal calc(Converter converter, int quantity, Money money , Currency currencyConvert) {
-        return converter.Convert(money.multiply(quantity),currencyConvert);
+    public BigDecimal calc(Converter converter, int quantity, Money money, Currency currencyConvert) {
+        return converter.Convert(money.multiply(quantity), currencyConvert);
     }
 }
 

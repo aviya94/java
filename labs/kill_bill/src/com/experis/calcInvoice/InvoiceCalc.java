@@ -25,7 +25,7 @@ public class InvoiceCalc {
 
     public void billCalc() {
         for (Item e : invoice.getItems()) {
-           bill= bill.add(itemCalc.calc(factoryConverter.getConverter(e.money().getCurrency()), e.quantity(), e.money(), currencyConvert));
+            bill = bill.add(itemCalc.calc(factoryConverter.getConverter(e.money().getCurrency()), e.quantity(), e.money(), currencyConvert));
         }
     }
 

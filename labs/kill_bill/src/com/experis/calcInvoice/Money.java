@@ -27,9 +27,9 @@ public class Money {
         this.amount = new BigDecimal(amount);
     }
 
-    public Money multiply(int quantity){
-        var q=new BigDecimal(quantity);
-        var a=amount.multiply(q);
-        return new Money(currency,a);
+    public Money multiply(int quantity) {
+        var q = new BigDecimal(quantity);
+        var a = amount.multiply(q);
+        return new Money(currency, a);
     }
 }

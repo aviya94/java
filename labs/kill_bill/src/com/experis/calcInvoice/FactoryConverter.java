@@ -13,12 +13,12 @@ public class FactoryConverter {
         this.converters = converters;
     }
 
-    public Converter getConverter(Currency currency){
-       Converter value= converters.get(currency.code());
-       if(value==null)
-       {
-           new IllegalArgumentException();
-       }
-       return value;
+    public Converter getConverter(Currency currency) {
+        Converter value = converters.get(currency.code());
+
+        if (value == null) {
+            new IllegalArgumentException();
+        }
+        return value;
     }
 }

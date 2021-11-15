@@ -18,8 +18,8 @@ class CurrencyFileLoaderTest {
 
     @BeforeEach
     void setUp() {
-        CurrencyParser currencyParser=new CurrencyParser();
-        loadCurrencyFile = new CurrencyFileLoader(currencyParser,"./resources/RatesFile.txt");
+        CurrencyParser currencyParser = new CurrencyParser();
+        loadCurrencyFile = new CurrencyFileLoader(currencyParser, "./resources/RatesFile.txt");
 
     }
 
@@ -31,10 +31,10 @@ class CurrencyFileLoaderTest {
     @Test
     void load_Currency_File() {
         HashMap<String, Currency> currencies = new HashMap<>();
-        currencies.put("CHF", new Currency(BigDecimal.valueOf(0.82),"CHF" ));
-        currencies.put("USD", new Currency(BigDecimal.valueOf(0.73),"USD"));
-        currencies.put("ILS", new Currency(BigDecimal.valueOf(0.21),"ILS"));
-        currencies.put("BRL", new Currency( BigDecimal.valueOf(0.31),"BRL"));
+        currencies.put("CHF", new Currency(BigDecimal.valueOf(0.82), "CHF"));
+        currencies.put("USD", new Currency(BigDecimal.valueOf(0.73), "USD"));
+        currencies.put("ILS", new Currency(BigDecimal.valueOf(0.21), "ILS"));
+        currencies.put("BRL", new Currency(BigDecimal.valueOf(0.31), "BRL"));
         assertEquals(currencies, loadCurrencyFile.getCurrencies());
 
     }

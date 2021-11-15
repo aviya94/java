@@ -11,11 +11,11 @@ public class IlsConverter extends CurrencyConverter {
     Currency currency;
 
     public IlsConverter() {
-        this.currency  = CurrencyConversionRate.getCurrency("ILS");
+        this.currency = CurrencyConversionRate.getCurrency("ILS");
     }
 
     @Override
-    public BigDecimal Convert(Money money,Currency currencyConvert) {
+    public BigDecimal Convert(Money money, Currency currencyConvert) {
         BigDecimal value = currency.value();
         return money.getAmount().multiply(value).divide(currencyConvert.value(), MathContext.DECIMAL128);
     }

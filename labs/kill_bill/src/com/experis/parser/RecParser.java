@@ -17,8 +17,8 @@ public class RecParser extends ItemParser {
     public Item parse(String value) {
         String[] valueArr = value.split(delimited);
         String[] currencyArr = valueArr[2].split(currencyDelimiter);
-        Currency currency= CurrencyConversionRate.getCurrency(currencyArr[1]);
-        Money money=new Money(currency ,Long.valueOf(currencyArr[0]));
-        return new Item(valueArr[1], Integer.valueOf(valueArr[0]),money);
+        Currency currency = CurrencyConversionRate.getCurrency(currencyArr[1]);
+        Money money = new Money(currency, Long.valueOf(currencyArr[0]));
+        return new Item(valueArr[1], Integer.valueOf(valueArr[0]), money);
     }
 }

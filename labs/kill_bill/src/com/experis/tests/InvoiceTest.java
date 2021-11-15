@@ -1,4 +1,5 @@
 package com.experis.tests;
+
 import com.experis.calcInvoice.*;
 import com.experis.currency.Currency;
 import com.experis.convert.*;
@@ -24,15 +25,15 @@ class InvoiceTest {
         CurrencyParser currencyParser = new CurrencyParser();
         CurrencyFileLoader loadCurrencyFile = new CurrencyFileLoader(currencyParser, "./resources/RatesFile.txt");
         ArrayList<Item> items = new ArrayList<>();
-        Currency brl=new Currency(new BigDecimal(3.12),"BRL");
-        Currency usd=new Currency(new BigDecimal(4.25),"USD");
-        Currency crf=new Currency(new BigDecimal(8.99),"CHF");
+        Currency brl = new Currency(new BigDecimal(3.12), "BRL");
+        Currency usd = new Currency(new BigDecimal(4.25), "USD");
+        Currency crf = new Currency(new BigDecimal(8.99), "CHF");
 
-        Money brlMoney=new Money(brl,new BigDecimal(3.12));
-        Money usdMoney=new Money(usd,new BigDecimal(4.25));
-        Money crfMoney=new Money(crf,new BigDecimal(8.99));
+        Money brlMoney = new Money(brl, new BigDecimal(3.12));
+        Money usdMoney = new Money(usd, new BigDecimal(4.25));
+        Money crfMoney = new Money(crf, new BigDecimal(8.99));
 
-        items.add(new Item("Ice cubes bag", 10,brlMoney));
+        items.add(new Item("Ice cubes bag", 10, brlMoney));
         items.add(new Item("drizzle", 14, usdMoney));
         items.add(new Item("slush", 3, crfMoney));
 

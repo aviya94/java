@@ -12,13 +12,13 @@ public class BrlConverter extends CurrencyConverter {
     Currency currency;
 
     public BrlConverter() {
-        this.currency  = CurrencyConversionRate.getCurrency("BRL");
+        this.currency = CurrencyConversionRate.getCurrency("BRL");
     }
 
     @Override
     public BigDecimal Convert(Money money, Currency currencyConvert) {
         BigDecimal value = currency.value();
-        return  money.getAmount().multiply(value).divide(currencyConvert.value(),  MathContext.DECIMAL128);
+        return money.getAmount().multiply(value).divide(currencyConvert.value(), MathContext.DECIMAL128);
 
     }
 }

@@ -17,7 +17,7 @@ public class TxtParser extends ItemParser{
     public Item parse(String value) {
         String[] valueArr = value.split(delimited);
 
-        Currency currency=CurrencyConversionRate.getCurrency(valueArr[3]);
+        Currency currency = CurrencyConversionRate.getCurrency(valueArr[3]);
         return new Item(valueArr[0], Integer.valueOf(valueArr[1]),new Money(currency,Long.valueOf(valueArr[2])));
     }
 }

@@ -10,7 +10,7 @@ public abstract class Loader {
     protected FileReader fileReader;
     protected BufferedReader bufferedReader;
 
-    public Loader(Parser parser,String filePath) {
+    public Loader(Parser parser, String filePath) {
         this.parser = parser;
 
         try {

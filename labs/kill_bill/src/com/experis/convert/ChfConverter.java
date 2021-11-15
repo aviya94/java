@@ -11,7 +11,7 @@ public class ChfConverter extends CurrencyConverter {
     Currency currency;
 
     public ChfConverter() {
-        this.currency  = CurrencyConversionRate.getCurrency("CHF");
+        this.currency = CurrencyConversionRate.getCurrency("CHF");
     }
 
     @Override
