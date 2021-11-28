@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameRunningTest {
-    GameRunning gameRunning;
+    private GameRunning gameRunning;
     @BeforeEach
     void setUp() {
         int[][] mat = new int[][]{{1, 1, 0, 1}, {1, 1, 1, 1}, {1, 0, 0, 1}, {1, 1, 0, 1}, {0, 1, 0, 1}};

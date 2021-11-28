@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardUpdaterTest {
-    BoardUpdater boardUpdater;
+    private BoardUpdater boardUpdater;
 
     @BeforeEach
     void setUp() {
