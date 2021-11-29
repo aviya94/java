@@ -1,49 +1,58 @@
 package com.experis;
 
+import java.util.concurrent.Semaphore;
+
 public class WaitableQueue<T> {
     private T[] data;
-    private int capacity;
-    private int next;
+    private int tail;
+    private int head;
+    private int size;
     private final Object lock = new Object();
+    Semaphore semaphoreEnqueue;
+    Semaphore semaphoreDequeue;
 
     public WaitableQueue(int capacity) {
-        this.capacity = capacity;
         data = (T[]) new Object[capacity];
-        next = 0;
+        head = 0;
+        tail = 0;
+        size = 0;
+        semaphoreEnqueue = new Semaphore(capacity);
+        semaphoreDequeue = new Semaphore(0);
     }
 
     public void enqueue(T value) throws InterruptedException {
+        semaphoreEnqueue.acquire();
         synchronized (lock) {
-            // if data exist
-            //  wait til its taken
-            while (isFull()) {
-                lock.wait();
+            ++size;
+            data[tail++] = value;
+            if (tail == capacity()) {
+                tail = 0;
             }
-            
-            assert !isFull();
-            data[next++] = value;
-
         }
+        semaphoreDequeue.release();
     }
 
+    private int capacity() {
+        return data.length;
+    }
+
+
     public T dequeue() throws InterruptedException {
+        semaphoreDequeue.acquire();
         synchronized (lock) {
-            // if not available
-            //  wait till available
-
-            while (isEmpty()) {
-                lock.wait();
+            --size;
+            var r = data[head++];
+            if (head == capacity()) {
+                head = 0;
             }
-            assert !isEmpty();
-            var r = data[--next];
-
+            semaphoreEnqueue.release();
             return r;
         }
     }
 
     public Boolean isEmpty() {
         synchronized (lock) {
-            if (next == 0) {
+            if (size == 0) {
                 return true;
             }
             return false;
@@ -52,14 +61,14 @@ public class WaitableQueue<T> {
 
     public Boolean isFull() {
         synchronized (lock) {
-            if (capacity == next) {
+            if (size == capacity()) {
                 return true;
             }
             return false;
         }
     }
 
-    public int size(){
-        return next;
+    public int size() {
+        return size;
     }
 }
