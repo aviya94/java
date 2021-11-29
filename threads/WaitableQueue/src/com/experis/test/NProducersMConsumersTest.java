@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NProducersMConsumersTest {
-    private final int numberOfProd = 10;
-    private final int numberOfCons = 5;
+    private final int numberOfProd = 100;
+    private final int numberOfCons = 25;
 
     @Test
     void nProducersMConsumers() {

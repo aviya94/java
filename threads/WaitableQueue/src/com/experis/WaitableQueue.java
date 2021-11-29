@@ -1,15 +1,17 @@
 package com.experis;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class WaitableQueue<T> {
     private T[] data;
     private int tail;
     private int head;
     private int size;
-    private final Object lock = new Object();
-    Semaphore semaphoreEnqueue;
-    Semaphore semaphoreDequeue;
+    private final Lock lock = new ReentrantLock();
+    private Semaphore semaphoreEnqueue;
+    private Semaphore semaphoreDequeue;
 
     public WaitableQueue(int capacity) {
         data = (T[]) new Object[capacity];
@@ -22,13 +24,16 @@ public class WaitableQueue<T> {
 
     public void enqueue(T value) throws InterruptedException {
         semaphoreEnqueue.acquire();
-        synchronized (lock) {
-            ++size;
-            data[tail++] = value;
-            if (tail == capacity()) {
-                tail = 0;
-            }
+
+        lock.lock();
+        ++size;
+        data[tail++] = value;
+
+        if (tail == capacity()) {
+            tail = 0;
         }
+        lock.unlock();
+
         semaphoreDequeue.release();
     }
 
@@ -39,32 +44,50 @@ public class WaitableQueue<T> {
 
     public T dequeue() throws InterruptedException {
         semaphoreDequeue.acquire();
-        synchronized (lock) {
+
+        lock.lock();
+        try {
             --size;
             var r = data[head++];
+
             if (head == capacity()) {
                 head = 0;
             }
             semaphoreEnqueue.release();
             return r;
+
+        } finally {
+            lock.unlock();
         }
+
     }
 
     public Boolean isEmpty() {
-        synchronized (lock) {
+        lock.lock();
+
+        try {
             if (size == 0) {
                 return true;
             }
             return false;
+            
+        } finally {
+            lock.unlock();
         }
+
     }
 
     public Boolean isFull() {
-        synchronized (lock) {
+        lock.lock();
+
+        try {
             if (size == capacity()) {
                 return true;
             }
             return false;
+
+        } finally {
+            lock.unlock();
         }
     }
 
