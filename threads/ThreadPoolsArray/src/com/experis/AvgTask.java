@@ -12,7 +12,6 @@ public class AvgTask implements Runnable {
     private final int start;
     private final int end;
     private DoubleAdder avg;
-    private Lock lock = new ReentrantLock();
 
     public AvgTask(int[] data, int start, int end, DoubleAdder avg) {
         this.data = data;

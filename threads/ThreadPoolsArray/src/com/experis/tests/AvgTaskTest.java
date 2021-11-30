@@ -28,6 +28,7 @@ class AvgTaskTest {
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         arr = new int[100_000];
         Random random = new Random();
+
         for (int i = 0; i < arr.length; i++) {
             arr[i] = random.nextInt(10);
         }
@@ -42,8 +43,10 @@ class AvgTaskTest {
         }
         executor.shutdown();
         executor.awaitTermination(10, TimeUnit.SECONDS);
+
         IntStream stream = IntStream.of(this.arr);
         double excepted = stream.average().getAsDouble();
+
         double res = avg.doubleValue();
 
         assertEquals(excepted, res);
