@@ -70,7 +70,7 @@ public class WaitableQueue<T> {
                 return true;
             }
             return false;
-            
+
         } finally {
             lock.unlock();
         }
