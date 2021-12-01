@@ -40,6 +40,7 @@ class MaxTaskTest {
         }
         executor.shutdown();
         executor.awaitTermination(10, TimeUnit.SECONDS);
+
         IntStream stream = IntStream.of(this.arr);
         int excepted = stream.parallel()
                 .max().getAsInt();
