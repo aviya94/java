@@ -2,39 +2,54 @@ package com.experis;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ManageTasks implements Runnable {
-    private ArrayDeque<Task> tasks;
+    private PriorityQueue<Task> tasks;
     private final Lock lock = new ReentrantLock();
     private ExecutorService executor;
-    private ArrayList<Task> runners;
 
-    public ManageTasks(ArrayDeque<Task> tasks, ExecutorService executor) {
-        runners = new ArrayList<>();
+    public ManageTasks(PriorityQueue<Task> tasks, ExecutorService executor) {
         this.tasks = tasks;
         this.executor = executor;
     }
 
     @Override
     public void run() {
-
         while (true) {
 
             while (!tasks.isEmpty()) {
                 var t = tasks.peek();
-                executor.submit(t);
-                pullFromQueue();
+
+                if (System.currentTimeMillis() >= t.getTimeNext() && t.isDone() == true) {
+                    executor.submit(t);
+                    updateTaskTime();
+
+                } else {
+                    pullFromQueueAndAdd();
+                }
             }
         }
     }
 
-    private void pullFromQueue() {
+    private void pullFromQueueAndAdd() {
         lock.lock();
         try {
-            runners.add(tasks.poll());
+            var t = tasks.poll();
+            tasks.add(t);
+
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void updateTaskTime() {
+        lock.lock();
+        try {
+            var t = tasks.peek();
+            t.updateTimeNext();
+
         } finally {
             lock.unlock();
         }

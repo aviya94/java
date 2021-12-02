@@ -1,6 +1,8 @@
 package com.experis.tests;
 
 import com.experis.PeriodicExecutor;
+import com.experis.Task;
+import com.experis.TaskRunnable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PeriodicExecutorTest {
-    PeriodicExecutor periodicExecutor;
+    private PeriodicExecutor periodicExecutor;
 
     @BeforeEach
     void setUp() throws InterruptedException {
@@ -20,10 +22,20 @@ class PeriodicExecutorTest {
 
     @Test
     void submit() {
+        var firstTask = new TaskRunnable("*");
+        var secondTask = new TaskRunnable("=");
+        var thirdTask = new TaskRunnable("&");
 
-        periodicExecutor.submit(() -> System.out.println("*"), 1, TimeUnit.SECONDS);
-        periodicExecutor.submit(() -> System.out.println("="), 5, TimeUnit.SECONDS);
-        //  periodicExecutor.submit(()->System.out.println("&"),3, TimeUnit.SECONDS);
+        try {
+            periodicExecutor.submit(firstTask, 1, TimeUnit.SECONDS);
+            periodicExecutor.submit(secondTask, 5, TimeUnit.SECONDS);
+            periodicExecutor.submit(thirdTask, 3, TimeUnit.SECONDS);
+            periodicExecutor.remove(new Task(secondTask, 0, TimeUnit.SECONDS));
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         periodicExecutor.exit();
 
     }

@@ -1,9 +1,11 @@
 package com.experis;
 
-public class taskRunnable implements Runnable{
+import java.util.Objects;
+
+public class TaskRunnable implements Runnable {
     private String str;
 
-    public taskRunnable(String str) {
+    public TaskRunnable(String str) {
         this.str = str;
     }
 
@@ -11,4 +13,5 @@ public class taskRunnable implements Runnable{
     public void run() {
         System.out.println(str);
     }
+
 }
