@@ -60,11 +60,11 @@ public class PeriodicExecutor {
         }
     }
 
-    public void exit() {
+    public void shutdown() {
         try {
             taskRunnerThread.join();
-            executor.shutdown();
-            executor.awaitTermination(20, TimeUnit.SECONDS);
+            //executor.shutdown();
+           // executor.awaitTermination(20, TimeUnit.SECONDS);
 
         } catch (InterruptedException e) {
             e.printStackTrace();

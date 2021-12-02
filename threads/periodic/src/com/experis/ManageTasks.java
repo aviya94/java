@@ -23,7 +23,8 @@ public class ManageTasks implements Runnable {
                 var t = tasks.peek();
 
                 if (System.currentTimeMillis() >= t.getTimeNext() && t.isDone() == true) {
-                    executor.submit(t);
+                    //executor.submit(t);
+                    t.run();
                     updateTaskTime();
 
                 } else {

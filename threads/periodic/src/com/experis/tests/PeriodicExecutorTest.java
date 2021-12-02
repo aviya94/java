@@ -36,7 +36,7 @@ class PeriodicExecutorTest {
             e.printStackTrace();
         }
 
-        periodicExecutor.exit();
+        periodicExecutor.shutdown();
 
     }
 }
