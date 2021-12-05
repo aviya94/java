@@ -2,18 +2,12 @@ package com.experis;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ManageTasks {
-    private PriorityQueue<Task> tasks=new PriorityQueue<>();
+    private PriorityQueue<Task> tasks = new PriorityQueue<>();
     private final Lock lock = new ReentrantLock();
-    private final Semaphore available = new Semaphore(0);
-
-    public Semaphore getAvailable() {
-        return available;
-    }
 
     public boolean isEmpty() {
         lock.lock();
@@ -40,23 +34,16 @@ public class ManageTasks {
         lock.lock();
         try {
             tasks.add(task);
-        }
-        finally {
-            available.release();
-
+        } finally {
             lock.unlock();
         }
     }
 
     public void remove(Task task) {
-
         lock.lock();
         try {
             tasks.remove(task);
-        }
-        finally {
-           // updateQueue.signal();
-
+        } finally {
             lock.unlock();
         }
     }
@@ -65,8 +52,7 @@ public class ManageTasks {
         lock.lock();
         try {
             return tasks.poll();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }

@@ -1,6 +1,5 @@
 package com.experis.tests;
 
-import java.util.Objects;
 
 class TaskRunnable implements Runnable {
     private String str;

@@ -1,25 +1,55 @@
 package com.experis;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class QueueTasksRunnable implements Runnable {
+public class QueueTasksRunnable {
     private ManageTasks tasks;
+    private AtomicBoolean stop;
+    private Thread thread;
+    private Lock lock = new ReentrantLock();
 
-    public QueueTasksRunnable(ManageTasks tasks) {
-        this.tasks = tasks;
+    public Thread getThread() {
+        return thread;
     }
 
-    @Override
-    public void run() {
-        while (true) {
+    public QueueTasksRunnable(ManageTasks tasks) {
+        stop = new AtomicBoolean(false);
+        this.tasks = tasks;
+        thread = new Thread(() -> run());
+        thread.start();
+    }
 
-            while (!tasks.isEmpty()) {
-                sleepUntilNext();
-                var t = tasks.peek();
+    public void stopToRun() {
+        stop.set(true);
+        thread.interrupt();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-                if (System.currentTimeMillis() >= t.getTimeNext())
-                    runTask(t);
-                updateTaskTime();
+    private void run() {
+        while (stop.get() == false) {
+            try {
+                lock.lock();
+
+                while (!tasks.isEmpty()) {
+                    var t = tasks.peek();
+                    sleepUntilNext(t);
+
+                    if (System.currentTimeMillis() >= t.getTimer().getTimeNext()) {
+                        runTask(t);
+                        updateTaskTime(t);
+                    }
+                }
+            } catch (InterruptedException e) {
+
+            } finally {
+                lock.unlock();
             }
         }
     }
@@ -28,23 +58,19 @@ public class QueueTasksRunnable implements Runnable {
         try {
             t.run();
         } catch (Exception e) {
-            System.out.println("Exception int thread" + Thread.currentThread());
+            System.out.println("Exception in thread" + Thread.currentThread());
         }
     }
 
-    private void updateTaskTime() {
-        var t = tasks.poll();
-        t.updateTimeNext();
+    private void updateTaskTime(Task t) {
+        tasks.remove(t);
+        t.getTimer().updateTimeNext();
         tasks.add(t);
     }
 
-    public void sleepUntilNext() {
-        var t = tasks.peek();
+    private void sleepUntilNext(Task t) throws InterruptedException {
+        TimeUnit.MILLISECONDS.sleep(t.getTimer().getTimeNext() - System.currentTimeMillis());
 
-        try {
-            TimeUnit.MILLISECONDS.sleep(t.getTimeNext() - System.currentTimeMillis());
-        } catch (InterruptedException e) {
-        }
     }
 
 }

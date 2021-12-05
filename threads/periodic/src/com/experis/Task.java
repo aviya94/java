@@ -1,66 +1,37 @@
 package com.experis;
-
+import java.sql.Time;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 
 public class Task implements Runnable, Comparable<Task> {
-    private long timeNext;
     private final Runnable task;
-    private final int periodicTime;
-    private final TimeUnit timeUnit;
-    private Boolean isDone = true;
-    Lock lock = new ReentrantLock();
+    private Timer timer;
 
-    public Task(Runnable task, int periodicTime, TimeUnit timeUnit) {
-        this.task = task;
-        this.periodicTime = periodicTime;
-        this.timeUnit = timeUnit;
-        this.timeNext = System.currentTimeMillis() + timeUnit.toMillis(periodicTime);
+    public Timer getTimer() {
+        return timer;
     }
 
-    public void sleep() {
-        try {
-            timeUnit.sleep(periodicTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public Task(Runnable task, int periodicTime, TimeUnit timeUnit, int delayTime, TimeUnit
+            delayTimeUnit) {
+        this.task = task;
+        var timeNext= System.currentTimeMillis() +
+                timeUnit.toMillis(periodicTime)+delayTimeUnit.toMillis(delayTime);
+        timer=new Timer(timeNext,periodicTime,timeUnit);
     }
 
     @Override
     public void run() {
-        updateIsDone(false);
-        sleep();
+        timer.sleep();
         task.run();
-        updateIsDone(true);
-    }
-
-    private void updateIsDone(Boolean isDone) {
-        lock.lock();
-        try {
-            this.isDone = isDone;
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public void updateTimeNext() {
-        timeNext = System.currentTimeMillis() + timeUnit.toMillis(periodicTime);
     }
 
     @Override
     public int compareTo(Task t) {
-        return (int) (timeNext - t.timeNext);
+        return (int) (timer.getTimeNext() - t.timer.getTimeNext());
     }
 
     public Runnable getTask() {
         return task;
-    }
-
-    public Boolean isDone() {
-        return isDone;
     }
 
     @Override
@@ -74,9 +45,5 @@ public class Task implements Runnable, Comparable<Task> {
     @Override
     public int hashCode() {
         return Objects.hash(task);
-    }
-
-    public long getTimeNext() {
-        return timeNext;
     }
 }

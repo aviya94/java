@@ -22,16 +22,21 @@ class PeriodicExecutorTest {
         var thirdTask = new TaskRunnable("&");
 
         try {
-            periodicExecutor.submit(firstTask, 1, TimeUnit.SECONDS);
-            periodicExecutor.submit(secondTask, 5, TimeUnit.SECONDS);
-            periodicExecutor.submit(thirdTask, 3, TimeUnit.SECONDS);
-            //periodicExecutor.remove(new Task(secondTask, 0, TimeUnit.SECONDS));
+            periodicExecutor.submit(firstTask, 1, TimeUnit.SECONDS,2,TimeUnit.SECONDS);
+            periodicExecutor.submit(secondTask, 3, TimeUnit.SECONDS);
+            periodicExecutor.submit(thirdTask, 5, TimeUnit.SECONDS);
+            periodicExecutor.remove(new Task(secondTask, 0, TimeUnit.SECONDS,0,TimeUnit.MILLISECONDS));
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        try {
+            TimeUnit.MILLISECONDS.sleep(20000);
 
-        periodicExecutor.shutdown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+         periodicExecutor.shutdown();
 
     }
 }
