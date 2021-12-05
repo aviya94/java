@@ -2,56 +2,71 @@ package com.experis;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ManageTasks implements Runnable {
-    private PriorityQueue<Task> tasks;
+public class ManageTasks {
+    private PriorityQueue<Task> tasks=new PriorityQueue<>();
     private final Lock lock = new ReentrantLock();
-    private ExecutorService executor;
+    private final Semaphore available = new Semaphore(0);
 
-    public ManageTasks(PriorityQueue<Task> tasks, ExecutorService executor) {
-        this.tasks = tasks;
-        this.executor = executor;
+    public Semaphore getAvailable() {
+        return available;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-
-            while (!tasks.isEmpty()) {
-                var t = tasks.peek();
-
-                if (System.currentTimeMillis() >= t.getTimeNext() && t.isDone() == true) {
-                    //executor.submit(t);
-                    t.run();
-                    updateTaskTime();
-
-                } else {
-                    pullFromQueueAndAdd();
-                }
-            }
-        }
-    }
-
-    private void pullFromQueueAndAdd() {
+    public boolean isEmpty() {
         lock.lock();
         try {
-            var t = tasks.poll();
-            tasks.add(t);
-
+            if (tasks.isEmpty()) {
+                return true;
+            }
+            return false;
         } finally {
             lock.unlock();
         }
     }
 
-    private void updateTaskTime() {
+    public Task peek() {
         lock.lock();
         try {
-            var t = tasks.peek();
-            t.updateTimeNext();
-
+            return tasks.peek();
         } finally {
+            lock.unlock();
+        }
+    }
+
+    public void add(Task task) {
+        lock.lock();
+        try {
+            tasks.add(task);
+        }
+        finally {
+            available.release();
+
+            lock.unlock();
+        }
+    }
+
+    public void remove(Task task) {
+
+        lock.lock();
+        try {
+            tasks.remove(task);
+        }
+        finally {
+           // updateQueue.signal();
+
+            lock.unlock();
+        }
+    }
+
+    public Task poll() {
+        lock.lock();
+        try {
+            return tasks.poll();
+        }
+        finally {
             lock.unlock();
         }
     }

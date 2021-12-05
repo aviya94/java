@@ -1,8 +1,8 @@
-package com.experis;
+package com.experis.tests;
 
 import java.util.Objects;
 
-public class TaskRunnable implements Runnable {
+class TaskRunnable implements Runnable {
     private String str;
 
     public TaskRunnable(String str) {
