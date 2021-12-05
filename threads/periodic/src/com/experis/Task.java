@@ -1,4 +1,5 @@
 package com.experis;
+
 import java.sql.Time;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -14,9 +15,9 @@ public class Task implements Runnable, Comparable<Task> {
     public Task(Runnable task, int periodicTime, TimeUnit timeUnit, int delayTime, TimeUnit
             delayTimeUnit) {
         this.task = task;
-        var timeNext= System.currentTimeMillis() +
-                timeUnit.toMillis(periodicTime)+delayTimeUnit.toMillis(delayTime);
-        timer=new Timer(timeNext,periodicTime,timeUnit);
+        var timeNext = System.currentTimeMillis() +
+                timeUnit.toMillis(periodicTime) + delayTimeUnit.toMillis(delayTime);
+        timer = new Timer(timeNext, periodicTime, timeUnit);
     }
 
     @Override

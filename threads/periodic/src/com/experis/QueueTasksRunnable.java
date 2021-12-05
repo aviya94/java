@@ -1,7 +1,9 @@
 package com.experis;
 
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -9,17 +11,18 @@ public class QueueTasksRunnable {
     private ManageTasks tasks;
     private AtomicBoolean stop;
     private Thread thread;
-    private Lock lock = new ReentrantLock();
+    private Lock lock;
+    private Condition wakeUp;
 
-    public Thread getThread() {
-        return thread;
-    }
 
-    public QueueTasksRunnable(ManageTasks tasks) {
+    public QueueTasksRunnable(ManageTasks tasks, Condition wakeUp, Lock lock) {
         stop = new AtomicBoolean(false);
         this.tasks = tasks;
+        this.lock = lock;
+        this.wakeUp = wakeUp;
         thread = new Thread(() -> run());
         thread.start();
+
     }
 
     public void stopToRun() {
@@ -28,31 +31,29 @@ public class QueueTasksRunnable {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
     private void run() {
         while (stop.get() == false) {
             try {
-                lock.lock();
-
                 while (!tasks.isEmpty()) {
-                    var t = tasks.peek();
+                    var t = tasks.poll();
                     sleepUntilNext(t);
+                    var time = t.getTimer().getTimeNext();
 
-                    if (System.currentTimeMillis() >= t.getTimer().getTimeNext()) {
+                    //wakeUp.await(time,TimeUnit.MILLISECONDS);
+                    if (System.currentTimeMillis() >= time) {
                         runTask(t);
                         updateTaskTime(t);
                     }
                 }
-            } catch (InterruptedException e) {
 
-            } finally {
-                lock.unlock();
+            } catch (InterruptedException e) {
             }
         }
     }
+
 
     private void runTask(Task t) {
         try {
@@ -63,9 +64,10 @@ public class QueueTasksRunnable {
     }
 
     private void updateTaskTime(Task t) {
-        tasks.remove(t);
         t.getTimer().updateTimeNext();
-        tasks.add(t);
+        if (tasks.getPopTask() != null) {
+            tasks.add(t);
+        }
     }
 
     private void sleepUntilNext(Task t) throws InterruptedException {
