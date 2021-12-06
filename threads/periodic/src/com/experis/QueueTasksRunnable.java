@@ -69,9 +69,4 @@ public class QueueTasksRunnable {
         }
     }
 
-    private void sleepUntilNext(Task t) throws InterruptedException {
-        TimeUnit.MILLISECONDS.sleep(t.getTimer().getTimeNext() - System.currentTimeMillis());
-
-    }
-
 }
