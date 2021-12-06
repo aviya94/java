@@ -1,7 +1,7 @@
 
 public class QuadraticEquationSolver {
 
-    public double[] calc(int a, int b, int c) {
+    public double[] calc(double a, double b, double c) {
         double calc= Math.pow(b,2) - 4 * a * c;
 
         if(calc<0)

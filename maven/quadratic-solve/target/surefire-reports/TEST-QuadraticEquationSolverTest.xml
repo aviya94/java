@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="QuadraticEquationSolverTest" time="0.031" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="QuadraticEquationSolverTest" time="0.092" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="IL"/>
     <property name="sun.boot.library.path" value="C:\Users\user\.jdks\openjdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\user\AppData\Local\Temp\surefire15231856338582866344\surefirebooter2093668897733469101.jar C:\Users\user\AppData\Local\Temp\surefire15231856338582866344 2021-12-06T12-48-42_392-jvmRun1 surefire6300931200766373921tmp surefire_08075626413370677696tmp"/>
+    <property name="sun.java.command" value="C:\Users\user\AppData\Local\Temp\surefire9660861253311820487\surefirebooter16427691729171281145.jar C:\Users\user\AppData\Local\Temp\surefire9660861253311820487 2021-12-06T14-51-12_154-jvmRun1 surefire7026009794443600813tmp surefire_014071233458568289477tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\user\course\java\maven\quadratic-solve\target\test-classes;C:\Users\user\course\java\maven\quadratic-solve\target\classes;C:\Users\user\.m2\repository\org\junit\jupiter\junit-jupiter\5.7.0\junit-jupiter-5.7.0.jar;C:\Users\user\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.7.0\junit-jupiter-api-5.7.0.jar;C:\Users\user\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\user\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\user\.m2\repository\org\junit\platform\junit-platform-commons\1.7.0\junit-platform-commons-1.7.0.jar;C:\Users\user\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.7.0\junit-jupiter-params-5.7.0.jar;C:\Users\user\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.7.0\junit-jupiter-engine-5.7.0.jar;C:\Users\user\.m2\repository\org\junit\platform\junit-platform-engine\1.7.0\junit-platform-engine-1.7.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\user\AppData\Local\Temp\surefire15231856338582866344\surefirebooter2093668897733469101.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\user\AppData\Local\Temp\surefire9660861253311820487\surefirebooter16427691729171281145.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17+35-2724"/>
@@ -57,7 +57,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="calc" classname="QuadraticEquationSolverTest" time="0.015"/>
-  <testcase name="calc2" classname="QuadraticEquationSolverTest" time="0"/>
-  <testcase name="calc3" classname="QuadraticEquationSolverTest" time="0"/>
+  <testcase name="calc" classname="QuadraticEquationSolverTest" time="0.062"/>
+  <testcase name="calc2" classname="QuadraticEquationSolverTest" time="0.008"/>
+  <testcase name="calc3" classname="QuadraticEquationSolverTest" time="0.002"/>
 </testsuite>

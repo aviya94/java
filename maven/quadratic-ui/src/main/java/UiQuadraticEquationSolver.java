@@ -6,9 +6,9 @@ public class UiQuadraticEquationSolver {
 
     public void runUi() {
         System.out.println("enter quadratic equation coefficients");
-        int a = scanner.nextInt();
-        int b = scanner.nextInt();
-        int c = scanner.nextInt();
+        double a = scanner.nextDouble();
+        double b = scanner.nextDouble();
+        double c = scanner.nextDouble();
 
         printEquation(a, b, c);
         double[] result = quadraticEquationSolver.calc(a, b, c);
@@ -27,7 +27,7 @@ public class UiQuadraticEquationSolver {
         }
     }
 
-    private void printEquation(int a, int b, int c) {
+    private void printEquation(double a, double b, double c) {
         System.out.println(a + "x^2+" + b + "x+" + c);
     }
 }
