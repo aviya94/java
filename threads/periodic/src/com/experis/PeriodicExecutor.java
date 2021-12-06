@@ -27,10 +27,6 @@ public class PeriodicExecutor {
         Task t = new Task(task, periodicTime, periodicTimeUnit, delayTime, delayTimeUnit);
         manageTasks.add(t);
 
-        if (manageTasks.peek().equals(t)) {
-            //  wakeUp.signal();
-            // queueTasksRunnable.getThread().interrupt();
-        }
 
     }
 

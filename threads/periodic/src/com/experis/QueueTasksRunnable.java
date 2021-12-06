@@ -38,11 +38,10 @@ public class QueueTasksRunnable {
         while (stop.get() == false) {
             try {
                 while (!tasks.isEmpty()) {
-                    var t = tasks.poll();
-                    sleepUntilNext(t);
+
+                   var t=tasks.sleepUntilNext();
                     var time = t.getTimer().getTimeNext();
 
-                    //wakeUp.await(time,TimeUnit.MILLISECONDS);
                     if (System.currentTimeMillis() >= time) {
                         runTask(t);
                         updateTaskTime(t);

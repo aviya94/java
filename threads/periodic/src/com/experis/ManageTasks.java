@@ -2,6 +2,7 @@ package com.experis;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -9,6 +10,7 @@ public class ManageTasks {
     private PriorityQueue<Task> tasks = new PriorityQueue<>();
     private final Lock lock = new ReentrantLock();
     private Task popTask;
+    private Condition wakeUp = lock.newCondition();
 
     public Task getPopTask() {
         lock.lock();
@@ -53,6 +55,10 @@ public class ManageTasks {
         lock.lock();
         try {
             tasks.add(task);
+
+            if (tasks.peek().equals(task)) {
+                wakeUp.signal();
+            }
         } finally {
             lock.unlock();
         }
@@ -61,9 +67,9 @@ public class ManageTasks {
     public void remove(Task task) {
         lock.lock();
         try {
-            if(tasks.remove(task)==false);
+            if (tasks.remove(task) == false) ;
             {
-                if(popTask!=null) {
+                if (popTask != null) {
                     if (popTask.equals(task)) {
                         popTask = null;
                     }
@@ -84,4 +90,18 @@ public class ManageTasks {
             lock.unlock();
         }
     }
+
+    public Task sleepUntilNext() throws InterruptedException {
+        var t = poll();
+        var time = t.getTimer().getTimeNext() - System.currentTimeMillis();
+        TimeUnit.MILLISECONDS.sleep(t.getTimer().getTimeNext() - System.currentTimeMillis());
+        lock.lock();
+        try {
+            wakeUp.await(time, TimeUnit.MILLISECONDS);
+        } finally {
+            lock.unlock();
+        }
+        return t;
+    }
+
 }
