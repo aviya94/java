@@ -17,7 +17,6 @@ public class Timer {
         try {
             timeUnit.sleep(periodicTime);
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
