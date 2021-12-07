@@ -14,6 +14,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+
     <dependencies>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -21,15 +22,12 @@
         <version>5.8.2</version>
         <scope>test</scope>
     </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>polynomial</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>derivation</artifactId>
             <version>1.0.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
