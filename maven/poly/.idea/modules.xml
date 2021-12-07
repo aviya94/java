@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/multimodule/derivation/derivation.iml" filepath="$PROJECT_DIR$/multimodule/derivation/derivation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multimodule/multimodule.iml" filepath="$PROJECT_DIR$/multimodule/multimodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/poly.iml" filepath="$PROJECT_DIR$/.idea/poly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multimodule/polynomial/polynomial.iml" filepath="$PROJECT_DIR$/multimodule/polynomial/polynomial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multimodule/ui/ui.iml" filepath="$PROJECT_DIR$/multimodule/ui/ui.iml" />
+    </modules>
+  </component>
+</project>
