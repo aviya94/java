@@ -2,7 +2,7 @@ package com.aviya.draughts;
 
 import com.aviya.draughts.soldier.Rules;
 
-public final class SquareDraughtsGame {
+public class SquareGame {
     private final Color squareColor;
     private Rules soldier;
 
@@ -16,7 +16,7 @@ public final class SquareDraughtsGame {
 
     private Color player;
 
-    public SquareDraughtsGame(Color squareColor, Rules soldier, Color player) {
+    public SquareGame(Color squareColor, Rules soldier, Color player) {
         this.squareColor = squareColor;
         this.soldier = soldier;
         this.player = player;

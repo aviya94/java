@@ -3,9 +3,9 @@ package com.aviya.draughts;
 import com.aviya.draughts.soldier.MenRules;
 
 public class DraughtsBoard {
-    private SquareDraughtsGame[][] board = new SquareDraughtsGame[8][8];
+    private SquareGame[][] board = new SquareGame[8][8];
 
-    public SquareDraughtsGame getIndexBoard(int row, int col) {
+    public SquareGame getIndexBoard(int row, int col) {
         return board[row][col];
     }
 
@@ -34,17 +34,17 @@ public class DraughtsBoard {
 
             if (i <= 2) {
                 {
-                    board[i][j] = new SquareDraughtsGame(squareColor, new MenRules(), Color.BLACK);
+                    board[i][j] = new SquareGame(squareColor, new MenRules(), Color.BLACK);
                 }
 
             } else if (i >= 5) {
-                board[i][j] = new SquareDraughtsGame(squareColor, new MenRules(), Color.WHITE);
+                board[i][j] = new SquareGame(squareColor, new MenRules(), Color.WHITE);
             }
 
         }
 
         if ((i > 2 && i < 5) || squareColor == Color.WHITE) {
-            board[i][j] = new SquareDraughtsGame(squareColor, null, null);
+            board[i][j] = new SquareGame(squareColor, null, null);
         }
     }
 

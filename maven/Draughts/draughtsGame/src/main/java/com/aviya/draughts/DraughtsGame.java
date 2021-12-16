@@ -23,7 +23,7 @@ public class DraughtsGame {
                 var moveFromPlayer = draughtsBoard.getIndexBoard(move.rowFrom(), move.colFrom()).player();
 
                 if (moveFromPlayer.equals(players[index].getPlayerColor())) {
-                    SquareDraughtsGame from = draughtsBoard.getIndexBoard(move.rowFrom(), move.colFrom());
+                    SquareGame from = draughtsBoard.getIndexBoard(move.rowFrom(), move.colFrom());
                     isLegalMove = from.soldier().move(move, draughtsBoard);
                 }
             }
