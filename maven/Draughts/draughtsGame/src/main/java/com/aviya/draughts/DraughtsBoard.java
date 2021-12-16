@@ -9,10 +9,6 @@ public class DraughtsBoard {
         return board[row][col];
     }
 
-    public void setBoard(SquareDraughtsGame[][] board) {
-        this.board = board;
-    }
-
     public DraughtsBoard() {
         initialize();
 

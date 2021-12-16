@@ -7,5 +7,5 @@ public interface Player {
 
     int getSoldiersCount();
 
-    public void decreaseSoldiersCount();
+     void decreaseSoldiersCount();
 }
