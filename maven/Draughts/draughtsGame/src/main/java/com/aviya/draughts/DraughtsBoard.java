@@ -12,7 +12,7 @@ public class DraughtsBoard {
     public DraughtsBoard() {
         initialize();
 
-        System.out.println(toString());
+       // System.out.println(toString());
     }
 
     private void initialize() {

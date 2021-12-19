@@ -46,7 +46,9 @@ class MenTest {
             "2,2,3,1",
             "2,2,3,3"})
     void moveTrueBlack(int rowFrom, int colFrom, int rowTo, int colTo) {
-        var res = men.move(new Move(rowFrom, colFrom, rowTo, colTo, new LocalPlayer(Color.BLACK)), new DraughtsBoard());
+        var board =new DraughtsBoard();
+        var res = men.move(new Move(rowFrom, colFrom, rowTo, colTo, new LocalPlayer(Color.BLACK)), board);
+        System.out.println(board.toString());
         assertTrue(res);
     }
 
