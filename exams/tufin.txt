@@ -1,0 +1,106 @@
+1. ההבדל הוא שמתודה סטטית היא מתודה של המחלקה, נוצרת פעם אחת בזיכרון, ברגע שיוצרים אינטרקציה עם המחלקה היא נוצרת 
+    וניתן לגשת אלייה באמצעות שם המחלקה נקודה ושם המתודה בלי ליצור אובייקט של המחלקה, לא ניתן להשתמש במשתנים שאינם סטטים של המחלקה
+    לעומת זאת מתודה של מופע היא מתודה השייכת עבור כל אובייקט של המחלקה, היא נוצרת ברגע שעושים new על המחלקה, היא נמצאת בזיכרון מספר פעמים של יצירת אובייקט
+   ניתן לגשת באמצעות שם האובייקט, נקודה, שם המתודה
+
+2. ההבדל הוא שמשתנה סטטי נוצר פעם אחת בזיכרון, ניתן לגשת אליו רק דרך שם המחלקה, נקודה ושם המשתנה, המשתנה נוצר ברגע שיוצרים אינטרקציה עם המחלקה 
+    הערך שלו נשמר עבור כל האובייקטים שנוצרים מהמחלקה 
+    משתנה לא סטטי נוצר כל אובייקט שעושים לו new במחלקה, ניתן לגשת אליו דרך האובייקט שיצרנו, כל פעם שנוצר אובייקט, נוצר המשתנה ויכול להכיל ערכים שונים מאובייקט לאובייקט 
+    כי הוא משתנה אחר שנשמר בזיכרון מספר פעמים עבור כל אובייקט
+
+3. כל מי שנמצא בתוך הpackage או כל מי שיורש מK
+
+4.public static void printDigit(Long num)
+{
+while(num!=0)
+{
+System.out.printlen(num%10)
+num=num/10
+}}
+
+5.ההבדל הוא שמיוטקס ניתן לגשת רק דרך הטרד שביצאנו בו את הנעילה ופועל כמנעול שניתן לפתוח ולסגור
+   סמפור לומת זאת, ניתן לגשת דרך כל טרד שיצרנו , הוא מוגדר עם ערך מסויים וברגע שעודים acquire הערך יורד וברגע שמגיע ל0 הוא ננעל ולא ניתן להמשיך עד שמשחרים, ברדע שמשחררים כל פעם הערך עולה ב1 ורק טרד אחד יוכל לגשת
+
+6. התנאים לdeadlock הם שיש שתי מששאבים, משאב a נועל את עצמו ומחכה שיהיה לו גישה למשאב b כדי להמשיך, משאב b לעומת זאת נועל את עצמו גם וצריך גישה למשאב a כדי להמשיך ונוצר מצב ששתי המשאבים 
+    צריכים אחת את השני להמשיך ואין להם את הגישה.
+
+7. 
+
+public class RunTask{
+  private Lock lock=new ReentrantLock();
+private Condision cond=lock.newCondision;
+	
+public RunTask(){
+Theard theard=new Theard(()->{()->runTick()});
+theard.start;
+theard.join;
+}
+
+private void runTick(){
+try{
+lock.lock()
+while(true)
+{
+Theard theard=new Theard(()->{()->tick()})
+Long time=currentTimeMillis();
+while(time<=currentTimeMillis())
+{cond.await();
+}
+theard.start
+theard.join
+}
+}
+finally{lock.unlock;
+}
+}
+
+addTask(Task task, Double delay) 
+   { try{
+  lock.lock();
+Theard.Sleep(delay,TimeUtil.MILISECOND)
+Theard theard=new Theard(()->{task.run
+theard.start;
+theard.join
+}
+finally{
+cond.signal();
+lock.unlock();
+}
+}
+
+
+
+
+
+8.
+class Bank {
+    // map of account number to account balance יתרה
+    private Map<Integer, Integer> money = new HashMap<>();
+    {
+        money.put(1, 100);
+        money.put(2, 0);
+    }
+    public boolean transfer(int accountFrom, int accountTo, int amount)
+    {
+    if(money.get(accountFrom)==null|| money.get(accountTo==null)
+    {
+    return false;
+    }
+     else if(money.get(accountFrom) < amount) {
+      return false;
+      }
+      money.put(accountFrom,  money.get(accountFrom) - amount);
+      money.put(accountTo,  money.get(accountFrom) + amount);
+
+       return true;
+    }
+
+
+
+
+
+
+
+
+
+
