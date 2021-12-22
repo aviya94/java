@@ -1,6 +1,6 @@
 package com.experis.test;
 
-import com.experis.Messanger;
+import com.experis.Messenger;
 import com.experis.Transformation.TransformComposition;
 import com.experis.destanation.FileWriterMassenger;
 import com.experis.sourse.FileReaderMassenger;
@@ -19,12 +19,12 @@ public class MessangerTest {
     private File tempFileWrite;
     private FileReader fileReader;
     private BufferedReader bufferedReader;
-    private Messanger messanger;
+    private Messenger messanger;
 
     @BeforeEach
     void setUp() {
 
-        messanger = new Messanger();
+        messanger = new Messenger();
         fileReaders = new FileReaderMassenger("./resources/Read.txt");
         composition = new TransformComposition<>();
         tempFileWrite = new File("./resources/WriteTemp.txt");
