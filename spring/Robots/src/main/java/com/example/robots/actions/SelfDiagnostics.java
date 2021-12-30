@@ -15,8 +15,10 @@ public class SelfDiagnostics extends Action implements Runnable {
     public void run() {
         System.out.println(toString());
         var tools= robot.getModel().getTools();
+
         for (int i = 0; i < tools.size(); i++) {
             var tool= tools.get(i);
+            gi
             if(tool.getState().equals(ToolState.MALFUNCTION)){
                 tool.setState(ToolState.READY);
             }

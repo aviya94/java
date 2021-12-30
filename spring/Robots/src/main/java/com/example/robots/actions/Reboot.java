@@ -17,6 +17,7 @@ public class Reboot extends Action implements Runnable {
         System.out.println(toString());
         var time = randomNumber(1, 5);
         var timeToEnd = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(time);
+
         while (System.currentTimeMillis() < timeToEnd) {
             try {
                 TimeUnit.MINUTES.sleep(timeToEnd-System.currentTimeMillis());
