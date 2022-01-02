@@ -1,0 +1,213 @@
+--1. write a query that returns all the info of the invoices in 2013
+ select *
+ from invoices
+ where InvoiceDate >='2013-01-01' and InvoiceDate<='2013-12-30';
+
+--2. Display all employees who are sales agents.
+select *
+from employees
+where Title like'%agent%';
+
+--3. Display all customers (first name, last name, and country) in Brazil, Canada, india, and Sweden
+select FirstName,LastName,country
+from customers
+where Country in('Brazil','Canada','Sweden');
+
+--4. Provide a query showing Customers (just their full names, customer ID and country) who are not
+ -- in the US ordered by country descending and full name ascending.
+select FirstName||' '||LastName as 'fullName',CustomerId,Country
+from customers
+where Country not in ('USA') order by Country desc ,fullName asc;
+
+--5. Select all customer s not in north America
+select  *
+from customers
+where Country not in ('USA','canada');
+
+--6. Display country and total number of invoices per country in descending order.
+select BillingCountry,count(*) as count
+from invoices group by BillingCountry order by BillingCountry desc;
+
+--7. Using the Track and Album tables, write a query that returns all the songs that start with 'Bad'
+   -- and the composer field is not empty. Your query should return the name of the song, the name
+--of the composer, and the title of the album ordered by track name
+
+select name,Composer,Title
+from albums,tracks
+where albums.AlbumId=tracks.TrackId and Name like 'bad%' and Composer is not null  order by Name;
+
+--8. team would like to throw a promotional Music Festival for their top 10 customers who have
+--spent the most in a single invoice. Write a query that returns the first name, last name, and
+--invoice total for the top 10 invoices ordered by invoice total descending.
+
+select FirstName,LastName,Total
+from invoices,customers
+where invoices.CustomerId=customers.CustomerId order by Total desc limit 10;
+
+--9. Use the Invoice table to determine the 10  countries that have the most invoices. Provide a
+--result of a table of Billing Country and Invoices ordered by the number of invoices for each
+--country. The country with the most invoices should appear first.
+
+select BillingCountry, count(*) as'InvoicesOrdered'
+from invoices group by BillingCountry
+order by InvoicesOrdered DESC limit 10;
+
+--10.  Display the top 10 countries with total money spent.
+
+select  BillingCountry, sum(Total) as'totalMoney'
+from invoices
+group by BillingCountry order by totalMoney desc limit 10;
+
+--11.  Display list of cities with sum of orders above 70$ in descending order,  in each row display
+--number of invoices and sum of all invoices.
+select BillingCity , count(*) as count ,sum(Total) as sum
+from invoices
+group by BillingCity
+having sum>70
+order by BillingCity desc ;
+
+--12.  Select all countries with total money spent between 40$ and 50$, display Country name and
+--total in descending order.
+
+select BillingCountry ,sum(Total) as sum
+from invoices
+group by BillingCountry
+having sum between 40 and 50
+order by sum desc ;
+
+--13.  Select the top city with total orders (invoices) and display city name and total.
+select  BillingCity ,count(InvoiceId) as totalOrder
+from invoices
+limit 1;
+
+--14.  Select all customers from Prague. display id, first and last name and total money spent for each.
+select customers.CustomerId,FirstName,LastName,sum(Total)as sum
+from customers,invoices
+where customers.CustomerId=invoices.CustomerId and City like'Prague'
+group by customers.CustomerId;
+
+--15.  select top 3 spending customer. display id, name, city and money spent.
+ select customers.CustomerId,FirstName,LastName,City, sum(Total) as sum
+from customers,invoices
+where customers.CustomerId=invoices.CustomerId
+ group by customers.CustomerId
+ order by sum desc
+ limit 3;
+
+-- 16.  Select the top 5 customer in terms of spending on "Rock" music.
+select invoices.CustomerId,FirstName,LastName, sum(Total) as sum
+from customers,invoices,invoice_items,tracks,genres
+where customers.CustomerId=invoices.CustomerId
+  and invoices.InvoiceId=invoice_items.InvoiceId
+  and invoice_items.TrackId=tracks.TrackId
+  and tracks.GenreId=genres.GenreId
+  and genres.Name like'rock'
+group by invoices.CustomerId
+order by sum desc limit 5;
+
+--17.  Select the top 10 cities spending on TV Shows. Display city and total money spent.
+
+select BillingCity, sum(Total) as total
+from genres, tracks, invoice_items, invoices
+where genres.Name = 'TV Shows'
+  and genres.GenreId = tracks.GenreId
+  and tracks.TrackId = invoice_items.TrackId
+  and invoice_items.InvoiceId = invoices.InvoiceId
+group by BillingCity
+order by Total desc
+limit 10;
+
+--18.  Select Rock Music listeners who spent more than 20$ on Rock. Display email, first and last name
+--and money spent ordered by amount spent descending.
+
+select Email,FirstName,LastName,sum(Total)as sum
+from customers,invoices,invoice_items,tracks,genres
+where customers.CustomerId=invoices.CustomerId
+  and invoices.InvoiceId=invoice_items.InvoiceId
+  and invoice_items.TrackId=tracks.TrackId
+  and tracks.GenreId=genres.GenreId
+  and genres.Name like'rock'
+group by invoices.CustomerId
+having sum>20
+order by sum desc;
+
+--19.  Provide a query that shows the # of customers assigned to each sales agent.
+select EmployeeId, employees.FirstName, employees.LastName, count(CustomerId) as numOfCustomers
+from employees, customers
+where EmployeeId = SupportRepId and
+        Title = 'Sales Support Agent'
+group by EmployeeId;
+
+--20.  Provide a query that shows the total sales per country rounded to nearest cent. Which country's
+--customers spent the most?
+select BillingCountry,round(sum (Total),1) as sum
+from invoices
+group by BillingCountry
+order by sum desc limit 1;
+
+--21.  Select the top 5 most purchased tracks of all times.
+select tracks.TrackId,name,count(*)*Quantity  as count
+from tracks,invoice_items
+where tracks.TrackId=invoice_items.TrackId
+group by tracks.TrackId
+order by count desc
+limit 5;
+
+--22.  Select the top 3 best-selling artists.
+select ArtistId,Name
+from
+     (select artists.ArtistId,artists.Name,count(*)*Quantity as count
+    from artists,albums,tracks,invoice_items
+         where tracks.TrackId=invoice_items.TrackId
+        and albums.AlbumId=tracks.AlbumId
+        and albums.ArtistId=artists.ArtistId
+     group by artists.ArtistId
+         order by count desc
+    )
+limit 3;
+
+--23.  Provide a query that shows total sales made by each sales agent.
+select EmployeeId,employees.FirstName,employees.LastName, count(*) as totalSales
+from employees,customers
+where EmployeeId=SupportRepId group by EmployeeId;
+
+--24.  Provide a query that shows the number tracks purchased in all invoices that contain more than
+--    one genre.
+--select Name as tName
+--from invoices,invoice_items,tracks
+--where invoices.InvoiceId=invoice_items.InvoiceId
+--and tracks.TrackId=invoice_items.TrackId and GenreId not in
+--(
+   -- select GenreId FROM tracks where Name=tName
+-- );
+
+
+
+--25.  Write a query that determines the customer that has spent the most on music for each country.
+    select max(sum),Country
+    from (
+          select sum(Total)as sum,Country
+          from invoices,customers
+        where invoices.CustomerId=customers.CustomerId
+        group by invoices.CustomerId
+         )
+group by Country;
+
+
+--Write a query that returns the country along with the top customer and how much they spent.
+  --  For countries where the top amount spent is shared, provide all customers who spent this
+   -- amount. You should only need to use the Customer and Invoice tables.
+select  sum,Country as maxCountry,CustomerId
+from (
+         select sum(Total)as sum,Country,invoices.CustomerId
+         from invoices,customers
+         where invoices.CustomerId=customers.CustomerId
+         group by invoices.CustomerId
+     )
+where sum in(select max(sum) from (
+                                      select sum(Total)as sum,Country,invoices.CustomerId
+                                      from invoices,customers
+                                      where invoices.CustomerId=customers.CustomerId
+                                      group by invoices.CustomerId
+                                  ) where maxCountry=Country)
+order by Country;
