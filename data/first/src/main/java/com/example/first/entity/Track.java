@@ -1,4 +1,4 @@
 package com.example.first.entity;
 
-public record Track(int trackId,String name) {
+public record Track(int trackId,String name,double unitPrice) {
 }

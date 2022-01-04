@@ -23,61 +23,89 @@ public class UI {
     private String idData;
     private String albums;
     private String track;
+    private String insertInvoice;
+    private String insertInvoiceItem;
+    private String buyTrack;
     private final Scanner scanner = new Scanner(System.in);
+
     @Autowired
     DatabaseConnector databaseConnector;
 
     public void run() {
         var user = getUser();
         user.forEach(System.out::println);
-       var albums= getAlbums();
-       albums.forEach(System.out::println);
-        var track= choseAlbum();
+        var albums = getAlbums();
+        albums.forEach(System.out::println);
+        var track = choseAlbum();
         track.forEach(System.out::println);
+        var SelectedTrek = buyTrack();
 
+
+    }
+
+    private ArrayList<Track> buyTrack() {
+        System.out.println("enter track you want to buy");
+        var SelectedTrek = scanner.nextLine();
+        Function<ResultSet, Track> function = (rs) -> {
+            try {
+                var trackId = rs.getInt("trackId");
+                var name = rs.getString("name");
+                var unitPrice = rs.getDouble("unitPrice");
+
+                return new Track(trackId, name, unitPrice);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        };
+        var res = databaseConnector.getQueries(buyTrack, function, SelectedTrek);
+        return res;
     }
 
     private ArrayList<Track> choseAlbum() {
         System.out.println("enter album id:");
         var album = scanner.nextLine();
-        Function<ResultSet , Track> function =(rs)-> {
+        Function<ResultSet, Track> function = (rs) -> {
             try {
                 var trackId = rs.getInt("trackId");
                 var name = rs.getString("name");
+                var unitPrice = rs.getDouble("unitPrice");
 
-                return new Track(trackId,name);
+                return new Track(trackId, name, unitPrice);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             return null;
         };
-        var res= databaseConnector.getQueries(track,function,album);
+        var res = databaseConnector.getQueries(track, function, album);
         return res;
     }
 
     private ArrayList<Album> getAlbums() {
-        Function<ResultSet , Album> function =(rs)-> {
+        System.out.println("All the albums:");
+        Function<ResultSet, Album> function = (rs) -> {
             try {
                 var albumId = rs.getInt("AlbumId");
                 var title = rs.getString("Title");
 
-                return new Album(albumId,title);
+                return new Album(albumId, title);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             return null;
         };
-        String[] a=new String[0];
-        var res= databaseConnector.getQueries(albums,function,a);
+        String[] a = new String[0];
+        var res = databaseConnector.getQueries(albums, function, a);
         return res;
     }
 
     private ArrayList<Customer> getUser() {
         System.out.println("enter id");
         var id = scanner.nextLine();
-        Function<ResultSet , Customer> function =(rs)-> {
+        Function<ResultSet, Customer> function = (rs) -> {
             try {
                 var name = rs.getString("name");
                 var email = rs.getString("Email");
@@ -90,7 +118,7 @@ public class UI {
 
             return null;
         };
-        var res= databaseConnector.getQueries(idData,function,id );
+        var res = databaseConnector.getQueries(idData, function, id);
         return res;
     }
 }
