@@ -1,8 +1,8 @@
 package com.example.first;
 
+import com.example.first.entity.Track;
 import com.example.first.entity.Album;
 import com.example.first.entity.Customer;
-import com.example.first.entity.Track;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -29,7 +29,7 @@ public class UI {
     private final Scanner scanner = new Scanner(System.in);
 
     @Autowired
-    DatabaseConnector databaseConnector;
+    private DatabaseConnector databaseConnector;
 
     public void run() {
         var user = getUser();
@@ -38,12 +38,12 @@ public class UI {
         albums.forEach(System.out::println);
         var track = choseAlbum();
         track.forEach(System.out::println);
-        var SelectedTrek = buyTrack();
+        var SelectedTrek = buyTrack(user.get(0));
 
 
     }
 
-    private ArrayList<Track> buyTrack() {
+    private ArrayList<Track> buyTrack(Customer user) {
         System.out.println("enter track you want to buy");
         var SelectedTrek = scanner.nextLine();
         Function<ResultSet, Track> function = (rs) -> {
@@ -59,7 +59,10 @@ public class UI {
 
             return null;
         };
+
         var res = databaseConnector.getQueries(buyTrack, function, SelectedTrek);
+        String[] fields = new String[]{String.valueOf(user.customerId()), '\'' + user.address() + '\'', '\'' + user.country() + '\'', '\'' + user.postalCode() + '\'', String.valueOf(res.get(0).unitPrice())};
+        databaseConnector.insertToDatabase(insertInvoice, fields);
         return res;
     }
 
@@ -110,8 +113,12 @@ public class UI {
                 var name = rs.getString("name");
                 var email = rs.getString("Email");
                 var city = rs.getString("City");
+                var customerId = rs.getInt("CustomerId");
+                var address = rs.getString("Address");
+                var country = rs.getString("Country");
+                var postalCode = rs.getString("PostalCode");
 
-                return new Customer(name, email, city);
+                return new Customer(name, email, city, customerId, address, country, postalCode);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
