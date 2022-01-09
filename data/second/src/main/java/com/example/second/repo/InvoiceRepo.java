@@ -13,7 +13,7 @@ public class InvoiceRepo extends RepoBase {
     }
 
     public Invoice creatInvoice(String... values) {
-        var sql = "INSERT INTO invoices (CustomerId,InvoiceDate, BillingAddress, BillingCountry, BillingPostalCode,Total)VALUES (?,CURRENT_TIMESTAMP ,?,?,?,?);";
+        var sql = "INSERT INTO invoices (CustomerId,InvoiceDate, BillingAddress,BillingCity,BillingState, BillingCountry, BillingPostalCode,Total)VALUES (?,CURRENT_TIMESTAMP ,?,?,?,?,?,?);";
         if (super.getJdbc().update(sql, values) > 0) {
             return getNewInvoiceId();
         }
@@ -26,9 +26,12 @@ public class InvoiceRepo extends RepoBase {
         return super.getJdbc().query(sql, toArtist).get(0);
     }
 
-    private int updateInvoiceItem(String... values) {
-        var sql = "INSERT INTO invoice_items (InvoiceId, TrackId, UnitPrice, Quantity)VALUES (?, ?, ?, ?,?);";
-        RowMapper<Invoice> toArtist = (rs, n) -> new Invoice(rs.getInt(1));
-        return super.getJdbc().update(sql, values);
+    public void updateInvoiceItem(String... values) {
+        var sql = "INSERT INTO invoice_items(InvoiceId, TrackId, UnitPrice, Quantity)VALUES (?, ?, ?, ?);";
+       var res= super.getJdbc().update(sql, values);
+       if(res<0)
+       {
+           throw new IllegalArgumentException();
+       }
     }
 }

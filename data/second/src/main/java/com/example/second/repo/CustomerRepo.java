@@ -16,8 +16,8 @@ public class CustomerRepo extends RepoBase{
     }
 
     public List<Customer> getUser(int id) {
-        var sql = "select FirstName||' '||LastName as name,Email,City from customers where CustomerId=?";
-        RowMapper<Customer> toCustomer = (rs, n) -> new Customer(rs.getString(1), rs.getString(2), rs.getString(3));
+        var sql = "select FirstName||' '||LastName as name,Email,Address,City,State,country,PostalCode from customers where CustomerId=?";
+        RowMapper<Customer> toCustomer = (rs, n) -> new Customer(id,rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7));
         return super.getJdbc().query(sql, toCustomer, id);
     }
 }
