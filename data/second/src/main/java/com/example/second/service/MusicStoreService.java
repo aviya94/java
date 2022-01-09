@@ -1,17 +1,19 @@
 package com.example.second.service;
 
-import com.example.second.entity.Album;
-import com.example.second.entity.Artist;
-import com.example.second.entity.Customer;
-import com.example.second.entity.Track;
+import com.example.second.entity.*;
 import com.example.second.repo.AlbumRepo;
 import com.example.second.repo.CustomerRepo;
 import com.example.second.repo.InvoiceRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Service
+@RestController
+@RequestMapping("/MusicStoreService")
 public class MusicStoreService {
 
     private final AlbumRepo albumRepo;
@@ -24,7 +26,8 @@ public class MusicStoreService {
         this.invoiceRepo = invoiceRepo;
     }
 
-    public Customer getUser(int id) {
+    @GetMapping("user/{id}")
+    public Customer getUser(@PathVariable int id) {
         var res = customerRepo.getUser(id);
         if (res.size() == 0) {
             throw new IllegalArgumentException();
@@ -32,30 +35,36 @@ public class MusicStoreService {
         return res.get(0);
     }
 
-    public List<Artist> getArtistsByName(String artistName) {
+    @GetMapping("getArtistsByName/{artistName}")
+    public List<Artist> getArtistsByName(@PathVariable String artistName) {
         return albumRepo.selectArtist(artistName);
 
     }
-
-    public Album getAlbumsByArtistId(int id) {
+    @GetMapping("getAlbumsByArtistId/{id}")
+    public Album getAlbumsByArtistId(@PathVariable int id) {
         var res = albumRepo.getAlbumsByArtistId(id);
         if (res.size() == 0) {
             throw new IllegalArgumentException();
         }
         return res.get(0);
     }
-
+    @GetMapping("getTracksByAlbumId/{id}")
     public List<Track> getTracksByAlbumId(int id) {
         return albumRepo.getTracksByAlbumId(id);
     }
 
-    public void orderTrack(int trackId, List<Track> tracks, Customer customer) {
+    public Invoice orderTrack(int trackId, List<Track> tracks, Customer customer) {
         var track = getTrackById(trackId, tracks);
-        var invoiceId = invoiceRepo.creatInvoice(String.valueOf(customer.id()),
+        var invoice = invoiceRepo.creatInvoice(String.valueOf(customer.id()),
                 customer.address(), customer.city(), customer.state(),
                 customer.country(), customer.postCode(), String.valueOf(track.UnitPrice()));
 
-        invoiceRepo.updateInvoiceItem(String.valueOf(invoiceId.invoiceId()),
+        updateInvoiceItem(track, invoice);
+        return invoice;
+    }
+
+    private void updateInvoiceItem(Track track, Invoice invoice) {
+        invoiceRepo.updateInvoiceItem(String.valueOf(invoice.invoiceId()),
                 String.valueOf(track.TrackId()), String.valueOf(track.UnitPrice()), "1");
     }
 
@@ -66,5 +75,11 @@ public class MusicStoreService {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public void orderMoreTrack(int trackId, Invoice invoice,List<Track> tracks) {
+        var track = getTrackById(trackId, tracks);
+        invoiceRepo.updateInvoicePrice(invoice.invoiceId(),track.UnitPrice());
+        updateInvoiceItem(track,invoice);
     }
 }

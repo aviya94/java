@@ -29,6 +29,11 @@ public class AlbumRepo extends RepoBase{
         RowMapper<Album> toAlbum = (rs, n) -> new Album(rs.getInt(2), rs.getString(1), id);
         return super.getJdbc().query(sql, toAlbum, id);
     }
+    public List<Track> getTrackByGenreId(int id) {
+        var sql = "select TrackId,name,UnitPrice from tracks where GenreId=?;";
+        RowMapper<Track> toTrack = (rs, n) -> new Track(rs.getInt(1), rs.getString(2),rs.getDouble(3));
+        return super.getJdbc().query(sql, toTrack, id);
+    }
 
     public List<Track> getTracksByAlbumId (int id) {
         var sql = "select TrackId,name,UnitPrice from tracks where AlbumId=?;";

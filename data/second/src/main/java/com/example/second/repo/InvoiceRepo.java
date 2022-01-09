@@ -34,4 +34,9 @@ public class InvoiceRepo extends RepoBase {
            throw new IllegalArgumentException();
        }
     }
+
+    public void updateInvoicePrice(int invoiceId,Double price){
+        var sql = "UPDATE invoices SET Total=Total+? WHERE InvoiceId in(?);";
+         super.getJdbc().update(sql,price,invoiceId);
+    }
 }
