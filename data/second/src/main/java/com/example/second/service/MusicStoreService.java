@@ -27,7 +27,7 @@ public class MusicStoreService {
     }
 
     @GetMapping("user/{id}")
-    public Customer getUser(@PathVariable int id) {
+    public Customer getUser(@PathVariable() int id) {
         var res = customerRepo.getUser(id);
         if (res.size() == 0) {
             throw new IllegalArgumentException();
