@@ -48,10 +48,10 @@ public class UI implements CommandLineRunner {
         scanner.nextLine();
 
         if(invoice!=null){
-            musicStoreService.orderMoreTrack(trackId,invoice,tracks);
+            musicStoreService.orderMoreTrack(trackId,invoice);
             return invoice;
         }
-       return musicStoreService.orderTrack(trackId, tracks, customer);
+       return musicStoreService.orderTrack(trackId, customer);
     }
 
     private List<Track> getTracks() {

@@ -46,4 +46,5 @@ public class AlbumRepo extends RepoBase{
         RowMapper<Track> toTrack = (rs, n) -> new Track(rs.getInt(1), rs.getString(2),rs.getDouble(3));
         return super.getJdbc().query(sql, toTrack, id).get(0);
     }
+
 }

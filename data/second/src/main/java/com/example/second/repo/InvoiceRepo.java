@@ -1,9 +1,12 @@
 package com.example.second.repo;
 
+import com.example.second.entity.Customer;
 import com.example.second.entity.Invoice;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public class InvoiceRepo extends RepoBase {
@@ -18,6 +21,23 @@ public class InvoiceRepo extends RepoBase {
             return getNewInvoiceId();
         }
         throw new IllegalArgumentException();
+    }
+
+    public  Invoice creatInvoice(Customer customer){
+        final var generatedKeyHolder = new GeneratedKeyHolder();
+        var n = getJdbc().update(cn -> {
+            var ps = cn.prepareStatement("INSERT INTO invoices (CustomerId,InvoiceDate, BillingAddress,BillingCity,BillingState, BillingCountry, BillingPostalCode,Total)VALUES (?,CURRENT_TIMESTAMP ,?,?,?,?,?,?);");
+            ps.setInt(1, customer.id());
+
+            ps.setString(2, customer.address());
+            ps.setString(3, customer.city());
+            ps.setString(4, customer.state());
+            ps.setString(5, customer.country());
+            ps.setString(6, customer.postCode());
+            ps.setDouble(7,0.0 );
+            return ps;
+        }, generatedKeyHolder);
+        return new Invoice((Integer) generatedKeyHolder.getKey());
     }
 
     private Invoice getNewInvoiceId() {
